@@ -27,6 +27,7 @@ import {
   SiN8N,
   SiChatbot,
   SiRobotframework,
+  SiGoogleads,
 } from "react-icons/si";
 import { Loader2 } from "lucide-react";
 import Logomarquee from "./Marquee";
@@ -224,7 +225,7 @@ const skills: SkillsRecord = {
     {
       id: "GOOGLE_ADS",
       name: "Google Ads",
-      Icon: SiGooglemarketingplatform,
+      Icon: SiGoogleads,
       level: 88,
       color: "text-blue-500",
       relay: "blue",
@@ -287,7 +288,7 @@ export function Skills() {
   const [hovered, setHovered] = React.useState<string | null>(null);
 
   return (
-    <section id="skills" className="px-6 relative overflow-hidden">
+    <section id="skills" className="py-6 px-6 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
@@ -345,7 +346,7 @@ export function Skills() {
           </div>
 
           {/* Skills Grid */}
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-6">
             {Object.entries(skills).map(([category, items]) => (
               <motion.div
                 key={category}
@@ -421,7 +422,7 @@ export function Skills() {
             ))}
           </div>
 
-          <Logomarquee className="mt-2" skills={skills} />
+          <Logomarquee className="mt-10" skills={skills} />
 
           {/* Call to Action */}
           <motion.div

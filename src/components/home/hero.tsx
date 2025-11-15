@@ -1,9 +1,21 @@
 "use client";
-
+import * as React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { text } from "stream/consumers";
 
 export const Hero = () => {
+  const [hidden, setHidden] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setHidden(window.scrollY > 80); // hide when scrolled a bit
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section className="min-h-screen flex items-center justify-center bg-inherit relative overflow-hidden py-20">
       {/* Animated Background Elements */}
@@ -40,8 +52,8 @@ export const Hero = () => {
           {/* Main Heading */}
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-              Hi, I'm{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-[length:200%_200%] animate-gradient">
+              Hi, {"I'm "}
+              <span className="text-transparent font-sans bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-[length:200%_200%] animate-gradient">
                 Dhanesh
               </span>
             </h1>
@@ -69,33 +81,107 @@ export const Hero = () => {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="flex flex-wrap justify-center lg:justify-start gap-3"
           >
-            {["Next.js", "TypeScript", "Tailwind", "Node.js", "PostgreSQL"].map(
-              (tech, index) => (
+            {[
+              { label: "Next.js", color: "from-slate-500 to-slate-300" },
+              { label: "TypeScript", color: "from-blue-500 to-blue-300" },
+              { label: "Tailwind", color: "from-cyan-400 to-cyan-300" },
+              { label: "React", color: "from-blue-400 to-blue-300" },
+              { label: "Node.js", color: "from-green-500 to-green-300" },
+              { label: "Express", color: "from-gray-300 to-gray-500" },
+              { label: "MongoDB", color: "from-green-400 to-green-300" },
+            ].map((tech, index) => (
+              <motion.span
+                key={tech.label}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
+                className={`
+        relative px-4 py-1.5 md:py-2 rounded-lg text-sm font-medium
+        text-white
+        bg-slate-900/40 border border-slate-700/50
+        backdrop-blur-sm
+        shadow-[0_0_10px_rgba(0,0,0,0.3)]
+        cursor-default
+        group
+        transition-all duration-300
+        hover:scale-110 hover:bg-slate-800/60
+      `}
+              >
+                {/* Glow Border Effect */}
                 <span
-                  key={tech}
-                  className="px-4 py-1 md:py-2 bg-slate-800/40 border border-slate-700/30 rounded-lg text-slate-300 text-sm backdrop-blur-sm hover:bg-slate-700/40 transition-all duration-300 hover:scale-105"
-                  style={{ animationDelay: `${0.6 + index * 0.1}s` }}
-                >
-                  {tech}
-                </span>
-              )
-            )}
+                  className={`
+          absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100
+          transition-opacity duration-300
+          bg-gradient-to-r ${tech.color}
+          blur-md
+        `}
+                ></span>
+
+                {/* Inside Glow Ring */}
+                <span
+                  className={`
+          absolute inset-0 rounded-lg opacity-0
+          group-hover:opacity-40 transition-all duration-300
+          bg-gradient-to-r ${tech.color}
+          blur-xl
+        `}
+                />
+
+                {/* Shine Line */}
+                <span
+                  className="
+          absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-[1px]
+          bg-gradient-to-r from-transparent via-white/50 to-transparent
+          opacity-0 group-hover:opacity-70
+          transition-all duration-500
+        "
+                />
+
+                {/* Actual Label */}
+                <span className="relative z-10">{tech.label}</span>
+              </motion.span>
+            ))}
           </motion.div>
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            className="flex flex-col sm:flex-row gap-4 mt-6 justify-center lg:justify-start"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.6 }}
           >
+            {/* Primary CTA – Neon Gradient */}
             <a
               href="#projects"
-              className="group inline-flex items-center justify-center px-6 md:px-8 py-2 md:py-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg text-white font-medium hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/25"
+              className="
+      relative group inline-flex items-center justify-center
+      px-7 md:px-10 py-3 md:py-4
+      font-medium text-white rounded-xl
+      bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
+      shadow-lg shadow-cyan-500/20
+      hover:shadow-blue-500/40
+      transition-all duration-300
+      hover:scale-[1.03]
+      overflow-hidden
+    "
             >
-              <span className="hover:scale-105">View My Work</span>
+              {/* Glow sweep */}
+              <span
+                className="
+        absolute inset-0 opacity-0 group-hover:opacity-20
+        bg-gradient-to-r from-white/40 to-transparent
+        translate-x-[-100%] group-hover:translate-x-[100%]
+        transition-all duration-700
+      "
+              />
+
+              <span className="relative z-10 mr-2 group-hover:scale-105 transition">
+                View My Work
+              </span>
+
+              {/* Arrow with trail */}
               <svg
-                className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"
+                className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -109,13 +195,37 @@ export const Hero = () => {
               </svg>
             </a>
 
+            {/* Secondary CTA – Glass + Glow Border */}
             <a
               href="#contact"
-              className="group inline-flex items-center justify-center px-6 md:px-8 py-2 md:py-4 border border-slate-600 rounded-xl text-slate-300 font-medium hover:bg-slate-800/50 hover:border-slate-500 hover:text-white transition-all duration-300 backdrop-blur-sm"
+              className="
+      group relative inline-flex items-center justify-center
+      px-7 md:px-10 py-3 md:py-4
+      font-medium rounded-xl
+      border border-slate-600 text-slate-300
+      backdrop-blur-md bg-slate-900/40
+      hover:text-white hover:border-cyan-400
+      hover:bg-slate-800/50
+      transition-all duration-300
+      hover:scale-[1.03]
+      overflow-hidden
+    "
             >
-              Get In Touch
+              {/* Glow Border Animation */}
+              <span
+                className="
+        absolute inset-0 rounded-xl
+        border border-transparent
+        group-hover:border-cyan-400
+        group-hover:shadow-[0_0_12px_3px_rgba(34,211,238,0.4)]
+        transition-all duration-500
+      "
+              ></span>
+
+              <span className="relative z-10 mr-2">Get In Touch</span>
+
               <svg
-                className="ml-2 w-4 h-4 group-hover:scale-110 transition-transform"
+                className="relative z-10 w-4 h-4 group-hover:scale-110 transition-transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -189,9 +299,9 @@ export const Hero = () => {
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        animate={{ opacity: hidden ? 0 : 1 }}
+        transition={{ duration: 0.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <div className="flex flex-col items-center gap-2 text-slate-400">
           <span className="text-sm">Scroll to explore</span>

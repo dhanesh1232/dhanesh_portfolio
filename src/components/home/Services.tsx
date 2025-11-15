@@ -11,7 +11,7 @@ import {
   FaBullhorn,
 } from "react-icons/fa";
 import { Shimmer } from "../shimmer";
-import { IconType } from "react-icons";
+import { cn } from "@/lib/utils";
 
 const services = [
   {
@@ -141,14 +141,22 @@ export default function Services() {
                     color={color}
                     duration={hovered === id ? "3.5s" : "2s"}
                   />
-                  <div className="z-20 bg-slate-800 p-6 rounded-2xl relative">
+                  <div className="z-20 bg-slate-800 p-6 h-full rounded-2xl relative">
                     <div
                       className={`absolute inset-0 group-hover:bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-5 transition`}
                     />
-                    <div
-                      className={`relative w-14 h-14 rounded-xl ${bg} flex items-center justify-center mb-6 transition`}
-                    >
-                      <Icon className={`w-7 h-7 ${text}`} />
+                    <div className="flex items-center justify-between">
+                      <div
+                        className={`relative w-14 h-14 rounded-xl ${bg} flex items-center justify-center mb-6 transition`}
+                      >
+                        <Icon className={`w-7 h-7 ${text}`} />
+                      </div>
+                      <Icon
+                        className={cn(
+                          "opacity-0 group-hover:opacity-20 size-1 ease-in-out duration-500 transition-opacity",
+                          text
+                        )}
+                      />
                     </div>
 
                     <h3

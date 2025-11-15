@@ -34,7 +34,7 @@ function Logomarquee({ skills, className }: LogomarqueeProps) {
         variants={fadeUp as Variants}
         className={cn("items-center overflow-hidden", className)}
       >
-        <div className="w-full max-w-6xl flex flex-col gap-y-6">
+        <div className="w-full max-w-7xl flex flex-col gap-y-6">
           <Marquee logos={logos} />
         </div>
       </motion.div>

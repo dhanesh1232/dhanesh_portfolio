@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import * as React from "react";
 import { MenuToggle } from "../menu-toggle";
 
 const navLinks = [
@@ -14,7 +14,7 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <motion.nav
