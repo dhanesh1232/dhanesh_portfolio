@@ -166,7 +166,7 @@ export function Projects() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-8">
             {projects.map((project, index) => (
               <motion.article
                 key={project.title}

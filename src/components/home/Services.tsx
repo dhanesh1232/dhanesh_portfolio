@@ -153,7 +153,7 @@ export default function Services() {
                       </div>
                       <Icon
                         className={cn(
-                          "opacity-0 group-hover:opacity-20 size-1 ease-in-out duration-500 transition-opacity",
+                          "opacity-0 group-hover:opacity-20 size-10 ease-in-out duration-500 transition-opacity",
                           text
                         )}
                       />

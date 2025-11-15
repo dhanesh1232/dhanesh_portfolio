@@ -28,8 +28,9 @@ import {
   SiChatbot,
   SiRobotframework,
   SiGoogleads,
+  SiOpensearch,
 } from "react-icons/si";
-import { Loader2 } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import Logomarquee from "./Marquee";
 import { Shimmer } from "../shimmer";
 import { IconType } from "react-icons";
@@ -217,7 +218,7 @@ const skills: SkillsRecord = {
     {
       id: "SEO",
       name: "SEO",
-      Icon: SiGoogle, // replace with proper icon if needed
+      Icon: Search, // replace with proper icon if needed
       level: 92,
       color: "text-green-500",
       relay: "green",
