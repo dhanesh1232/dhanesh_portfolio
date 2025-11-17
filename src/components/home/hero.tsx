@@ -3,6 +3,8 @@ import * as React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { text } from "stream/consumers";
+import Link from "next/link";
+import { ArrowRight, Clock } from "lucide-react";
 
 export const Hero = () => {
   const [hidden, setHidden] = React.useState(false);
@@ -151,11 +153,11 @@ export const Hero = () => {
             transition={{ delay: 0.7, duration: 0.6 }}
           >
             {/* Primary CTA – Neon Gradient */}
-            <a
+            <Link
               href="#projects"
               className="
       relative group inline-flex items-center justify-center
-      px-7 md:px-10 py-3 md:py-4
+      px-7 md:px-10 py-2 md:py-3
       font-medium text-white rounded-xl
       bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
       shadow-lg shadow-cyan-500/20
@@ -193,14 +195,16 @@ export const Hero = () => {
                   d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
-            </a>
+            </Link>
 
             {/* Secondary CTA – Glass + Glow Border */}
-            <a
-              href="#contact"
+            <Link
+              href="https://ecodrix.fillout.com/ecodrix-ai-agent"
+              target="_blank"
+              role="navigation"
               className="
       group relative inline-flex items-center justify-center
-      px-7 md:px-10 py-3 md:py-4
+      px-7 md:px-10 py-2 md:py-3
       font-medium rounded-xl
       border border-slate-600 text-slate-300
       backdrop-blur-md bg-slate-900/40
@@ -222,22 +226,28 @@ export const Hero = () => {
       "
               ></span>
 
-              <span className="relative z-10 mr-2">Get In Touch</span>
+              <span className="relative z-10 mr-2">Book</span>
 
-              <svg
-                className="relative z-10 w-4 h-4 group-hover:scale-110 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                />
-              </svg>
-            </a>
+              <Clock className="h-4 w-4 text-muted-foreground  group-hover:text-cyan-500" />
+            </Link>
+            <Link
+              target="_blank"
+              role="navigation"
+              href="https://www.notion.so/Offer-Letter-234bac2403aa80688e9ef71436fd7d0a?source=copy_link"
+              className="
+      group relative inline-flex items-center justify-center
+      px-7 md:px-10 py-2 md:py-3
+      font-medium rounded-xl
+      border-0 outline-0 ring-0 border-gray-600
+      backdrop-blur-md bg-blue-600/70
+      hover:text-white hover:border-blue-400
+      transition-all duration-300
+      hover:scale-[1.03]
+      overflow-hidden gap-2 text-white hover:bg-blue-500/70"
+            >
+              Offer
+              <ArrowRight className="w-4 h-4 text-white  group-hover:text-cyan-600 group-hover:translate-x-2 transform transition-all ease-in-out duration-300" />
+            </Link>
           </motion.div>
         </motion.div>
 
