@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/header";
 import { Footer } from "@/components/layout/Footer";
 import { CTAFloat } from "@/components/layout/cta-float";
+import { PortfolioProvider } from "@/context/parent";
+import { MainLayout } from "@/components/layout/main";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,10 +46,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100`}
       >
-        <Navbar />
-        {children}
-        <Footer />
-        <CTAFloat />
+        <PortfolioProvider>
+          <MainLayout>{children}</MainLayout>
+        </PortfolioProvider>
       </body>
     </html>
   );

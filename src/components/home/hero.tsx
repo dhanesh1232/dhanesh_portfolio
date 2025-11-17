@@ -2,12 +2,13 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { text } from "stream/consumers";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
+import { usePortfolio } from "@/context/parent";
 
 export const Hero = () => {
   const [hidden, setHidden] = React.useState(false);
+  const { setShowFill, setShowOffer } = usePortfolio();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -198,10 +199,9 @@ export const Hero = () => {
             </Link>
 
             {/* Secondary CTA – Glass + Glow Border */}
-            <Link
-              href="https://ecodrix.fillout.com/meeting-with-dhanesh"
-              target="_blank"
-              role="navigation"
+            <button
+              onClick={() => setShowFill?.(true)}
+              role="button"
               className="
       group relative inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
@@ -212,7 +212,7 @@ export const Hero = () => {
       hover:bg-slate-800/50
       transition-all duration-300
       hover:scale-[1.03]
-      overflow-hidden
+      overflow-hidden cursor-pointer
     "
             >
               {/* Glow Border Animation */}
@@ -229,11 +229,9 @@ export const Hero = () => {
               <span className="relative z-10 mr-2">Book</span>
 
               <Clock className="h-4 w-4 text-muted-foreground  group-hover:text-cyan-500" />
-            </Link>
-            <Link
-              target="_blank"
-              role="navigation"
-              href="https://www.notion.so/Offer-Letter-234bac2403aa80688e9ef71436fd7d0a?source=copy_link"
+            </button>
+            <button
+              onClick={() => setShowOffer?.(true)}
               className="
       group relative inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
@@ -247,7 +245,7 @@ export const Hero = () => {
             >
               Offer
               <ArrowRight className="w-4 h-4 text-white  group-hover:text-cyan-600 group-hover:translate-x-2 transform transition-all ease-in-out duration-300" />
-            </Link>
+            </button>
           </motion.div>
         </motion.div>
 
