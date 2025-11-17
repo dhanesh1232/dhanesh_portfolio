@@ -199,7 +199,7 @@ export const Hero = () => {
 
             {/* Secondary CTA – Glass + Glow Border */}
             <Link
-              href="https://ecodrix.fillout.com/ecodrix-ai-agent"
+              href="https://ecodrix.fillout.com/meeting-with-dhanesh"
               target="_blank"
               role="navigation"
               className="

@@ -6,6 +6,7 @@ import { Clock, Gift, LucideIcon, Sparkles } from "lucide-react";
 import { BsWhatsapp } from "react-icons/bs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { IconType } from "react-icons";
+import Script from "next/script";
 
 function CTAIconButton({
   icon: Icon,
@@ -79,7 +80,7 @@ export const CTAFloat = () => {
       {/* Schedule Call */}
       <CTAIconButton
         icon={Clock}
-        href="https://ecodrix.fillout.com/ecodrix-ai-agent"
+        href="https://ecodrix.fillout.com/meeting-with-dhanesh"
         hovered={hovered}
         bg="bg-gradient-to-br from-blue-500 to-indigo-600"
         label="Schedule a Call"
