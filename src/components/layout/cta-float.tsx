@@ -56,13 +56,12 @@ export const CTAFloat = () => {
   return (
     <div
       className="fixed bottom-6 right-6 flex flex-col items-center gap-3 z-50"
-      onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* WhatsApp — Chat */}
       <CTAIconButton
         icon={BsWhatsapp}
-        href="https://wa.me/1234567890"
+        href="https://wa.me/+918143963821"
         hovered={hovered}
         bg="bg-gradient-to-br from-green-500 to-green-600"
         label="Chat on WhatsApp"
@@ -71,7 +70,7 @@ export const CTAFloat = () => {
       {/* Offer Button */}
       <CTAIconButton
         icon={Gift}
-        href="https://wa.me/+918143963821"
+        href="https://www.notion.so/Offer-Letter-234bac2403aa80688e9ef71436fd7d0a?source=copy_link"
         hovered={hovered}
         bg="bg-gradient-to-br from-orange-600 via-yellow-500 to-red-600"
         label="Special Offers"
@@ -80,7 +79,7 @@ export const CTAFloat = () => {
       {/* Schedule Call */}
       <CTAIconButton
         icon={Clock}
-        href="https://wa.me/1234567890"
+        href="https://ecodrix.fillout.com/ecodrix-ai-agent"
         hovered={hovered}
         bg="bg-gradient-to-br from-blue-500 to-indigo-600"
         label="Schedule a Call"
@@ -89,6 +88,7 @@ export const CTAFloat = () => {
       {/* Main Floating Button */}
       <button
         aria-label="Open Menu"
+        onMouseEnter={() => setHovered(true)}
         className="relative p-3.5 rounded-full cursor-pointer bg-indigo-600 text-white shadow-xl hover:shadow-2xl transition-shadow duration-300 focus:outline-none flex items-center justify-center"
       >
         {!hovered && (

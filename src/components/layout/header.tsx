@@ -27,12 +27,12 @@ export function Navbar() {
         {/* Brand Logo */}
         <Link
           href="/"
-          className="relative text-3xl font-bold text-cyan-400 tracking-tighter"
+          className="relative text-3xl font-bold text-cyan-400 tracking-tighter ring-0 outline-0 focus:ring-0 focus:outline-0"
         >
           <span className="relative inline-block">
             Dhanesh
             <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 blur-sm"
+              className="absolute inset-0 bg-linear-to-r from-cyan-400 to-blue-500 opacity-0 blur-sm"
               animate={{ opacity: [0, 0.4, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
             />

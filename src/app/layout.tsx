@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   title: "Dhanesh - Full-Stack Developer & SaaS Builder",
   description:
     "Portfolio of Dhanesh - Building scalable SaaS platforms and open-source tools",
+  icons: {
+    icon: "https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png",
+    apple:
+      "https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png",
+  },
 };
 
 export default function RootLayout({
@@ -28,6 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          href="https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png"
+          type="image/png"
+        />
+      </head>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100`}
       >
