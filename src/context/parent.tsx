@@ -1,4 +1,6 @@
 "use client";
+import { ToastProvider } from "@/components/ui/use-toast";
+import { ThemeProvider } from "next-themes";
 import * as React from "react";
 
 interface PortfolioContextType {
@@ -6,7 +8,17 @@ interface PortfolioContextType {
   setShowFill: (value: boolean) => void;
   showOffer: boolean;
   setShowOffer: (value: boolean) => void;
+
+  // New
+  state?: Record<string, boolean>;
+  handleToChangeState: (key: string, value: boolean) => void;
 }
+
+const defaultState: Record<string, boolean> = {
+  mounted: false,
+  fillOut: false,
+  offer: false,
+};
 
 const PortfolioContext = React.createContext<PortfolioContextType | undefined>(
   undefined
@@ -15,13 +27,41 @@ const PortfolioContext = React.createContext<PortfolioContextType | undefined>(
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [showFill, setShowFill] = React.useState<boolean>(false);
   const [showOffer, setShowOffer] = React.useState<boolean>(false);
+  const [state, setState] =
+    React.useState<Record<string, boolean>>(defaultState);
+
+  const handleToChangeState = (
+    key: keyof typeof defaultState,
+    value: boolean
+  ) => {
+    setState(() => ({
+      ...defaultState,
+      [key]: value,
+    }));
+  };
 
   return (
-    <PortfolioContext.Provider
-      value={{ showFill, setShowFill, setShowOffer, showOffer }}
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
     >
-      {children}
-    </PortfolioContext.Provider>
+      <ToastProvider>
+        <PortfolioContext.Provider
+          value={{
+            showFill,
+            setShowFill,
+            setShowOffer,
+            showOffer,
+            state,
+            handleToChangeState,
+          }}
+        >
+          {children}
+        </PortfolioContext.Provider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 

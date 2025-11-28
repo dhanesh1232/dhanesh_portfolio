@@ -5,17 +5,21 @@ import { Projects } from "@/components/home/Projects";
 import Services from "@/components/home/Services";
 import { Skills } from "@/components/home/Skills";
 import Testimonials from "@/components/home/Testimonials";
+import { Navbar } from "@/components/layout/header";
 
 export default function Home() {
   return (
-    <div className="bg-transparent">
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Services />
-      <Testimonials />
-      <CTA />
-    </div>
+    <>
+      <Navbar />
+      <div className="bg-transparent">
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Services />
+        <Testimonials />
+        <CTA />
+      </div>
+    </>
   );
 }

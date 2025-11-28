@@ -86,7 +86,7 @@ function CTAActionButton({
 
 export const CTAFloat = () => {
   const [hovered, setHovered] = React.useState(false);
-  const { setShowFill, setShowOffer } = usePortfolio();
+  const { setShowFill, setShowOffer, handleToChangeState } = usePortfolio();
 
   return (
     <div
@@ -114,7 +114,7 @@ export const CTAFloat = () => {
         hovered={hovered}
         bg="bg-gradient-to-br from-orange-600 via-yellow-500 to-red-600"
         label="Special Offers"
-        onClick={() => setShowOffer?.(true)}
+        onClick={() => handleToChangeState?.("offer", true)}
       />
 
       <CTAActionButton
@@ -122,7 +122,7 @@ export const CTAFloat = () => {
         hovered={hovered}
         bg="bg-gradient-to-br from-blue-500 to-indigo-600"
         label="Schedule a Call"
-        onClick={() => setShowFill?.(true)}
+        onClick={() => handleToChangeState?.("fillOut", true)}
       />
 
       {/* Main Floating Button */}

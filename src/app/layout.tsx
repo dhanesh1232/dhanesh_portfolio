@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/header";
-import { Footer } from "@/components/layout/Footer";
-import { CTAFloat } from "@/components/layout/cta-float";
 import { PortfolioProvider } from "@/context/parent";
 import { MainLayout } from "@/components/layout/main";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +45,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100`}
       >
         <PortfolioProvider>
+          <Toaster />
           <MainLayout>{children}</MainLayout>
         </PortfolioProvider>
       </body>

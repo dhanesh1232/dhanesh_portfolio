@@ -2,13 +2,13 @@ import { usePortfolio } from "@/context/parent";
 import { FilloutPopupEmbed } from "@fillout/react";
 
 export const FilloutModal = () => {
-  const { showFill, setShowFill } = usePortfolio();
+  const { state, handleToChangeState } = usePortfolio();
   return (
     <FilloutPopupEmbed
       filloutId="ctANjyyVC1us"
       inheritParameters
-      isOpen={showFill}
-      onClose={() => setShowFill(false)}
+      isOpen={state?.fillOut ?? false}
+      onClose={() => handleToChangeState?.("fillOut", false)}
     />
   );
 };

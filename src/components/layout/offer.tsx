@@ -3,9 +3,12 @@ import { usePortfolio } from "@/context/parent";
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 
 export const OfferModal = () => {
-  const { showOffer, setShowOffer } = usePortfolio();
+  const { state, handleToChangeState } = usePortfolio();
   return (
-    <Dialog open={showOffer} onOpenChange={setShowOffer}>
+    <Dialog
+      open={state?.offer ?? false}
+      onOpenChange={() => handleToChangeState?.("offer", false)}
+    >
       <DialogContent className="w-screen h-[75vh] bg-foreground p-0 pt-12 overflow-hidden gap-0 space-y-0">
         <DialogTitle className="hidden">Special Offers</DialogTitle>
         <iframe

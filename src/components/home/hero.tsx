@@ -8,7 +8,7 @@ import { usePortfolio } from "@/context/parent";
 
 export const Hero = () => {
   const [hidden, setHidden] = React.useState(false);
-  const { setShowFill, setShowOffer } = usePortfolio();
+  const { handleToChangeState } = usePortfolio();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -200,7 +200,7 @@ export const Hero = () => {
 
             {/* Secondary CTA – Glass + Glow Border */}
             <button
-              onClick={() => setShowFill?.(true)}
+              onClick={() => handleToChangeState?.("fillOut", true)}
               role="button"
               className="
       group relative inline-flex items-center justify-center
@@ -230,8 +230,8 @@ export const Hero = () => {
 
               <Clock className="h-4 w-4 text-muted-foreground  group-hover:text-cyan-500" />
             </button>
-            <button
-              onClick={() => setShowOffer?.(true)}
+            {/* <button
+              onClick={() => handleToChangeState?.("offer", true)}
               className="
       group relative inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
@@ -245,7 +245,24 @@ export const Hero = () => {
             >
               Offer
               <ArrowRight className="w-4 h-4 text-white  group-hover:text-cyan-600 group-hover:translate-x-2 transform transition-all ease-in-out duration-300" />
-            </button>
+            </button> */}
+            <Link href="/offer">
+              <button
+                className="
+      group relative inline-flex items-center justify-center
+      px-7 md:px-10 py-2 md:py-3
+      font-medium rounded-xl
+      border-0 outline-0 ring-0 border-gray-600
+      backdrop-blur-md bg-blue-600/70
+      hover:text-white hover:border-blue-400
+      transition-all duration-300
+      hover:scale-[1.03]
+      overflow-hidden gap-2 text-white hover:bg-blue-500/70 cursor-pointer"
+              >
+                Offer
+                <ArrowRight className="w-4 h-4 text-white  group-hover:text-cyan-600 group-hover:translate-x-2 transform transition-all ease-in-out duration-300" />
+              </button>
+            </Link>
           </motion.div>
         </motion.div>
 
