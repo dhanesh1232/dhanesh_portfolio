@@ -19,7 +19,6 @@ import {
   Sparkles,
   ArrowRight,
   CheckCircle2,
-  Heart,
 } from "lucide-react";
 import Link from "next/link";
 import { BsHeartFill } from "react-icons/bs";
@@ -32,13 +31,13 @@ import {
 
 export default function StarterOfferLanding() {
   const { handleToChangeState } = usePortfolio();
-  const [slotsLeft, setSlotsLeft] = useState(72);
+  const [slotsLeft, setSlotsLeft] = useState(85);
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSlotsLeft((prev) => (prev > 65 ? prev - 1 : prev));
+      setSlotsLeft((prev) => (prev > 82 ? prev - 1 : prev));
     }, 7000);
     return () => clearInterval(interval);
   }, []);
@@ -232,7 +231,7 @@ export default function StarterOfferLanding() {
 
       {/* Floating CTA */}
       <motion.div
-        className="fixed bottom-6 right-6 bg-linear-to-r from-blue-600 hover:ring-2 transform transition ease-in-out duration-300 ring-blue-500 to-blue-700 text-white py-2.5 px-6 rounded-2xl shadow-2xl cursor-pointer text-sm md:text-base z-50 max-w-xs"
+        className="fixed bottom-6 right-6 bg-linear-to-r from-blue-600 hover:ring-2 transform transition ease-in-out duration-300 ring-blue-500 to-blue-700 text-white py-2.5 px-6 rounded-2xl shadow-2xl cursor-pointer text-sm md:text-base z-50 max-w-xs overflow-hidden"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 2 }}
@@ -243,7 +242,11 @@ export default function StarterOfferLanding() {
             ?.scrollIntoView({ behavior: "smooth" })
         }
       >
-        <div className="flex items-center gap-3">
+        {/* Ripple pulse animation */}
+        <span className="absolute inset-0 rounded-2xl bg-white/20 animate-[ripple_2s_ease-in-out_infinite]" />
+        <span className="absolute inset-0 rounded-2xl bg-white/20 animate-[ripple_2s_ease-in-out_infinite_1s]" />
+
+        <div className="relative flex items-center gap-3">
           <Timer className="w-5 h-5 animate-pulse" />
           <div>
             <div className="font-bold">Limited Slots!</div>
