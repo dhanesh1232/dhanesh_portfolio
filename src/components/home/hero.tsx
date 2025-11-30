@@ -115,7 +115,7 @@ export const Hero = () => {
                   className={`
           absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100
           transition-opacity duration-300
-          bg-gradient-to-r ${tech.color}
+          bg-linear-to-r ${tech.color}
           blur-md
         `}
                 ></span>
@@ -125,7 +125,7 @@ export const Hero = () => {
                   className={`
           absolute inset-0 rounded-lg opacity-0
           group-hover:opacity-40 transition-all duration-300
-          bg-gradient-to-r ${tech.color}
+          bg-linear-to-r ${tech.color}
           blur-xl
         `}
                 />
@@ -159,12 +159,11 @@ export const Hero = () => {
               className="
       relative group inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
-      font-medium text-white rounded-xl
+      font-medium text-white rounded-full
       bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
       shadow-lg shadow-cyan-500/20
       hover:shadow-blue-500/40
       transition-all duration-300
-      hover:scale-[1.03]
       overflow-hidden
     "
             >
@@ -197,7 +196,6 @@ export const Hero = () => {
                 />
               </svg>
             </Link>
-
             {/* Secondary CTA – Glass + Glow Border */}
             <button
               onClick={() => handleToChangeState?.("fillOut", true)}
@@ -205,20 +203,19 @@ export const Hero = () => {
               className="
       group relative inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
-      font-medium rounded-xl
+      font-medium rounded-full
       border border-slate-600 text-slate-300
       backdrop-blur-md bg-slate-900/40
       hover:text-white hover:border-cyan-400
       hover:bg-slate-800/50
       transition-all duration-300
-      hover:scale-[1.03]
       overflow-hidden cursor-pointer
     "
             >
               {/* Glow Border Animation */}
               <span
                 className="
-        absolute inset-0 rounded-xl
+        absolute inset-0 rounded-full
         border border-transparent
         group-hover:border-cyan-400
         group-hover:shadow-[0_0_12px_3px_rgba(34,211,238,0.4)]
@@ -246,22 +243,24 @@ export const Hero = () => {
               Offer
               <ArrowRight className="w-4 h-4 text-white  group-hover:text-cyan-600 group-hover:translate-x-2 transform transition-all ease-in-out duration-300" />
             </button> */}
-            <Link href="/offer">
-              <button
-                className="
+            <Link
+              href="/offer"
+              className="
       group relative inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
-      font-medium rounded-xl
-      border-0 outline-0 ring-0 border-gray-600
+      font-medium rounded-full
+      border-0 outline-0 ring-0
       backdrop-blur-md bg-blue-600/70
-      hover:text-white hover:border-blue-400
+      hover:text-white
       transition-all duration-300
-      hover:scale-[1.03]
       overflow-hidden gap-2 text-white hover:bg-blue-500/70 cursor-pointer"
-              >
-                Offer
-                <ArrowRight className="w-4 h-4 text-white  group-hover:text-cyan-600 group-hover:translate-x-2 transform transition-all ease-in-out duration-300" />
-              </button>
+            >
+              <span className="flex items-center">
+                <ArrowRight className="w-6 h-4 opacity-0 group-hover:opacity-100 translate-y-2 text-white group-hover:text-cyan-600 group-hover:translate-y-0 transform transition-all ease-in-out duration-300" />
+                <span className="-translate-x-2 group-hover:translate-x-0 transform transition-all ease-in-out duration-300">
+                  Offer
+                </span>
+              </span>
             </Link>
           </motion.div>
         </motion.div>
@@ -281,7 +280,7 @@ export const Hero = () => {
             {/* Main Image Container */}
             <div className="relative w-80 h-80 sm:w-96 sm:h-96 rounded-full overflow-hidden border border-slate-700/50 shadow-2xl shadow-black/50 group">
               {/* Animated Gradient Border */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -m-0.5 blur-sm"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-blue-500/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -m-0.5 blur-sm"></div>
 
               {/* Inner Glow */}
               <div className="absolute inset-0 pointer-events-none">
@@ -300,7 +299,7 @@ export const Hero = () => {
               />
 
               {/* Overlay Shine Effect */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-slate-900/10"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-slate-900/20 via-transparent to-slate-900/10"></div>
             </div>
 
             {/* Floating Badge */}
@@ -308,7 +307,7 @@ export const Hero = () => {
               initial={{ opacity: 0, scale: 0, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.5 }}
-              className="absolute -bottom-4 -right-4 bg-slate-800/80 backdrop-blur-md border border-slate-700/50 rounded-2xl px-4 py-3 shadow-2xl"
+              className="absolute -bottom-4 -right-4 bg-slate-800/80 backdrop-blur-md border border-slate-700/50 rounded-full px-4 py-3 shadow-2xl"
             >
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>

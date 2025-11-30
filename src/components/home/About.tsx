@@ -67,11 +67,11 @@ export function About() {
             </motion.div>
 
             <motion.h2
-              className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent"
+              className="text-3xl md:text-5xl font-bold mb-8 bg-linear-to-br from-white to-slate-400 bg-clip-text text-transparent"
               variants={fadeUp as Variants}
             >
               Building With Purpose,
-              <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              <span className="block bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 Crafting With Precision
               </span>
             </motion.h2>
@@ -111,11 +111,11 @@ export function About() {
                   className="group relative p-0.5"
                 >
                   <Shimmer color={color} />
-                  <div className="absolute z-10 inset-0 bg-gradient-to-r from-slate-700 to-slate-800 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -m-0.5 blur-sm"></div>
+                  <div className="absolute z-10 inset-0 bg-linear-to-r from-slate-700 to-slate-800 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -m-0.5 blur-sm"></div>
 
                   <div className="relative z-10 bg-slate-800 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 h-full overflow-hidden">
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+                      className={`absolute inset-0 bg-linear-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
                     />
 
                     {/* Icon Row */}
