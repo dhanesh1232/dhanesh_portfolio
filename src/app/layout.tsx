@@ -4,6 +4,7 @@ import "./globals.css";
 import { PortfolioProvider } from "@/context/parent";
 import { MainLayout } from "@/components/layout/main";
 import { Toaster } from "sonner";
+import MetaPixel from "@/components/tracking/MetaPixel";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,9 +46,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100`}
       >
         <PortfolioProvider>
+          <MetaPixel />
           <Toaster />
           <MainLayout>{children}</MainLayout>
         </PortfolioProvider>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=767522571903226&ev=PageView&noscript=1"
+          />
+        </noscript>
       </body>
     </html>
   );
