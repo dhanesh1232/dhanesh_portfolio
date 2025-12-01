@@ -1,7 +1,7 @@
 "use client";
 
 import { BsWhatsapp } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -26,13 +26,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { StyledPhoneInput } from "@/components/ui/phone-input";
 
+const timelineOptions = [
+  "Within 7 Days",
+  "Within 2 Weeks",
+  "Within 1 Month",
+  "Within 2 Months",
+  "Flexible / Not Sure",
+];
+
 const defaultForm = {
   name: "",
   phone: "",
   email: "",
   title: "",
   categoryName: "",
+  street: "",
   city: "",
+  state: "",
   serviceSelected: "Basic Website",
   timeline: "Within 7 Days",
   purpose: "",
@@ -69,30 +79,94 @@ export default function LeadForm() {
   const [thankYou, setThankYou] = useState(false);
   const [country, setCountry] = useState("IN");
 
+  const getLocation = useCallback(() => {
+    const fillFromBigDataCloud = (
+      latitude: string | number,
+      longitude: string | number
+    ) => {
+      fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const city =
+            data.city ||
+            data.locality ||
+            data.localityInfo?.locality?.[0]?.name ||
+            "";
+
+          if (!form.city && city) {
+            setForm((prev) => ({
+              ...prev,
+              city,
+              state: data.principalSubdivision || "",
+              street: data.locality || "",
+            }));
+            setCountry(data.countryCode || "");
+          }
+        })
+        .catch(() => {});
+    };
+
+    const fillFromIpApi = () => {
+      fetch("https://ipapi.co/json/")
+        .then((res) => res.json())
+        .then((data) => {
+          if (!form.city && data.city) {
+            setForm((prev) => ({
+              ...prev,
+              city: data.city,
+              state: data.region || "",
+            }));
+            setCountry(data.country_code || "");
+          }
+        })
+        .catch(() => {});
+    };
+
+    if (!("geolocation" in navigator)) {
+      fillFromIpApi();
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        fillFromBigDataCloud(latitude, longitude);
+      },
+      () => {
+        // fallback to IP-based detection if geolocation fails
+        fillFromIpApi();
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  }, [form.city]);
+
   // Restore saved progress
   useEffect(() => {
     const saved = localStorage.getItem("leadForm");
     const alreadySubmitted = localStorage.getItem("leadSubmitted");
 
     if (alreadySubmitted === "yes") {
-      setThankYou(true);
+      // defer setThankYou to the next tick to avoid cascading renders
+      Promise.resolve().then(() => setThankYou(true));
       return;
     }
 
     if (saved) {
-      setForm(JSON.parse(saved));
+      try {
+        const parsed = JSON.parse(saved);
+        // Defer setForm to the next tick to avoid cascading renders
+        Promise.resolve().then(() => setForm(parsed));
+      } catch {}
     }
 
     // Detect location once
-    fetch("https://ipapi.co/json/")
-      .then((res) => res.json())
-      .then((data) => {
-        if (!form.city && data.city) {
-          setForm((prev) => ({ ...prev, city: data.city }));
-          setCountry(data.country_code);
-        }
-      })
-      .catch(() => {});
+    getLocation();
   }, []);
 
   // Save on change
@@ -108,10 +182,13 @@ export default function LeadForm() {
 
     for (const keyword in categoryRules) {
       if (name.includes(keyword)) {
-        setForm((prev) => ({
-          ...prev,
-          categoryName: prev.categoryName || categoryRules[keyword],
-        }));
+        // Defer setForm to the next tick to avoid cascading renders
+        Promise.resolve().then(() =>
+          setForm((prev) => ({
+            ...prev,
+            categoryName: prev.categoryName || categoryRules[keyword],
+          }))
+        );
         break;
       }
     }
@@ -127,7 +204,13 @@ export default function LeadForm() {
   const isStepValid = () => {
     if (step === 0) return form.name.trim() && isPhoneValid(form.phone);
     if (step === 1)
-      return form.title.trim() && form.categoryName.trim() && form.city.trim();
+      return (
+        form.title.trim() &&
+        form.categoryName.trim() &&
+        form.city.trim() &&
+        form.state.trim() &&
+        form.street.trim()
+      );
     if (step === 2) return form.serviceSelected.trim();
     return true;
   };
@@ -138,7 +221,7 @@ export default function LeadForm() {
   const handleSubmit = async () => {
     setLoading(true);
 
-    const res = await fetch("https://api.ecodrix.com/api/add-lead", {
+    const res = await fetch("http://localhost:4000/api/add-lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -163,6 +246,13 @@ export default function LeadForm() {
         title: data.exists ? "Already Submitted" : "Submission Failed",
         description: data.message || "Please try again.",
       });
+      if (data.exists) {
+        setTimeout(() => {
+          localStorage.setItem("leadSubmitted", "yes");
+          localStorage.removeItem("leadForm");
+          setThankYou(true);
+        }, 1000);
+      }
     }
 
     setLoading(false);
@@ -240,7 +330,7 @@ export default function LeadForm() {
                   country={country}
                   placeholder="9876543210"
                   value={form.phone}
-                  onChange={(e: any) => setForm({ ...form, phone: e })}
+                  onChange={(e: string) => setForm({ ...form, phone: e })}
                 />
               </div>
             </motion.div>
@@ -269,7 +359,7 @@ export default function LeadForm() {
                   value={form.categoryName}
                   onValueChange={(v) => setForm({ ...form, categoryName: v })}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Auto-detecting..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -292,11 +382,27 @@ export default function LeadForm() {
               </div>
 
               <div className="space-y-2">
+                <Label>Address *</Label>
+                <Input
+                  placeholder="Auto-detecting..."
+                  value={form.street}
+                  onChange={(e) => setForm({ ...form, street: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
                 <Label>City *</Label>
                 <Input
                   placeholder="Auto-detecting..."
                   value={form.city}
                   onChange={(e) => setForm({ ...form, city: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>State *</Label>
+                <Input
+                  placeholder="Auto-detecting..."
+                  value={form.state}
+                  onChange={(e) => setForm({ ...form, state: e.target.value })}
                 />
               </div>
             </motion.div>
@@ -318,7 +424,7 @@ export default function LeadForm() {
                     setForm({ ...form, serviceSelected: v })
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Choose service" />
                   </SelectTrigger>
                   <SelectContent>
@@ -347,6 +453,24 @@ export default function LeadForm() {
               )}
 
               <div className="space-y-2">
+                <Label>Timeline *</Label>
+                <Select
+                  value={form.timeline}
+                  onValueChange={(v) => setForm({ ...form, timeline: v })}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Choose timeline" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {timelineOptions.map((tl) => (
+                      <SelectItem value={tl} key={tl}>
+                        {tl}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
                 <Label>Purpose</Label>
                 <Textarea
                   placeholder="Lead generation, online store, portfolio..."
@@ -354,6 +478,7 @@ export default function LeadForm() {
                   onChange={(e) =>
                     setForm({ ...form, purpose: e.target.value })
                   }
+                  className="min-h-32 resize-none"
                 />
               </div>
 
@@ -403,7 +528,7 @@ export default function LeadForm() {
           {step > 0 ? (
             <Button
               variant="ghost"
-              className={step === 4 ? "w-full" : "w-auto"}
+              className={cn(step === 4 ? "w-full" : "w-auto", "cursor-pointer")}
               onClick={prevStep}
             >
               {" "}
@@ -413,13 +538,17 @@ export default function LeadForm() {
             <div />
           )}{" "}
           {step < 3 ? (
-            <Button disabled={!isStepValid()} onClick={nextStep}>
+            <Button
+              disabled={!isStepValid()}
+              onClick={nextStep}
+              className="cursor-pointer"
+            >
               {" "}
               Next →{" "}
             </Button>
           ) : (
             <Button
-              className="w-full"
+              className="w-full cursor-pointer"
               disabled={loading}
               onClick={handleSubmit}
             >
