@@ -27,11 +27,15 @@ import { cn } from "@/lib/utils";
 import { StyledPhoneInput } from "@/components/ui/phone-input";
 
 const timelineOptions = [
-  "Within 7 Days",
-  "Within 2 Weeks",
-  "Within 1 Month",
-  "Within 2 Months",
-  "Flexible / Not Sure",
+  { id: "within-7-days", label: "Within 7 Days", value: "within-7-days" },
+  { id: "within-2-weeks", label: "Within 2 Weeks", value: "within-2-weeks" },
+  { id: "within-1-month", label: "Within 1 Month", value: "within-1-month" },
+  { id: "within-2-months", label: "Within 2 Months", value: "within-2-months" },
+  {
+    id: "flexible/not-sure",
+    label: "Flexible / Not Sure",
+    value: "flexible/not-sure",
+  },
 ];
 
 const defaultForm = {
@@ -44,7 +48,7 @@ const defaultForm = {
   city: "",
   state: "",
   serviceSelected: "Basic Website",
-  timeline: "Within 7 Days",
+  timeline: timelineOptions[0].value,
   purpose: "",
 };
 
@@ -167,7 +171,7 @@ export default function LeadForm() {
 
     // Detect location once
     getLocation();
-  }, []);
+  }, [getLocation]);
 
   // Save on change
   useEffect(() => {
@@ -197,7 +201,6 @@ export default function LeadForm() {
   const isPhoneValid = (phone: string | undefined) => {
     if (!phone) return false; // empty is invalid
     const digits = phone.replace(/\D/g, ""); // only numbers
-    console.log(digits, digits.length);
     return digits.length > 10 && digits.length === 12;
   };
 
@@ -220,42 +223,58 @@ export default function LeadForm() {
 
   const handleSubmit = async () => {
     setLoading(true);
-
-    const res = await fetch("http://localhost:4000/api/add-lead", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      localStorage.setItem("leadSubmitted", "yes");
-      localStorage.removeItem("leadForm");
-      setThankYou(true);
-      toast({
-        variant: "success",
-        title: "🎉 Submitted Successfully!",
-        description: "We'll contact you shortly.",
+    try {
+      const res = await fetch("https://api.ecodrix.com/api/add-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
 
-      window.location.href = `https://wa.me/918143963821?text=Hi,%20I%20submitted%20my%20details.%0AName:%20${form.name}%0AService:%20${form.serviceSelected}`;
-    } else {
-      toast({
-        variant: data.exists ? "warning" : "destructive",
-        title: data.exists ? "Already Submitted" : "Submission Failed",
-        description: data.message || "Please try again.",
-      });
-      if (data.exists) {
-        setTimeout(() => {
-          localStorage.setItem("leadSubmitted", "yes");
-          localStorage.removeItem("leadForm");
-          setThankYou(true);
-        }, 1000);
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem("leadSubmitted", "yes");
+        localStorage.removeItem("leadForm");
+        setThankYou(true);
+        toast({
+          variant: "success",
+          title: "🎉 Submitted Successfully!",
+          description: "We'll contact you shortly.",
+        });
+
+        // Open WhatsApp in a new tab to avoid breaking the SPA flow
+        window.open(
+          `https://wa.me/918143963821?text=Hi,%20I%20submitted%20my%20details.%0AName:%20${encodeURIComponent(
+            form.name
+          )}%0AService:%20${encodeURIComponent(form.serviceSelected)}`,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      } else {
+        toast({
+          variant: data.exists ? "warning" : "destructive",
+          title: data.exists ? "Already Submitted" : "Submission Failed",
+          description: data.message || "Please try again.",
+        });
+        if (data.exists) {
+          setTimeout(() => {
+            localStorage.setItem("leadSubmitted", "yes");
+            localStorage.removeItem("leadForm");
+            setThankYou(true);
+          }, 1000);
+        }
       }
+    } catch (err) {
+      console.error("Lead submission error:", err);
+      toast({
+        variant: "destructive",
+        title: "Submittion failed!",
+        description:
+          "Unable to submit. Please check your connection and try again.",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   // 🟢 THANK YOU SCREEN
@@ -333,6 +352,15 @@ export default function LeadForm() {
                   onChange={(e: string) => setForm({ ...form, phone: e })}
                 />
               </div>
+              <div className="space-y-2">
+                <Label>Email (optional)</Label>
+                <Input
+                  type="email"
+                  placeholder="example@gmail.com"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
             </motion.div>
           )}
 
@@ -360,7 +388,7 @@ export default function LeadForm() {
                   onValueChange={(v) => setForm({ ...form, categoryName: v })}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Auto-detecting..." />
+                    <SelectValue placeholder="Category..." />
                   </SelectTrigger>
                   <SelectContent>
                     {[
@@ -463,8 +491,8 @@ export default function LeadForm() {
                   </SelectTrigger>
                   <SelectContent>
                     {timelineOptions.map((tl) => (
-                      <SelectItem value={tl} key={tl}>
-                        {tl}
+                      <SelectItem value={tl.value} key={tl.id}>
+                        {tl.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -479,16 +507,6 @@ export default function LeadForm() {
                     setForm({ ...form, purpose: e.target.value })
                   }
                   className="min-h-32 resize-none"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Email (optional)</Label>
-                <Input
-                  type="email"
-                  placeholder="example@gmail.com"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
               </div>
             </motion.div>
@@ -517,7 +535,7 @@ export default function LeadForm() {
         </AnimatePresence>
       </CardContent>
 
-      <CardFooter className="flex flex-col gap-4">
+      <CardFooter className="flex flex-col gap-4 border-y border-border/70 py-2">
         <div
           className={cn(
             "flex w-full justify-between",
@@ -557,9 +575,8 @@ export default function LeadForm() {
             </Button>
           )}{" "}
         </div>
-
-        <hr className="w-full opacity-30" />
-
+      </CardFooter>
+      <div>
         <Link
           href="https://wa.me/918143963821?text=Hi!+I+submitted+my+details."
           target="_blank"
@@ -568,7 +585,7 @@ export default function LeadForm() {
           <BsWhatsapp className="text-lg" />
           Prefer WhatsApp? Continue here
         </Link>
-      </CardFooter>
+      </div>
     </Card>
   );
 }
