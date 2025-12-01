@@ -256,6 +256,9 @@ export default function LeadForm() {
           title: data.exists ? "Already Submitted" : "Submission Failed",
           description: data.message || "Please try again.",
         });
+        if (typeof window !== "undefined" && window.fbq) {
+          window.fbq("track", "Lead");
+        }
         if (data.exists) {
           setTimeout(() => {
             localStorage.setItem("leadSubmitted", "yes");
