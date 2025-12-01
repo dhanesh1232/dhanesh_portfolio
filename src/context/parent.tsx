@@ -30,6 +30,14 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] =
     React.useState<Record<string, boolean>>(defaultState);
 
+  React.useEffect(() => {
+    const handlePing = async () => {
+      await fetch("https://api.ecodrix.com").then().catch();
+    };
+    handlePing();
+    return () => {};
+  }, []);
+
   const handleToChangeState = (
     key: keyof typeof defaultState,
     value: boolean
