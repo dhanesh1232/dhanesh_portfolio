@@ -74,18 +74,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100`}
       >
         <PortfolioProvider>
-          <MetaPixel />
+          {/* <MetaPixel /> */}
           <Toaster />
           <MainLayout>{children}</MainLayout>
         </PortfolioProvider>
-        <noscript>
+        {/* <noscript>
           <img
             height="1"
             width="1"
             style={{ display: "none" }}
             src="https://www.facebook.com/tr?id=767522571903226&ev=PageView&noscript=1"
           />
-        </noscript>
+        </noscript> */}
       </body>
     </html>
   );
