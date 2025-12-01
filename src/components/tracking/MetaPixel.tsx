@@ -37,7 +37,7 @@ export default function MetaPixel() {
     window.fbq.queue = [];
 
     // Init pixel + track
-    window.fbq("init", "767522571903226");
+    window.fbq("init", "1134219955577693");
     window.fbq("track", "PageView");
   }, []);
 
