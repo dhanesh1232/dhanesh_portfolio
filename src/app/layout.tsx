@@ -40,6 +40,10 @@ export default function RootLayout({
           href="https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png"
           type="image/png"
         />
+        <meta
+          name="facebook-domain-verification"
+          content="jl1vkjxmuowl2xl4ame6u3fdbltm1j"
+        />
       </head>
 
       <body
