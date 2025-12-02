@@ -1,7 +1,7 @@
 "use client";
 
 import { BsWhatsapp } from "react-icons/bs";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -83,72 +83,12 @@ export default function LeadForm() {
   const [thankYou, setThankYou] = useState(false);
   const [country, setCountry] = useState("IN");
 
-  const getLocation = useCallback(() => {
-    const fillFromBigDataCloud = (
-      latitude: string | number,
-      longitude: string | number
-    ) => {
-      fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          const city =
-            data.city ||
-            data.locality ||
-            data.localityInfo?.locality?.[0]?.name ||
-            "";
-
-          if (!form.city && city) {
-            setForm((prev) => ({
-              ...prev,
-              city,
-              state: data.principalSubdivision || "",
-              street: data.locality || "",
-            }));
-            setCountry(data.countryCode || "");
-          }
-        })
-        .catch(() => {});
-    };
-
-    const fillFromIpApi = () => {
-      fetch("https://ipapi.co/json/")
-        .then((res) => res.json())
-        .then((data) => {
-          if (!form.city && data.city) {
-            setForm((prev) => ({
-              ...prev,
-              city: data.city,
-              state: data.region || "",
-            }));
-            setCountry(data.country_code || "");
-          }
-        })
-        .catch(() => {});
-    };
-
-    if (!("geolocation" in navigator)) {
-      fillFromIpApi();
-      return;
+  // Facebook pixels tracking
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("fbq in client:", (window as any).fbq);
     }
-
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        fillFromBigDataCloud(latitude, longitude);
-      },
-      () => {
-        // fallback to IP-based detection if geolocation fails
-        fillFromIpApi();
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      }
-    );
-  }, [form.city]);
+  }, []);
 
   // Restore saved progress
   useEffect(() => {
@@ -166,12 +106,11 @@ export default function LeadForm() {
         const parsed = JSON.parse(saved);
         // Defer setForm to the next tick to avoid cascading renders
         Promise.resolve().then(() => setForm(parsed));
+        return;
       } catch {}
     }
-
-    // Detect location once
-    getLocation();
-  }, [getLocation]);
+    setCountry("IN");
+  }, []);
 
   // Save on change
   useEffect(() => {
@@ -205,7 +144,14 @@ export default function LeadForm() {
   };
 
   const isStepValid = () => {
-    if (step === 0) return form.name.trim() && isPhoneValid(form.phone);
+    if (step === 0) {
+      const trimmed = form.name.trim();
+      if (!trimmed) return false;
+      const parts = trimmed.split(/\s+/);
+      return (
+        parts.length >= 2 && parts[1].length >= 1 && isPhoneValid(form.phone)
+      );
+    }
     if (step === 1)
       return (
         form.title.trim() &&
@@ -233,6 +179,15 @@ export default function LeadForm() {
       const data = await res.json();
 
       if (data.success) {
+        // 🔵 FB: Lead event on successful form submit
+        if (typeof window !== "undefined" && (window as any).fbq) {
+          (window as any).fbq("track", "Lead", {
+            name: form.name,
+            service: form.serviceSelected,
+            city: form.city,
+          });
+        }
+
         localStorage.setItem("leadSubmitted", "yes");
         localStorage.removeItem("leadForm");
         setThankYou(true);
@@ -251,14 +206,19 @@ export default function LeadForm() {
           "noopener,noreferrer"
         );
       } else {
+        if (
+          typeof window !== "undefined" &&
+          (window as any).fbq &&
+          data.exists
+        ) {
+          (window as any).fbq("trackCustom", "LeadAlreadySubmitted");
+        }
+
         toast({
           variant: data.exists ? "warning" : "destructive",
           title: data.exists ? "Already Submitted" : "Submission Failed",
           description: data.message || "Please try again.",
         });
-        if (typeof window !== "undefined" && window.fbq) {
-          window.fbq("track", "Lead");
-        }
         if (data.exists) {
           setTimeout(() => {
             localStorage.setItem("leadSubmitted", "yes");
@@ -306,62 +266,98 @@ export default function LeadForm() {
     );
 
   return (
-    <Card className="max-w-lg mx-auto shadow-xl border-border bg-card rounded-2xl">
-      <CardHeader className="text-center space-y-2 pb-2">
-        <h3 className="text-xl font-bold">Claim the ₹2,999 Offer 🚀</h3>
-
-        {/* Progress */}
-        <div className="flex items-center justify-center gap-2 w-full pt-4">
-          {stepLabels.map((_, idx) => (
-            <div
-              key={idx}
-              className={`h-2 w-20 rounded-full transition-all ${
-                idx <= step ? "bg-blue-600" : "bg-muted"
-              }`}
-            />
-          ))}
+    <Card className="max-w-xl mx-auto shadow-2xl border-border/60 bg-gradient-to-b from-slate-900/70 via-slate-900 to-slate-950 rounded-2xl">
+      <CardHeader className="space-y-3 pb-3 border-b border-border/60 bg-slate-900/60 rounded-t-2xl">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h3 className="text-lg sm:text-xl font-semibold">
+              Launch Your Website Offer 🚀
+            </h3>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+              Fill this 1–2 minute form to claim the ₹2,999 starter website.
+            </p>
+          </div>
+          <div className="hidden sm:flex flex-col items-end text-xs text-muted-foreground">
+            <span className="font-medium text-emerald-400">Limited-time</span>
+            <span>Fast delivery & WhatsApp support</span>
+          </div>
         </div>
 
-        <p className="text-xs text-muted-foreground">
-          Step {step + 1} of {stepLabels.length} — {stepLabels[step]}
-        </p>
+        {/* Progress */}
+        <div className="space-y-2 pt-1">
+          <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+            <span>
+              Step {step + 1} of {stepLabels.length}
+            </span>
+            <span className="font-medium text-sky-400">{stepLabels[step]}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            {stepLabels.map((_, idx) => (
+              <div
+                key={idx}
+                className={cn(
+                  "h-1.5 flex-1 rounded-full transition-all duration-300",
+                  idx < step
+                    ? "bg-sky-500"
+                    : idx === step
+                    ? "bg-sky-400"
+                    : "bg-slate-700"
+                )}
+              />
+            ))}
+          </div>
+        </div>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 pt-6">
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div
               key="step1"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -8 }}
               className="space-y-4"
             >
-              <div className="space-y-2">
-                <Label>Your Name *</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  Full Name <span className="text-red-500">*</span>
+                </Label>
                 <Input
-                  placeholder="Enter name"
+                  placeholder="e.g. John Doe"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label>WhatsApp Number *</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  WhatsApp Number <span className="text-red-500">*</span>
+                </Label>
                 <StyledPhoneInput
                   country={country}
-                  placeholder="9876543210"
+                  helperText="Include country code, e.g. +91 98765 43210"
                   value={form.phone}
                   onChange={(e: string) => setForm({ ...form, phone: e })}
+                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
                 />
+                <p className="text-[11px] text-muted-foreground">
+                  Used only to share your website demo and updates.
+                </p>
               </div>
-              <div className="space-y-2">
-                <Label>Email (optional)</Label>
+
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  Email{" "}
+                  <span className="text-muted-foreground">(optional)</span>
+                </Label>
                 <Input
                   type="email"
-                  placeholder="example@gmail.com"
+                  placeholder="you@example.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
                 />
               </div>
             </motion.div>
@@ -370,28 +366,33 @@ export default function LeadForm() {
           {step === 1 && (
             <motion.div
               key="step2"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -8 }}
               className="space-y-4"
             >
-              <div className="space-y-2">
-                <Label>Business Name *</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  Business / Brand Name <span className="text-red-500">*</span>
+                </Label>
                 <Input
-                  placeholder="Eg: Sai Real Estate"
+                  placeholder="e.g. Sai Real Estate"
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label>Suggested Category *</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  Category <span className="text-red-500">*</span>
+                </Label>
                 <Select
                   value={form.categoryName}
                   onValueChange={(v) => setForm({ ...form, categoryName: v })}
                 >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Category..." />
+                  <SelectTrigger className="w-full bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500">
+                    <SelectValue placeholder="Select business type" />
                   </SelectTrigger>
                   <SelectContent>
                     {[
@@ -410,31 +411,49 @@ export default function LeadForm() {
                     ))}
                   </SelectContent>
                 </Select>
+                <p className="text-[11px] text-muted-foreground">
+                  This helps tailor the design and sections for your niche.
+                </p>
               </div>
 
-              <div className="space-y-2">
-                <Label>Address *</Label>
-                <Input
-                  placeholder="Auto-detecting..."
-                  value={form.street}
-                  onChange={(e) => setForm({ ...form, street: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>City *</Label>
-                <Input
-                  placeholder="Auto-detecting..."
-                  value={form.city}
-                  onChange={(e) => setForm({ ...form, city: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>State *</Label>
-                <Input
-                  placeholder="Auto-detecting..."
-                  value={form.state}
-                  onChange={(e) => setForm({ ...form, state: e.target.value })}
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1.5 sm:col-span-2">
+                  <Label className="text-xs uppercase tracking-wide text-slate-300">
+                    Address <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    placeholder="Street / area"
+                    value={form.street}
+                    onChange={(e) =>
+                      setForm({ ...form, street: e.target.value })
+                    }
+                    className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs uppercase tracking-wide text-slate-300">
+                    City <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    placeholder="City"
+                    value={form.city}
+                    onChange={(e) => setForm({ ...form, city: e.target.value })}
+                    className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs uppercase tracking-wide text-slate-300">
+                    State <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    placeholder="State"
+                    value={form.state}
+                    onChange={(e) =>
+                      setForm({ ...form, state: e.target.value })
+                    }
+                    className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  />
+                </div>
               </div>
             </motion.div>
           )}
@@ -442,21 +461,23 @@ export default function LeadForm() {
           {step === 2 && (
             <motion.div
               key="step3"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -8 }}
               className="space-y-4"
             >
-              <div className="space-y-2">
-                <Label>Service Required *</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  Service Required <span className="text-red-500">*</span>
+                </Label>
                 <Select
                   value={form.serviceSelected}
                   onValueChange={(v) =>
                     setForm({ ...form, serviceSelected: v })
                   }
                 >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Choose service" />
+                  <SelectTrigger className="w-full bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500">
+                    <SelectValue placeholder="Choose a package" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Basic Website">
@@ -477,20 +498,22 @@ export default function LeadForm() {
               </div>
 
               {form.serviceSelected !== "Basic Website" && (
-                <p className="text-xs text-muted-foreground">
-                  <Info className="inline h-4 w-4 text-orange-500 mr-1" />
-                  Pricing varies based on scope.
+                <p className="text-[11px] text-amber-300/90 flex items-start gap-1.5">
+                  <Info className="h-3.5 w-3.5 mt-px" />
+                  Pricing may change based on pages, features and integrations.
                 </p>
               )}
 
-              <div className="space-y-2">
-                <Label>Timeline *</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  Timeline <span className="text-red-500">*</span>
+                </Label>
                 <Select
                   value={form.timeline}
                   onValueChange={(v) => setForm({ ...form, timeline: v })}
                 >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Choose timeline" />
+                  <SelectTrigger className="w-full bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500">
+                    <SelectValue placeholder="How soon do you need it?" />
                   </SelectTrigger>
                   <SelectContent>
                     {timelineOptions.map((tl) => (
@@ -501,16 +524,23 @@ export default function LeadForm() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label>Purpose</Label>
+
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wide text-slate-300">
+                  Purpose / Notes
+                </Label>
                 <Textarea
-                  placeholder="Lead generation, online store, portfolio..."
+                  placeholder="e.g. Lead generation, appointment booking, online store, portfolio..."
                   value={form.purpose}
                   onChange={(e) =>
                     setForm({ ...form, purpose: e.target.value })
                   }
-                  className="min-h-32 resize-none"
+                  className="min-h-28 resize-none bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
                 />
+                <p className="text-[11px] text-muted-foreground">
+                  Share anything specific you want: pages, features, references,
+                  etc.
+                </p>
               </div>
             </motion.div>
           )}
@@ -518,75 +548,101 @@ export default function LeadForm() {
           {step === 3 && (
             <motion.div
               key="step4"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-sm text-muted-foreground space-y-2"
+              exit={{ opacity: 0, y: -8 }}
+              className="text-sm text-muted-foreground space-y-3"
             >
-              <p className="font-semibold text-foreground">Review:</p>
-
-              {Object.entries(form).map(([k, v]) => (
-                <p key={k} className="capitalize">
-                  {k.replace(/([A-Z])/g, " $1")}:{" "}
-                  <span className="font-medium text-foreground">
-                    {v || "-"}
-                  </span>
-                </p>
-              ))}
+              <p className="font-semibold text-foreground">
+                Review your details
+              </p>
+              <div className="space-y-1.5 max-h-64 overflow-y-auto pr-1">
+                {Object.entries(form).map(([k, v]) => (
+                  <p key={k} className="flex justify-between gap-3 text-xs">
+                    <span className="capitalize text-slate-400">
+                      {k.replace(/([A-Z])/g, " $1")}
+                    </span>
+                    <span className="font-medium text-foreground capitalize text-right">
+                      {String(v).replace(/-/g, " ") || "-"}
+                    </span>
+                  </p>
+                ))}
+              </div>
+              <p className="text-[11px] text-emerald-400">
+                Everything looks good? Hit Submit and you’ll also get a WhatsApp
+                link.
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
       </CardContent>
 
-      <CardFooter className="flex flex-col gap-4 border-y border-border/70 py-2">
+      <CardFooter className="flex flex-col gap-3 border-t border-border/60 py-3">
         <div
           className={cn(
-            "flex w-full justify-between",
-            step < 3 ? "flex-row" : "flex-col gap-1"
+            "flex w-full items-center justify-between gap-2",
+            step < 3 ? "flex-row" : "flex-col sm:flex-row"
           )}
         >
-          {" "}
           {step > 0 ? (
             <Button
               variant="ghost"
-              className={cn(step === 4 ? "w-full" : "w-auto", "cursor-pointer")}
+              className="w-auto text-xs sm:text-sm"
               onClick={prevStep}
             >
-              {" "}
-              Back{" "}
+              ← Back
             </Button>
           ) : (
-            <div />
-          )}{" "}
-          {step < 3 ? (
+            <span />
+          )}
+
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <Button
-              disabled={!isStepValid()}
-              onClick={nextStep}
-              className="cursor-pointer"
+              type="button"
+              variant="outline"
+              className="flex-1 sm:flex-none text-xs sm:text-sm"
+              onClick={() => {
+                setForm(defaultForm);
+                setStep(0);
+              }}
             >
-              {" "}
-              Next →{" "}
+              Clear form
             </Button>
-          ) : (
-            <Button
-              className="w-full cursor-pointer"
-              disabled={loading}
-              onClick={handleSubmit}
-            >
-              {" "}
-              {loading ? "Submitting..." : "Submit"}{" "}
-            </Button>
-          )}{" "}
+
+            {step < 3 ? (
+              <Button
+                disabled={!isStepValid()}
+                onClick={nextStep}
+                className="flex-1 sm:flex-none text-xs sm:text-sm"
+              >
+                Next step →
+              </Button>
+            ) : (
+              <Button
+                className="flex-1 sm:flex-none text-xs sm:text-sm"
+                disabled={loading}
+                onClick={handleSubmit}
+              >
+                {loading ? "Submitting..." : "Submit & continue"}
+              </Button>
+            )}
+          </div>
         </div>
+
+        <p className="text-[11px] text-center text-muted-foreground">
+          No spam. Your details are used only to contact you about this website
+          project.
+        </p>
       </CardFooter>
-      <div>
+
+      <div className="pb-4 pt-1">
         <Link
-          href="https://wa.me/918143963821?text=Hi!+I+submitted+my+details."
+          href="https://wa.me/918143963821?text=Hi!+I+want+to+discuss+the+website+offer."
           target="_blank"
-          className="flex items-center justify-center gap-2 text-green-500 text-sm hover:underline"
+          className="flex items-center justify-center gap-2 text-emerald-400 text-xs sm:text-sm hover:underline"
         >
-          <BsWhatsapp className="text-lg" />
-          Prefer WhatsApp? Continue here
+          <BsWhatsapp className="text-base" />
+          Prefer WhatsApp? Tap to chat instead
         </Link>
       </div>
     </Card>

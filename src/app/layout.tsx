@@ -78,14 +78,6 @@ export default function RootLayout({
           <Toaster />
           <MainLayout>{children}</MainLayout>
         </PortfolioProvider>
-        {/* <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=767522571903226&ev=PageView&noscript=1"
-          />
-        </noscript> */}
       </body>
     </html>
   );
