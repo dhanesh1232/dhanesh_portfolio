@@ -163,7 +163,7 @@ export default function StarterOfferLanding() {
             className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
           >
             Grow Your Business With a{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-teal-500 to-blue-700 dark:from-blue-400 dark:via-teal-400 dark:to-blue-500">
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-600 via-teal-500 to-blue-700 dark:from-blue-400 dark:via-teal-400 dark:to-blue-500">
               High-Converting Website
             </span>{" "}
             in 72 Hours
@@ -187,7 +187,20 @@ export default function StarterOfferLanding() {
             className="flex flex-col sm:flex-row gap-4 justify-center mt-10"
           >
             <button
-              onClick={() => handleToChangeState?.("fillOut", true)}
+              onClick={() => {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as unknown as { fbq?: unknown }).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq("track", "Schedule");
+                }
+                handleToChangeState?.("fillOut", true);
+              }}
               className="group relative px-8 py-2 rounded-full cursor-pointer bg-linear-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all ease-in-out duration-300 overflow-hidden"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
@@ -199,6 +212,23 @@ export default function StarterOfferLanding() {
 
             <Link
               href="#form"
+              onClick={() => {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as unknown as { fbq?: unknown }).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq("track", "ViewLeadForm", {
+                    content_name: "Offer",
+                    content_type: "website",
+                    content_ids: ["offer"],
+                  });
+                }
+              }}
               className="group px-8 py-2 rounded-full border-2 border-border hover:border-blue-600 dark:hover:border-blue-400 text-lg font-semibold hover:bg-accent transition-all duration-300 flex items-center justify-center gap-2"
             >
               ⚡ Claim ₹2,999 Offer

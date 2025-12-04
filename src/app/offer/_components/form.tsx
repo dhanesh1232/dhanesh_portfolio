@@ -86,7 +86,10 @@ export default function LeadForm() {
   // Facebook pixels tracking
   useEffect(() => {
     if (typeof window !== "undefined") {
-      console.log("fbq in client:", (window as any).fbq);
+      console.log(
+        "fbq in client:",
+        (window as unknown as { fbq?: unknown }).fbq
+      );
     }
   }, []);
 
@@ -180,8 +183,16 @@ export default function LeadForm() {
 
       if (data.success) {
         // 🔵 FB: Lead event on successful form submit
-        if (typeof window !== "undefined" && (window as any).fbq) {
-          (window as any).fbq("track", "Lead", {
+        if (
+          typeof window !== "undefined" &&
+          (window as unknown as { fbq?: unknown }).fbq
+        ) {
+          (
+            window as Window &
+              typeof globalThis & {
+                fbq?: (event: string, ...args: unknown[]) => void;
+              }
+          ).fbq("track", "Lead", {
             name: form.name,
             service: form.serviceSelected,
             city: form.city,
@@ -208,10 +219,20 @@ export default function LeadForm() {
       } else {
         if (
           typeof window !== "undefined" &&
-          (window as any).fbq &&
+          (
+            window as Window &
+              typeof globalThis & {
+                fbq?: (event: string, ...args: unknown[]) => void;
+              }
+          ).fbq &&
           data.exists
         ) {
-          (window as any).fbq("trackCustom", "LeadAlreadySubmitted");
+          (
+            window as Window &
+              typeof globalThis & {
+                fbq?: (event: string, ...args: unknown[]) => void;
+              }
+          ).fbq("trackCustom", "LeadAlreadySubmitted");
         }
 
         toast({
@@ -266,7 +287,7 @@ export default function LeadForm() {
     );
 
   return (
-    <Card className="max-w-xl mx-auto shadow-2xl border-border/60 bg-gradient-to-b from-slate-900/70 via-slate-900 to-slate-950 rounded-2xl">
+    <Card className="max-w-xl mx-auto shadow-2xl border-border/60 bg-linear-to-b from-slate-900/70 via-slate-900 to-slate-950 rounded-2xl">
       <CardHeader className="space-y-3 pb-3 border-b border-border/60 bg-slate-900/60 rounded-t-2xl">
         <div className="flex items-center justify-between gap-3">
           <div>

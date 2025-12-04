@@ -30,12 +30,25 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] =
     React.useState<Record<string, boolean>>(defaultState);
 
+  // Facebook pixels tracking
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log(
+        "fbq in client:",
+        (window as unknown as { fbq?: unknown }).fbq
+      );
+    }
+  }, []);
+
   React.useEffect(() => {
     const handlePing = async () => {
-      await fetch("https://api.ecodrix.com").then().catch();
+      try {
+        await fetch("https://api.ecodrix.com");
+      } catch (error) {
+        // Silently ignore network errors to prevent runtime crashes
+      }
     };
     handlePing();
-    return () => {};
   }, []);
 
   const handleToChangeState = (

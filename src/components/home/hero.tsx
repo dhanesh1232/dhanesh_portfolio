@@ -156,6 +156,21 @@ export const Hero = () => {
             {/* Primary CTA – Neon Gradient */}
             <Link
               href="#projects"
+              onClick={() => {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as unknown as { fbq?: unknown }).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq?.("track", "ViewContent", {
+                    content_name: "Projects",
+                  });
+                }
+              }}
               className="
       relative group inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
@@ -198,7 +213,20 @@ export const Hero = () => {
             </Link>
             {/* Secondary CTA – Glass + Glow Border */}
             <button
-              onClick={() => handleToChangeState?.("fillOut", true)}
+              onClick={() => {
+                handleToChangeState?.("fillOut", true);
+                if (
+                  typeof window !== "undefined" &&
+                  (window as unknown as { fbq?: unknown }).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq("track", "Schedule");
+                }
+              }}
               role="button"
               className="
       group relative inline-flex items-center justify-center
@@ -227,24 +255,24 @@ export const Hero = () => {
 
               <Clock className="h-4 w-4 text-muted-foreground  group-hover:text-cyan-500" />
             </button>
-            {/* <button
-              onClick={() => handleToChangeState?.("offer", true)}
-              className="
-      group relative inline-flex items-center justify-center
-      px-7 md:px-10 py-2 md:py-3
-      font-medium rounded-xl
-      border-0 outline-0 ring-0 border-gray-600
-      backdrop-blur-md bg-blue-600/70
-      hover:text-white hover:border-blue-400
-      transition-all duration-300
-      hover:scale-[1.03]
-      overflow-hidden gap-2 text-white hover:bg-blue-500/70"
-            >
-              Offer
-              <ArrowRight className="w-4 h-4 text-white  group-hover:text-cyan-600 group-hover:translate-x-2 transform transition-all ease-in-out duration-300" />
-            </button> */}
+            {/* Offer CTA – Glass + Glow Border */}
             <Link
               href="/offer"
+              onClick={() => {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as unknown as { fbq?: unknown }).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq("track", "ViewContent", {
+                    content_name: "Offer",
+                  });
+                }
+              }}
               className="
       group relative inline-flex items-center justify-center
       px-7 md:px-10 py-2 md:py-3
