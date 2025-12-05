@@ -30,19 +30,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Head from "next/head";
+import { StarRating } from "./_components/star-rating";
+import PricingPlans from "./_components/packages";
+import { Card } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function StarterOfferLanding() {
-  const { handleToChangeState } = usePortfolio();
-  const [slotsLeft, setSlotsLeft] = useState(85);
+  const { handleToChangeState, slotsLeft } = usePortfolio();
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSlotsLeft((prev) => (prev > 82 ? prev - 1 : prev));
-    }, 7000);
-    return () => clearInterval(interval);
-  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,23 +63,23 @@ export default function StarterOfferLanding() {
     <>
       <Head>
         <title>
-          Professional Website at ₹2,999 | 72-Hour Delivery | WhatsApp-Enabled
+          Professional Website at ₹2,999 | 48-Hour Delivery | WhatsApp-Enabled
         </title>
         <meta
           name="description"
-          content="Get a high-converting, mobile-first website with WhatsApp automation in just 72 hours for ₹2,999. Secure, SEO-ready, and delivered by trusted experts. Limited slots!"
+          content="Get a high-converting, mobile-first website with WhatsApp automation in just 48 hours for ₹2,999. Secure, SEO-ready, and delivered by trusted experts. Limited slots!"
         />
         <meta
           name="keywords"
-          content="affordable website design, WhatsApp website integration, 72-hour website delivery, small business website India, mobile-first landing page, SEO-ready website, ₹2999 website offer"
+          content="affordable website design, WhatsApp website integration, 48-hour website delivery, small business website India, mobile-first landing page, SEO-ready website, ₹2999 website offer"
         />
         <meta
           property="og:title"
-          content="Professional Website at ₹2,999 | 72-Hour Delivery | WhatsApp-Enabled"
+          content="Professional Website at ₹2,999 | 48-Hour Delivery | WhatsApp-Enabled"
         />
         <meta
           property="og:description"
-          content="Launch your business online with a stunning, WhatsApp-integrated website in 72 hours. Only ₹2,999 — no advance, pay after confirmation."
+          content="Launch your business online with a stunning, WhatsApp-integrated website in 48 hours. Only ₹2,999 — no advance, pay after confirmation."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://portfolio.ecodrix.com/offer" />
@@ -94,7 +90,7 @@ export default function StarterOfferLanding() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="₹2,999 Website Offer | 72-Hour Delivery"
+          content="₹2,999 Website Offer | 48-Hour Delivery"
         />
         <meta
           name="twitter:description"
@@ -126,11 +122,11 @@ export default function StarterOfferLanding() {
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Users className="w-4 h-4 text-blue-500" />
-              <span>100+ Happy Clients</span>
+              <span>50+ Happy Clients</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Award className="w-4 h-4 text-yellow-500" />
-              <span>4.9/5 Rating</span>
+              <span>4.5/5 Rating</span>
             </div>
           </motion.div>
 
@@ -138,11 +134,9 @@ export default function StarterOfferLanding() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex justify-center gap-1 mb-4 text-yellow-500"
+            className="flex justify-center gap-1 mb-4"
           >
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 fill-yellow-500" />
-            ))}
+            <StarRating value={4.5} />
           </motion.div>
 
           {/* Label */}
@@ -166,7 +160,7 @@ export default function StarterOfferLanding() {
             <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-600 via-teal-500 to-blue-700 dark:from-blue-400 dark:via-teal-400 dark:to-blue-500">
               High-Converting Website
             </span>{" "}
-            in 72 Hours
+            in 48 Hours
           </motion.h1>
 
           <motion.p
@@ -276,10 +270,11 @@ export default function StarterOfferLanding() {
           }
         >
           {/* Ripple pulse animation */}
-          <span className="absolute inset-0 rounded-2xl bg-white/20 animate-[ripple_2s_ease-in-out_infinite]" />
-          <span className="absolute inset-0 rounded-2xl bg-white/20 animate-[ripple_2s_ease-in-out_infinite_1s]" />
+          <span className="absolute inset-0 rounded-2xl bg-blue-600 border-blue-400 animate-ping" />
+          <span className="absolute inset-0 rounded-2xl bg-blue-600 border-blue-400 animate-ping" />
 
           <div className="relative flex items-center gap-3">
+            <div className="absolute w-full h-full rounded-2xl border-2 border-blue-800 animate-ping opacity-75"></div>
             <Timer className="w-5 h-5 animate-pulse" />
             <div>
               <div className="font-bold">Limited Slots!</div>
@@ -316,7 +311,7 @@ export default function StarterOfferLanding() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {[
               {
@@ -350,7 +345,7 @@ export default function StarterOfferLanding() {
                 gradient: "from-indigo-500 to-blue-500",
               },
               {
-                title: "Fast 72-Hour Delivery",
+                title: "Fast 48-Hour Delivery",
                 subtitle: "From content to live website in 3 days",
                 icon: Timer,
                 gradient: "from-yellow-500 to-orange-500",
@@ -378,7 +373,7 @@ export default function StarterOfferLanding() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-2 text-center text-sm text-muted-foreground max-w-2xl mx-auto"
+            className="mt-10 text-center text-sm text-muted-foreground max-w-2xl mx-auto"
           >
             Need your own domain, business email,{" "}
             <span className="text-blue-500">CMS</span>, or advanced features?{" "}
@@ -396,15 +391,15 @@ export default function StarterOfferLanding() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={containerVariants}
-              className="text-center mb-4"
+              className="text-center mb-6"
             >
               <motion.h2
                 variants={itemVariants}
-                className="text-2xl md:text-4xl lg:text-5xl font-bold"
+                className="text-2xl md:text-4xl lg:text-5xl font-bold mb-1"
               >
                 Why{" "}
                 <span className="text-purple-500 font-stretch-50% font-extrabold">
-                  100+
+                  50+
                 </span>{" "}
                 Businesses Choose Us
               </motion.h2>
@@ -421,14 +416,14 @@ export default function StarterOfferLanding() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={containerVariants}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
             >
               {[
                 {
                   title: "Fastest Delivery in Market",
-                  desc: "Most agencies take 2–3 weeks. We build and launch in just 72 hours — without compromising quality.",
+                  desc: "Most agencies take 2–3 weeks. We build and launch in just 48 hours — without compromising quality.",
                   icon: Timer,
-                  stat: "72 Hours",
+                  stat: "48 Hours",
                 },
                 {
                   title: "Affordable + Premium Quality",
@@ -456,8 +451,8 @@ export default function StarterOfferLanding() {
                       {item.stat}
                     </span>
                   </div>
-                  <h3 className="font-bold text-xl mb-3">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <h3 className="font-bold text-xl">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
                     {item.desc}
                   </p>
                 </motion.div>
@@ -465,6 +460,7 @@ export default function StarterOfferLanding() {
             </motion.div>
           </div>
         </section>
+        <PricingPlans />
 
         {/* ================= PORTFOLIO ================= */}
         <section className="py-20 md:py-28">
@@ -495,7 +491,7 @@ export default function StarterOfferLanding() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={containerVariants}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
             >
               {[
                 {
@@ -538,15 +534,6 @@ export default function StarterOfferLanding() {
                 </motion.div>
               ))}
             </motion.div>
-
-            {/* <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center text-sm mt-10 text-muted-foreground"
-          >
-            📁 Full portfolio and case studies shared during consultation
-          </motion.p> */}
           </div>
         </section>
 
@@ -583,7 +570,7 @@ export default function StarterOfferLanding() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={containerVariants}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
             >
               {[
                 {
@@ -692,7 +679,7 @@ export default function StarterOfferLanding() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-center mt-4 text-sm text-muted-foreground"
+              className="text-center mt-8 text-sm text-muted-foreground"
             >
               💡 All upgrades are completely optional — choose only what you
               need
@@ -736,7 +723,7 @@ export default function StarterOfferLanding() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={containerVariants}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-3 gap-4"
             >
               {[
                 {
@@ -745,6 +732,7 @@ export default function StarterOfferLanding() {
                   review:
                     "Got my landing page in 48 hours. Now I get 3-4 WhatsApp leads daily. Best investment I made for my business!",
                   avatar: "RS",
+                  rating: 4.5,
                 },
                 {
                   name: "Prakash Reddy",
@@ -752,6 +740,7 @@ export default function StarterOfferLanding() {
                   review:
                     "Affordable and super professional. My website looks premium and clients trust me more now. Highly recommend!",
                   avatar: "PR",
+                  rating: 4,
                 },
                 {
                   name: "Ayesha Khan",
@@ -759,34 +748,37 @@ export default function StarterOfferLanding() {
                   review:
                     "Very smooth process. The WhatsApp automation is a game changer! Parents can contact us instantly.",
                   avatar: "AK",
+                  rating: 5,
                 },
               ].map((item, i) => (
                 <motion.div
                   key={i}
                   variants={itemVariants}
-                  className="bg-card border border-border rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:ring-1 ring-cyan-500 hover:-translate-y-0.5 duration-300"
+                  className="bg-card border border-border rounded-2xl shadow-lg hover:shadow-xl transition-all hover:ring-1 ring-cyan-500 duration-300"
                 >
-                  <div className="flex gap-1 text-yellow-500 mb-4">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="w-4 h-4 fill-yellow-500" />
-                    ))}
-                  </div>
-
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                    {`"${item.review}"`}
-                  </p>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-500 to-teal-500 flex items-center justify-center text-white font-bold">
-                      {item.avatar}
+                  <Card className="p-4">
+                    <div className="flex gap-1">
+                      <StarRating value={item.rating} />
                     </div>
-                    <div>
-                      <p className="font-semibold text-sm">{item.name}</p>
-                      <p className="text-xs text-muted-foreground/70">
-                        {item.role}
-                      </p>
+
+                    <p className="text-sm text-muted-foreground italic leading-relaxed mb-6 line-clamp-4">
+                      {`"${item.review}"`}
+                    </p>
+
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-10 h-10">
+                        <AvatarFallback className="font-bold">
+                          {item.avatar}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-semibold text-sm">{item.name}</p>
+                        <p className="text-xs text-muted-foreground/70">
+                          {item.role}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </Card>
                 </motion.div>
               ))}
             </motion.div>
@@ -853,13 +845,13 @@ export default function StarterOfferLanding() {
                   <motion.div
                     key={i}
                     variants={itemVariants}
-                    className="bg-card border border-border px-4 py-2.5 rounded-xl hover:shadow-md transition-shadow"
+                    className="bg-card border border-border px-3 py-2 rounded-lg hover:shadow-md transition-shadow"
                   >
                     <AccordionItem value={item.q}>
-                      <AccordionTrigger>
-                        <span className="flex items-center gap-1">
+                      <AccordionTrigger className="hover:cursor-pointer">
+                        <span className="flex items-center gap-2">
                           <CheckCircle2 className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-                          {item.q}
+                          <span className="text-base">{item.q}</span>
                         </span>
                       </AccordionTrigger>
                       <AccordionContent>
@@ -920,7 +912,7 @@ export default function StarterOfferLanding() {
                 <div className="w-14 h-14 rounded-full bg-yellow-500/10 flex items-center justify-center">
                   <Award className="w-7 h-7 text-yellow-500" />
                 </div>
-                <p className="font-semibold">100+ Happy Clients</p>
+                <p className="font-semibold">50+ Happy Clients</p>
                 <p className="text-sm text-muted-foreground">
                   Trusted by businesses across India
                 </p>

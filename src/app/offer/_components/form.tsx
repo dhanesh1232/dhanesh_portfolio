@@ -25,59 +25,20 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { StyledPhoneInput } from "@/components/ui/phone-input";
-
-const timelineOptions = [
-  { id: "within-7-days", label: "Within 7 Days", value: "within-7-days" },
-  { id: "within-2-weeks", label: "Within 2 Weeks", value: "within-2-weeks" },
-  { id: "within-1-month", label: "Within 1 Month", value: "within-1-month" },
-  { id: "within-2-months", label: "Within 2 Months", value: "within-2-months" },
-  {
-    id: "flexible/not-sure",
-    label: "Flexible / Not Sure",
-    value: "flexible/not-sure",
-  },
-];
-
-const defaultForm = {
-  name: "",
-  phone: "",
-  email: "",
-  title: "",
-  categoryName: "",
-  street: "",
-  city: "",
-  state: "",
-  serviceSelected: "Basic Website",
-  timeline: timelineOptions[0].value,
-  purpose: "",
-};
+import {
+  categories,
+  defaultForm,
+  plans,
+  servicesOptions,
+  timelineOptions,
+} from "@/lib/data";
+import { usePortfolio } from "@/context/parent";
 
 const stepLabels = ["Contact", "Business Details", "Requirements", "Review"];
 
-// Keyword logic for auto-category
-const categoryRules: Record<string, string> = {
-  gym: "Fitness",
-  fitness: "Fitness",
-  property: "Real Estate",
-  estate: "Real Estate",
-  realtor: "Real Estate",
-  academy: "Education",
-  school: "Education",
-  coaching: "Education",
-  food: "Restaurant / Food",
-  restaurant: "Restaurant / Food",
-  cafe: "Restaurant / Food",
-  shop: "E-Commerce",
-  store: "E-Commerce",
-  services: "Service Business",
-  agency: "Service Business",
-  personal: "Personal Brand",
-  blog: "Personal Brand",
-};
-
 export default function LeadForm() {
+  const { form, setForm } = usePortfolio();
   const toast = useToast();
-  const [form, setForm] = useState(defaultForm);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
   const [thankYou, setThankYou] = useState(false);
@@ -108,37 +69,17 @@ export default function LeadForm() {
       try {
         const parsed = JSON.parse(saved);
         // Defer setForm to the next tick to avoid cascading renders
-        Promise.resolve().then(() => setForm(parsed));
+        Promise.resolve().then(() => setForm?.(parsed));
         return;
       } catch {}
     }
     setCountry("IN");
-  }, []);
+  }, [setForm]);
 
   // Save on change
   useEffect(() => {
     localStorage.setItem("leadForm", JSON.stringify(form));
   }, [form]);
-
-  // Detect business category by name
-  useEffect(() => {
-    if (!form.title) return;
-
-    const name = form.title.toLowerCase();
-
-    for (const keyword in categoryRules) {
-      if (name.includes(keyword)) {
-        // Defer setForm to the next tick to avoid cascading renders
-        Promise.resolve().then(() =>
-          setForm((prev) => ({
-            ...prev,
-            categoryName: prev.categoryName || categoryRules[keyword],
-          }))
-        );
-        break;
-      }
-    }
-  }, [form.title]);
 
   const isPhoneValid = (phone: string | undefined) => {
     if (!phone) return false; // empty is invalid
@@ -148,22 +89,23 @@ export default function LeadForm() {
 
   const isStepValid = () => {
     if (step === 0) {
-      const trimmed = form.name.trim();
-      if (!trimmed) return false;
-      const parts = trimmed.split(/\s+/);
-      return (
-        parts.length >= 2 && parts[1].length >= 1 && isPhoneValid(form.phone)
+      const nameValid = form?.name?.trim().length >= 3;
+      const phoneValid = isPhoneValid(form?.phone);
+      const emailValid = /^\w+([._-]?\w+)*@\w+([.-]?\w+)*\.\w{2,}$/.test(
+        form?.email.trim()
       );
+
+      return nameValid && phoneValid && emailValid;
     }
     if (step === 1)
       return (
-        form.title.trim() &&
-        form.categoryName.trim() &&
-        form.city.trim() &&
-        form.state.trim() &&
-        form.street.trim()
+        form?.title.trim() &&
+        form?.categoryName.trim() &&
+        form?.city.trim() &&
+        form?.state.trim() &&
+        form?.street.trim()
       );
-    if (step === 2) return form.serviceSelected.trim();
+    if (step === 2) return form?.serviceSelected.trim();
     return true;
   };
 
@@ -330,7 +272,7 @@ export default function LeadForm() {
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-6 pt-6">
+      <CardContent className="space-y-4">
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div
@@ -370,8 +312,7 @@ export default function LeadForm() {
 
               <div className="space-y-1.5">
                 <Label className="text-xs uppercase tracking-wide text-slate-300">
-                  Email{" "}
-                  <span className="text-muted-foreground">(optional)</span>
+                  Email <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   type="email"
@@ -416,16 +357,7 @@ export default function LeadForm() {
                     <SelectValue placeholder="Select business type" />
                   </SelectTrigger>
                   <SelectContent>
-                    {[
-                      "Fitness",
-                      "Real Estate",
-                      "Education",
-                      "Restaurant / Food",
-                      "E-Commerce",
-                      "Service Provider",
-                      "Personal Brand",
-                      "Other",
-                    ].map((c) => (
+                    {categories.map((c) => (
                       <SelectItem key={c} value={c}>
                         {c}
                       </SelectItem>
@@ -494,36 +426,37 @@ export default function LeadForm() {
                 <Select
                   value={form.serviceSelected}
                   onValueChange={(v) =>
-                    setForm({ ...form, serviceSelected: v })
+                    setForm({
+                      ...form,
+                      serviceSelected: v,
+                      timeline:
+                        plans.find((sp) => sp.id === v)?.timeline ||
+                        "flexible/not-sure",
+                    })
                   }
                 >
                   <SelectTrigger className="w-full bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500">
                     <SelectValue placeholder="Choose a package" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Basic Website">
-                      Starter Website — ₹2,999
-                    </SelectItem>
-                    <SelectItem value="Website + Domain + CMS">
-                      Website + Domain + CMS
-                    </SelectItem>
-                    <SelectItem value="Website + SEO">Website + SEO</SelectItem>
-                    <SelectItem value="Website + SEO + Ads">
-                      Website + SEO + Ads
-                    </SelectItem>
-                    <SelectItem value="Website + CRM">Website + CRM</SelectItem>
-                    <SelectItem value="Full Package">Full Package</SelectItem>
-                    <SelectItem value="Not Sure Yet">Not Sure Yet</SelectItem>
+                    {servicesOptions.map((sp) => (
+                      <SelectItem key={sp.value} value={sp.value}>
+                        {sp.name} — {sp.price}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              {form.serviceSelected !== "Basic Website" && (
-                <p className="text-[11px] text-amber-300/90 flex items-start gap-1.5">
-                  <Info className="h-3.5 w-3.5 mt-px" />
-                  Pricing may change based on pages, features and integrations.
-                </p>
-              )}
+              {form.serviceSelected !== "pro-website" &&
+                form.serviceSelected !== "starter-website" &&
+                form.serviceSelected !== "growth-website" && (
+                  <p className="text-[11px] text-amber-300/90 flex items-start gap-1.5">
+                    <Info className="h-3.5 w-3.5 mt-px" />
+                    Pricing may change based on pages, features and
+                    integrations.
+                  </p>
+                )}
 
               <div className="space-y-1.5">
                 <Label className="text-xs uppercase tracking-wide text-slate-300">
@@ -608,7 +541,7 @@ export default function LeadForm() {
           {step > 0 ? (
             <Button
               variant="ghost"
-              className="w-auto text-xs sm:text-sm"
+              className="w-auto text-xs sm:text-sm cursor-pointer"
               onClick={prevStep}
             >
               ← Back
@@ -621,7 +554,7 @@ export default function LeadForm() {
             <Button
               type="button"
               variant="outline"
-              className="flex-1 sm:flex-none text-xs sm:text-sm"
+              className="flex-1 sm:flex-none text-xs sm:text-sm cursor-pointer"
               onClick={() => {
                 setForm(defaultForm);
                 setStep(0);
@@ -634,13 +567,13 @@ export default function LeadForm() {
               <Button
                 disabled={!isStepValid()}
                 onClick={nextStep}
-                className="flex-1 sm:flex-none text-xs sm:text-sm"
+                className="flex-1 sm:flex-none text-xs sm:text-sm cursor-pointer"
               >
                 Next step →
               </Button>
             ) : (
               <Button
-                className="flex-1 sm:flex-none text-xs sm:text-sm"
+                className="flex-1 sm:flex-none text-xs sm:text-sm cursor-pointer"
                 disabled={loading}
                 onClick={handleSubmit}
               >

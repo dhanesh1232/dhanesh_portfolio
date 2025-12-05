@@ -1,5 +1,6 @@
 "use client";
 import { ToastProvider } from "@/components/ui/use-toast";
+import { defaultForm } from "@/lib/data";
 import { ThemeProvider } from "next-themes";
 import * as React from "react";
 
@@ -12,6 +13,9 @@ interface PortfolioContextType {
   // New
   state?: Record<string, boolean>;
   handleToChangeState: (key: string, value: boolean) => void;
+  slotsLeft?: number;
+  form: Record<string, string>;
+  setForm: (value: Record<string, string>) => void;
 }
 
 const defaultState: Record<string, boolean> = {
@@ -27,8 +31,17 @@ const PortfolioContext = React.createContext<PortfolioContextType | undefined>(
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [showFill, setShowFill] = React.useState<boolean>(false);
   const [showOffer, setShowOffer] = React.useState<boolean>(false);
+  const [slotsLeft, setSlotsLeft] = React.useState<number>(85);
   const [state, setState] =
     React.useState<Record<string, boolean>>(defaultState);
+  const [form, setForm] = React.useState<Record<string, string>>(defaultForm);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setSlotsLeft((prev) => (prev > 82 ? prev - 1 : prev));
+    }, 7000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Facebook pixels tracking
   React.useEffect(() => {
@@ -77,6 +90,9 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             showOffer,
             state,
             handleToChangeState,
+            slotsLeft,
+            form,
+            setForm,
           }}
         >
           {children}
