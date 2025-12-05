@@ -82,7 +82,7 @@ export default function PricingPlans() {
                   className="h-full"
                 >
                   <Card
-                    className={`relative h-full gap-2 flex flex-col p-2 sm:p-4 transition-all duration-300 ${
+                    className={`relative h-full gap-2 flex flex-col p-4 sm:p-6 transition-all duration-300 ${
                       plan.highlight
                         ? "border-2 border-blue-600 shadow-xl shadow-blue-500/20 bg-linear-to-b from-blue-50 to-white dark:from-blue-950/50 dark:to-gray-950"
                         : "border border-border hover:border-blue-300 dark:hover:border-blue-800 hover:shadow-lg"
