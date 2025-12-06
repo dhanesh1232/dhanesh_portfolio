@@ -215,10 +215,7 @@ export default function LeadForm() {
           We’ll reach out soon on WhatsApp.
         </p>
         <Button className="mt-6 flex gap-2 mx-auto" asChild>
-          <Link
-            href={`https://wa.me/918143963821?text=Hi! I completed the form.`}
-            target="_blank"
-          >
+          <Link href={`https://wa.me/918143963821`} target="_blank">
             <BsWhatsapp /> Chat on WhatsApp
           </Link>
         </Button>

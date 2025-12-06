@@ -77,13 +77,16 @@ export const plans = [
     iconColor: "text-orange-400",
     description: "Perfect for growing businesses ready to scale",
     features: [
-      { text: "Up to 5 Pages", tooltip: "Expandable page structure" },
+      {
+        text: "Up to 5 Pages (Home, About, Services, Contact, etc.)",
+        tooltip: "Expandable page structure",
+      },
       {
         text: "CMS Access (Self Edit)",
         tooltip: "Update content anytime yourself",
       },
       {
-        text: "1 Year Hosting & SSL & Domain Free",
+        text: "Free .com/.in Domain + 1 Year Hosting & SSL",
         tooltip: "Use your own domain name",
       },
       {
@@ -142,6 +145,7 @@ export const plans = [
     savings: "Save 25%",
   },
 ];
+
 export const timelineOptions = [
   { id: "within-2-days", label: "Within 2 Days", value: "within-2-days" },
   { id: "within-7-days", label: "Within 7 Days", value: "within-7-days" },

@@ -187,7 +187,9 @@ export default function PricingPlans() {
                               <Check className="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
                           </div>
-                          <span className="text-sm flex-1">{feature.text}</span>
+                          <span className="text-sm flex-1 truncate">
+                            {feature.text}
+                          </span>
                           {feature.tooltip && (
                             <Tooltip>
                               <TooltipTrigger asChild>

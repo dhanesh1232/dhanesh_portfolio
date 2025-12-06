@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { usePortfolio } from "@/context/parent";
 import LeadForm from "./_components/form";
 import {
-  Star,
   Check,
   Shield,
   Award,
@@ -36,7 +34,7 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function StarterOfferLanding() {
-  const { handleToChangeState, slotsLeft } = usePortfolio();
+  const { handleToChangeState } = usePortfolio();
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
@@ -61,43 +59,7 @@ export default function StarterOfferLanding() {
 
   return (
     <>
-      <Head>
-        <title>
-          Professional Website at ₹2,999 | 48-Hour Delivery | WhatsApp-Enabled
-        </title>
-        <meta
-          name="description"
-          content="Get a high-converting, mobile-first website with WhatsApp automation in just 48 hours for ₹2,999. Secure, SEO-ready, and delivered by trusted experts. Limited slots!"
-        />
-        <meta
-          name="keywords"
-          content="affordable website design, WhatsApp website integration, 48-hour website delivery, small business website India, mobile-first landing page, SEO-ready website, ₹2999 website offer"
-        />
-        <meta
-          property="og:title"
-          content="Professional Website at ₹2,999 | 48-Hour Delivery | WhatsApp-Enabled"
-        />
-        <meta
-          property="og:description"
-          content="Launch your business online with a stunning, WhatsApp-integrated website in 48 hours. Only ₹2,999 — no advance, pay after confirmation."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://portfolio.ecodrix.com/offer" />
-        <meta
-          property="og:image"
-          content="https://portfolio.ecodrix.com/og-image.jpg"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="₹2,999 Website Offer | 48-Hour Delivery"
-        />
-        <meta
-          name="twitter:description"
-          content="Get a lead-generating website with WhatsApp automation in 3 days. Limited slots at ₹2,999 — price increases soon!"
-        />
-        <link rel="canonical" href="https://portfolio.ecodrix.com/offer" />
-      </Head>
+      <LeadHead />
       <div className="w-full bg-background text-foreground overflow-x-hidden">
         {/* ================= HERO SECTION ================= */}
         <motion.header
@@ -167,10 +129,10 @@ export default function StarterOfferLanding() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            className="mt-6 text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
           >
-            Professional website with WhatsApp automation, responsive UI, and
-            conversion-focused structure — without paying agency-level costs.
+            Get a professional, lead-focused website with WhatsApp chat and
+            mobile-first design — without paying agency prices.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -198,8 +160,9 @@ export default function StarterOfferLanding() {
               className="group relative px-8 py-2 rounded-full cursor-pointer bg-linear-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all ease-in-out duration-300 overflow-hidden"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
-                <Phone className="h-5 w-5" /> Book a Free Call
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <Zap className="h-5 w-5 group-hover:scale-[1.05] transition-transform" />{" "}
+                Claim ₹2,999 Offer
+                <Sparkles className="w-5 h-5 group-hover:scale-[1.05] group-hover:text-yellow-500 transition-transform" />
               </span>
               <div className="absolute inset-0 bg-linear-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
@@ -225,8 +188,10 @@ export default function StarterOfferLanding() {
               }}
               className="group px-8 py-2 rounded-full border-2 border-border hover:border-blue-600 dark:hover:border-blue-400 text-lg font-semibold hover:bg-accent transition-all duration-300 flex items-center justify-center gap-2"
             >
-              ⚡ Claim ₹2,999 Offer
-              <Sparkles className="w-5 h-5 group-hover:rotate-12 group-hover:text-yellow-400 transition-transform" />
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                <Phone className="h-5 w-5" /> Book a Free Call
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
             </Link>
           </motion.div>
 
@@ -245,42 +210,15 @@ export default function StarterOfferLanding() {
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="sticky top-0 z-50 py-3 text-center font-semibold bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 dark:from-yellow-600 dark:via-yellow-500 dark:to-yellow-600 text-black text-sm md:text-base shadow-lg"
+          className="sticky top-0 z-50 py-3 text-center font-semibold bg-linear-to-r from-yellow-400 via-yellow-300 to-yellow-400 dark:from-yellow-600 dark:via-yellow-500 dark:to-yellow-600 text-black text-sm md:text-base shadow-lg"
         >
           <motion.span
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
-            ✨ Only {slotsLeft}/100 slots left at ₹2,999 — Price increases to
-            ₹4,999 soon!
+            ✨ We offer for first 100 projects at ₹2,999. Price will increase to
+            ₹4,999.
           </motion.span>
-        </motion.div>
-
-        {/* Floating CTA */}
-        <motion.div
-          className="fixed bottom-6 right-6 bg-linear-to-r from-blue-600 hover:ring-2 transform transition ease-in-out duration-300 ring-blue-500 to-blue-700 text-white py-2.5 px-6 rounded-2xl shadow-2xl cursor-pointer text-sm md:text-base z-50 max-w-xs overflow-hidden"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 2 }}
-          whileHover={{ scale: 1.05 }}
-          onClick={() =>
-            document
-              .getElementById("form")
-              ?.scrollIntoView({ behavior: "smooth" })
-          }
-        >
-          {/* Ripple pulse animation */}
-          <span className="absolute inset-0 rounded-2xl bg-blue-600 border-blue-400 animate-ping" />
-          <span className="absolute inset-0 rounded-2xl bg-blue-600 border-blue-400 animate-ping" />
-
-          <div className="relative flex items-center gap-3">
-            <div className="absolute w-full h-full rounded-2xl border-2 border-blue-800 animate-ping opacity-75"></div>
-            <Timer className="w-5 h-5 animate-pulse" />
-            <div>
-              <div className="font-bold">Limited Slots!</div>
-              <div className="text-xs opacity-90">{slotsLeft} spots left</div>
-            </div>
-          </div>
         </motion.div>
 
         {/* ================= VALUE STACK ================= */}
@@ -302,7 +240,8 @@ export default function StarterOfferLanding() {
               variants={itemVariants}
               className="text-base text-muted-foreground max-w-2xl mx-auto"
             >
-              Launch your business with a complete web presence in just 3 days
+              Launch your business with a complete web presence in just 48 - 72
+              Hours
             </motion.p>
           </motion.div>
 
@@ -314,12 +253,6 @@ export default function StarterOfferLanding() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {[
-              {
-                title: "Mobile-First Landing Page",
-                subtitle: "Looks stunning on phone, tablet and desktop",
-                icon: Smartphone,
-                gradient: "from-blue-500 to-cyan-500",
-              },
               {
                 title: "WhatsApp Click-to-Chat",
                 subtitle: "Visitors contact you directly in 1 tap",
@@ -333,10 +266,10 @@ export default function StarterOfferLanding() {
                 gradient: "from-purple-500 to-pink-500",
               },
               {
-                title: "Free Hosting Included",
-                subtitle: "Live on our subdomain — no extra cost",
-                icon: Globe,
-                gradient: "from-orange-500 to-red-500",
+                title: "Mobile-First Landing Page",
+                subtitle: "Looks stunning on phone, tablet and desktop",
+                icon: Smartphone,
+                gradient: "from-blue-500 to-cyan-500",
               },
               {
                 title: "SEO-Ready Structure",
@@ -345,8 +278,14 @@ export default function StarterOfferLanding() {
                 gradient: "from-indigo-500 to-blue-500",
               },
               {
+                title: "Free Hosting Included",
+                subtitle: "Live on our subdomain — no extra cost",
+                icon: Globe,
+                gradient: "from-orange-500 to-red-500",
+              },
+              {
                 title: "Fast 48-Hour Delivery",
-                subtitle: "From content to live website in 3 days",
+                subtitle: "From content to live website in 48 - 72 Hours",
                 icon: Timer,
                 gradient: "from-yellow-500 to-orange-500",
               },
@@ -384,7 +323,7 @@ export default function StarterOfferLanding() {
         </section>
 
         {/* ================= WHY CHOOSE US ================= */}
-        <section className="py-20 md:py-28 bg-muted/40">
+        <section className="py-20 md:py-28">
           <div className="max-w-6xl mx-auto px-6">
             <motion.div
               initial="hidden"
@@ -538,7 +477,7 @@ export default function StarterOfferLanding() {
         </section>
 
         {/* ================= OPTIONAL UPGRADES ================= */}
-        <section className="py-20 md:py-28 bg-muted/40">
+        <section className="py-20 md:py-28">
           <div className="max-w-6xl mx-auto px-6">
             <motion.div
               initial="hidden"
@@ -688,7 +627,7 @@ export default function StarterOfferLanding() {
         </section>
 
         {/* ================= TESTIMONIALS ================= */}
-        <section className="py-20 md:py-28 bg-muted/40">
+        <section className="py-20 md:py-28">
           <div className="max-w-6xl mx-auto px-6">
             <motion.div
               initial="hidden"
@@ -932,5 +871,47 @@ export default function StarterOfferLanding() {
         </footer>
       </div>
     </>
+  );
+}
+
+function LeadHead() {
+  return (
+    <Head>
+      <title>
+        Professional Website at ₹2,999 | 48-Hour Delivery | WhatsApp-Enabled
+      </title>
+      <meta
+        name="description"
+        content="Get a high-converting, mobile-first website with WhatsApp automation in just 48 hours for ₹2,999. Secure, SEO-ready, and delivered by trusted experts. Limited slots!"
+      />
+      <meta
+        name="keywords"
+        content="affordable website design, WhatsApp website integration, 48-hour website delivery, small business website India, mobile-first landing page, SEO-ready website, ₹2999 website offer"
+      />
+      <meta
+        property="og:title"
+        content="Professional Website at ₹2,999 | 48-Hour Delivery | WhatsApp-Enabled"
+      />
+      <meta
+        property="og:description"
+        content="Launch your business online with a stunning, WhatsApp-integrated website in 48 hours. Only ₹2,999 — no advance, pay after confirmation."
+      />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://portfolio.ecodrix.com/offer" />
+      <meta
+        property="og:image"
+        content="https://portfolio.ecodrix.com/og-image.jpg"
+      />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:title"
+        content="₹2,999 Website Offer | 48-Hour Delivery"
+      />
+      <meta
+        name="twitter:description"
+        content="Get a lead-generating website with WhatsApp automation in 48 - 72 Hours. Limited slots at ₹2,999 — price increases soon!"
+      />
+      <link rel="canonical" href="https://portfolio.ecodrix.com/offer" />
+    </Head>
   );
 }
