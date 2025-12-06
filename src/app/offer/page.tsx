@@ -62,7 +62,7 @@ export default function StarterOfferLanding() {
       <LeadHead />
       <div className="w-full bg-background text-foreground overflow-x-hidden">
         {/* ================= HERO SECTION ================= */}
-        <motion.header
+        <motion.section
           style={{ opacity }}
           className="relative max-w-6xl mx-auto px-6 pt-24 md:pt-32 pb-20 text-center"
         >
@@ -142,33 +142,7 @@ export default function StarterOfferLanding() {
             transition={{ delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mt-10"
           >
-            <button
-              onClick={() => {
-                if (
-                  typeof window !== "undefined" &&
-                  (window as unknown as { fbq?: unknown }).fbq
-                ) {
-                  (
-                    window as Window &
-                      typeof globalThis & {
-                        fbq?: (event: string, ...args: unknown[]) => void;
-                      }
-                  ).fbq("track", "Schedule");
-                }
-                handleToChangeState?.("fillOut", true);
-              }}
-              className="group relative px-8 py-2 rounded-full cursor-pointer bg-linear-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all ease-in-out duration-300 overflow-hidden"
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                <Zap className="h-5 w-5 group-hover:scale-[1.05] transition-transform" />{" "}
-                Claim ₹2,999 Offer
-                <Sparkles className="w-5 h-5 group-hover:scale-[1.05] group-hover:text-yellow-500 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-linear-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
-
             <Link
-              href="#form"
               onClick={() => {
                 if (
                   typeof window !== "undefined" &&
@@ -186,13 +160,39 @@ export default function StarterOfferLanding() {
                   });
                 }
               }}
+              href="#form"
+              className="group relative px-8 py-2 rounded-full cursor-pointer bg-linear-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all ease-in-out duration-300 overflow-hidden"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                <Zap className="h-5 w-5 group-hover:scale-[1.05] transition-transform" />{" "}
+                Claim ₹2,999 Offer
+                <Sparkles className="w-5 h-5 group-hover:scale-[1.05] group-hover:text-yellow-500 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-linear-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+
+            <button
+              onClick={() => {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as unknown as { fbq?: unknown }).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq("track", "Schedule");
+                }
+                handleToChangeState?.("fillOut", true);
+              }}
               className="group px-8 py-2 rounded-full border-2 border-border hover:border-blue-600 dark:hover:border-blue-400 text-lg font-semibold hover:bg-accent transition-all duration-300 flex items-center justify-center gap-2"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 <Phone className="h-5 w-5" /> Book a Free Call
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
-            </Link>
+            </button>
           </motion.div>
 
           <motion.p
@@ -204,7 +204,7 @@ export default function StarterOfferLanding() {
             <CheckCircle2 className="w-4 h-4 text-green-500" />
             No advance required — pay only after confirmation
           </motion.p>
-        </motion.header>
+        </motion.section>
 
         {/* ================= URGENT BANNER ================= */}
         <motion.div
