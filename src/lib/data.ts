@@ -211,3 +211,33 @@ export const defaultForm = {
   timeline: timelineOptions[0].value,
   purpose: "",
 };
+
+export const highlights = [
+  {
+    title: "3+",
+    subtitle: "Years of Craft",
+    description:
+      "Building clean, scalable applications, AI automations, and high-converting systems.",
+    icon: "🛠️",
+    gradient: "from-purple-500 to-pink-500",
+    color: "purple",
+  },
+  {
+    title: "50+",
+    subtitle: "Real Projects",
+    description:
+      "Web apps, automations, dashboards, landing pages, and open-source tools.",
+    icon: "💼",
+    gradient: "from-blue-500 to-cyan-500",
+    color: "blue",
+  },
+  {
+    title: "15+",
+    subtitle: "Core Skills",
+    description:
+      "From full-stack engineering to SEO, ads, workflows, and AI integrations.",
+    icon: "⚡",
+    gradient: "from-green-500 to-emerald-500",
+    color: "green",
+  },
+] as const;

@@ -3,36 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import { fadeUp, stagger } from "@/utils/motion";
 import { Shimmer } from "../shimmer";
-
-const highlights = [
-  {
-    title: "3+",
-    subtitle: "Years of Craft",
-    description:
-      "Building clean, scalable applications, AI automations, and high-converting systems.",
-    icon: "🛠️",
-    gradient: "from-purple-500 to-pink-500",
-    color: "purple",
-  },
-  {
-    title: "20+",
-    subtitle: "Real Projects",
-    description:
-      "Web apps, automations, dashboards, landing pages, and open-source tools.",
-    icon: "💼",
-    gradient: "from-blue-500 to-cyan-500",
-    color: "blue",
-  },
-  {
-    title: "15+",
-    subtitle: "Core Skills",
-    description:
-      "From full-stack engineering to SEO, ads, workflows, and AI integrations.",
-    icon: "⚡",
-    gradient: "from-green-500 to-emerald-500",
-    color: "green",
-  },
-];
+import { highlights } from "@/lib/data";
 
 export function About() {
   return (
@@ -106,20 +77,19 @@ export function About() {
                 <motion.div
                   key={subtitle}
                   variants={fadeUp as Variants}
-                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="group relative p-0.5"
                 >
                   <Shimmer color={color} />
                   <div className="absolute z-10 inset-0 bg-linear-to-r from-slate-700 to-slate-800 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -m-0.5 blur-sm"></div>
 
-                  <div className="relative z-10 bg-slate-800 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 h-full overflow-hidden">
+                  <div className="relative z-10 bg-slate-800 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 h-full overflow-hidden">
                     <div
                       className={`absolute inset-0 bg-linear-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
                     />
 
                     {/* Icon Row */}
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center justify-between mb-4">
                       <div className="text-4xl">{icon}</div>
                       <div className="text-2xl text-slate-400 group-hover:text-cyan-400 transition-colors">
                         #{String(index + 1).padStart(2, "0")}
@@ -128,7 +98,7 @@ export function About() {
 
                     {/* Info */}
                     <motion.div
-                      className={`text-6xl font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent mb-4`}
+                      className={`text-4xl font-bold bg-linear-to-r ${gradient} bg-clip-text text-transparent mb-2`}
                       whileHover={{ scale: 1.1 }}
                     >
                       {title}
@@ -138,7 +108,7 @@ export function About() {
                       {subtitle}
                     </h3>
 
-                    <p className="text-slate-400 text-lg leading-relaxed">
+                    <p className="text-slate-400 text-base leading-relaxed">
                       {description}
                     </p>
                   </div>
