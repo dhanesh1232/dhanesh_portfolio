@@ -13,13 +13,8 @@ import {
   Smartphone,
   LayoutDashboard,
   TrendingUp,
-  Users,
-  Sparkles,
-  ArrowRight,
   CheckCircle2,
-  Phone,
 } from "lucide-react";
-import Link from "next/link";
 import { BsHeartFill } from "react-icons/bs";
 import {
   Accordion,
@@ -30,14 +25,11 @@ import {
 import Head from "next/head";
 import { StarRating } from "./_components/star-rating";
 import PricingPlans from "./_components/packages";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { HeroSection } from "./_components/sections";
 
 export default function StarterOfferLanding() {
-  const { handleToChangeState } = usePortfolio();
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -60,152 +52,9 @@ export default function StarterOfferLanding() {
   return (
     <>
       <LeadHead />
-      <div className="w-full bg-background text-foreground overflow-x-hidden">
+      <div className="w-full bg-linear-to-br from-slate-900 via-slate-900 to-slate-950 text-slate-100 overflow-x-hidden">
         {/* ================= HERO SECTION ================= */}
-        <motion.section
-          style={{ opacity }}
-          className="relative max-w-6xl mx-auto px-6 pt-24 md:pt-32 pb-20 text-center"
-        >
-          {/* Animated Background Gradient */}
-          <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute top-20 right-1/4 w-96 h-96 bg-teal-500/10 dark:bg-teal-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
-          </div>
-
-          {/* Trust Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap justify-center items-center gap-3 md:gap-6 mb-8"
-          >
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Shield className="w-4 h-4 text-green-500" />
-              <span>Secure & Trusted</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Users className="w-4 h-4 text-blue-500" />
-              <span>50+ Happy Clients</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Award className="w-4 h-4 text-yellow-500" />
-              <span>4.5/5 Rating</span>
-            </div>
-          </motion.div>
-
-          {/* Trust Stars */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex justify-center gap-1 mb-4"
-          >
-            <StarRating value={4.5} />
-          </motion.div>
-
-          {/* Label */}
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-block text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase text-xs mb-6"
-          >
-            ⚡ Limited Time Starter Offer
-          </motion.span>
-
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
-          >
-            Grow Your Business With a{" "}
-            <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-600 via-teal-500 to-blue-700 dark:from-blue-400 dark:via-teal-400 dark:to-blue-500">
-              High-Converting Website
-            </span>{" "}
-            in 48 Hours
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="mt-6 text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-          >
-            Get a professional, lead-focused website with WhatsApp chat and
-            mobile-first design — without paying agency prices.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-10"
-          >
-            <Link
-              onClick={() => {
-                if (
-                  typeof window !== "undefined" &&
-                  (window as unknown as { fbq?: unknown }).fbq
-                ) {
-                  (
-                    window as Window &
-                      typeof globalThis & {
-                        fbq?: (event: string, ...args: unknown[]) => void;
-                      }
-                  ).fbq("track", "ViewLeadForm", {
-                    content_name: "Offer",
-                    content_type: "website",
-                    content_ids: ["offer"],
-                  });
-                }
-              }}
-              href="#form"
-              className="group relative px-8 py-2 rounded-full cursor-pointer bg-linear-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all ease-in-out duration-300 overflow-hidden"
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                <Zap className="h-5 w-5 group-hover:scale-[1.05] transition-transform" />{" "}
-                Claim ₹2,999 Offer
-                <Sparkles className="w-5 h-5 group-hover:scale-[1.05] group-hover:text-yellow-500 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-linear-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
-
-            <button
-              onClick={() => {
-                if (
-                  typeof window !== "undefined" &&
-                  (window as unknown as { fbq?: unknown }).fbq
-                ) {
-                  (
-                    window as Window &
-                      typeof globalThis & {
-                        fbq?: (event: string, ...args: unknown[]) => void;
-                      }
-                  ).fbq("track", "Schedule");
-                }
-                handleToChangeState?.("fillOut", true);
-              }}
-              className="group px-8 py-2 rounded-full border-2 border-border hover:border-blue-600 dark:hover:border-blue-400 text-lg font-semibold hover:bg-accent transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                <Phone className="h-5 w-5" /> Book a Free Call
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </button>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9 }}
-            className="mt-4 text-sm text-muted-foreground flex items-center justify-center gap-2"
-          >
-            <CheckCircle2 className="w-4 h-4 text-green-500" />
-            No advance required — pay only after confirmation
-          </motion.p>
-        </motion.section>
-
+        <HeroSection />
         {/* ================= URGENT BANNER ================= */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
@@ -238,7 +87,7 @@ export default function StarterOfferLanding() {
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-base text-muted-foreground max-w-2xl mx-auto"
+              className="text-base text-gray-300 max-w-2xl mx-auto"
             >
               Launch your business with a complete web presence in just 48 - 72
               Hours
@@ -293,7 +142,7 @@ export default function StarterOfferLanding() {
               <motion.div
                 key={i}
                 variants={itemVariants}
-                className="group bg-card border transform ease-in-out border-border rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300"
+                className="group bg-slate-800 transform ease-in-out rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300"
               >
                 <div
                   className={`w-12 h-12 group-hover:rounded-full rounded-2xl bg-linear-to-br ${item.gradient} flex items-center justify-center mb-4 group-hover:scale-105 transition-transform transform ease-in-out duration-2000`}
@@ -301,7 +150,7 @@ export default function StarterOfferLanding() {
                   <item.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-lg mb-0.5">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-gray-300 leading-relaxed">
                   {item.subtitle}
                 </p>
               </motion.div>
@@ -312,11 +161,12 @@ export default function StarterOfferLanding() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-10 text-center text-sm text-muted-foreground max-w-2xl mx-auto"
+            className="mt-10 text-center text-sm text-gray-300 max-w-2xl mx-auto"
           >
             Need your own domain, business email,{" "}
-            <span className="text-blue-500">CMS</span>, or advanced features?{" "}
-            <span className="font-semibold text-foreground">
+            <span className="text-blue-500 font-bold">CMS</span>, or advanced
+            features?{" "}
+            <span className="font-semibold text-white">
               Available as optional add-ons after setup.
             </span>
           </motion.p>
@@ -344,7 +194,7 @@ export default function StarterOfferLanding() {
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-base lg:text-lg text-muted-foreground"
+                className="text-base lg:text-lg text-gray-300"
               >
                 Fast, affordable, and results-driven
               </motion.p>
@@ -380,18 +230,18 @@ export default function StarterOfferLanding() {
                 <motion.div
                   key={i}
                   variants={itemVariants}
-                  className="bg-card border border-border rounded-2xl group p-4 shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:border-blue-600 transform hover:-translate-y-0.5"
+                  className="bg-slate-800 rounded-2xl group p-4 py-5 shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:border-blue-600 hover:ring-2 ring-blue-600 transform hover:-translate-y-0.5"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-14 h-14 rounded-2xl group-hover:rounded-full bg-blue-600/10 dark:bg-blue-400/10 flex items-center justify-center transform transition ease-in-out duration-5000">
+                    <div className="w-14 h-14 rounded-2xl group-hover:rounded-full bg-blue-600/10 dark:bg-blue-400/10 flex items-center justify-center transform transition ease-in-out duration-10000">
                       <item.icon className="w-7 h-7 text-blue-600 dark:text-blue-400" />
                     </div>
                     <span className="text-2xl font-bold text-blue-600 dark:text-blue-400 truncate">
                       {item.stat}
                     </span>
                   </div>
-                  <h3 className="font-bold text-xl">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                  <h3 className="font-bold text-xl truncate">{item.title}</h3>
+                  <p className="text-sm text-gray-300 leading-relaxed line-clamp-2">
                     {item.desc}
                   </p>
                 </motion.div>
@@ -419,7 +269,7 @@ export default function StarterOfferLanding() {
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-bas lg:text-lg text-muted-foreground"
+                className="text-bas lg:text-lg text-gray-300"
               >
                 Real websites launched for real businesses
               </motion.p>
@@ -452,7 +302,7 @@ export default function StarterOfferLanding() {
                 <motion.div
                   key={i}
                   variants={itemVariants}
-                  className="group bg-card border border-border rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+                  className="group bg-slate-900 border border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
                 >
                   <div className="relative overflow-hidden h-56">
                     <img
@@ -497,7 +347,7 @@ export default function StarterOfferLanding() {
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto"
+                className="text-base lg:text-lg text-gray-300 max-w-2xl mx-auto"
               >
                 Start with ₹2,999 — and scale as you grow. No forced bundles or
                 hidden charges.
@@ -582,10 +432,10 @@ export default function StarterOfferLanding() {
                 <motion.div
                   key={i}
                   variants={itemVariants}
-                  className="bg-card border group hover:-translate-y-0.5 hover:ring-cyan-500 hover:ring-1 border-border rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300"
+                  className="bg-slate-800 border group hover:-translate-y-0.5 hover:ring-cyan-500 hover:ring-1 border-gray-700 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300"
                 >
                   <div className="flex items-start justify-between mb-2">
-                    <div className="w-12 h-12 rounded-xl group-hover:rounded-full bg-linear-to-br from-blue-500 to-teal-500 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl group-hover:rounded-full transform transition-transform ease-in duration-100000 bg-linear-to-br from-blue-500 to-teal-500 flex items-center justify-center">
                       <item.icon className="w-6 h-6 text-white" />
                     </div>
                   </div>
@@ -593,14 +443,12 @@ export default function StarterOfferLanding() {
                   <p className="text-blue-600 dark:text-blue-400 font-bold text-sm mb-3">
                     {item.price}
                   </p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {item.desc}
-                  </p>
+                  <p className="text-sm text-gray-300 mb-4">{item.desc}</p>
                   <ul className="space-y-1">
                     {item.features.map((f, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-2 text-xs text-muted-foreground"
+                        className="flex items-start gap-2 text-xs text-gray-300"
                       >
                         <Check
                           strokeWidth="3px"
@@ -618,7 +466,7 @@ export default function StarterOfferLanding() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-center mt-8 text-sm text-muted-foreground"
+              className="text-center mt-8 text-sm text-gray-300"
             >
               💡 All upgrades are completely optional — choose only what you
               need
@@ -651,7 +499,7 @@ export default function StarterOfferLanding() {
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-base lg:text-lg text-muted-foreground"
+                className="text-base lg:text-lg text-gray-300"
               >
                 Real feedback from real businesses
               </motion.p>
@@ -693,30 +541,30 @@ export default function StarterOfferLanding() {
                 <motion.div
                   key={i}
                   variants={itemVariants}
-                  className="bg-card border border-border rounded-2xl shadow-lg hover:shadow-xl transition-all hover:ring-1 ring-cyan-500 duration-300"
+                  className="bg-slate-800 border border-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:ring-1 ring-cyan-500 duration-300"
                 >
-                  <Card className="p-4">
+                  <Card className="p-4 bg-inherit border-0 shadow-none gap-2 pt-6">
                     <div className="flex gap-1">
                       <StarRating value={item.rating} />
                     </div>
 
-                    <p className="text-sm text-muted-foreground italic leading-relaxed mb-6 line-clamp-4">
+                    <p className="text-sm text-gray-300 italic leading-relaxed mb-6 line-clamp-4">
                       {`"${item.review}"`}
                     </p>
 
-                    <div className="flex items-center gap-3">
+                    <CardFooter className="flex items-center gap-3 px-0">
                       <Avatar className="w-10 h-10">
                         <AvatarFallback className="font-bold">
                           {item.avatar}
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-semibold text-sm">{item.name}</p>
-                        <p className="text-xs text-muted-foreground/70">
-                          {item.role}
+                        <p className="font-semibold text-sm text-white">
+                          {item.name}
                         </p>
+                        <p className="text-xs text-gray-300/70">{item.role}</p>
                       </div>
-                    </div>
+                    </CardFooter>
                   </Card>
                 </motion.div>
               ))}
@@ -736,13 +584,13 @@ export default function StarterOfferLanding() {
             >
               <motion.h2
                 variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-4"
+                className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2"
               >
                 Frequently Asked Questions
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-lg text-muted-foreground"
+                className="text-base text-gray-300"
               >
                 Everything you need to know
               </motion.p>
@@ -784,7 +632,7 @@ export default function StarterOfferLanding() {
                   <motion.div
                     key={i}
                     variants={itemVariants}
-                    className="bg-card border border-border px-3 py-2 rounded-lg hover:shadow-md transition-shadow"
+                    className="bg-slate-800 border border-gray-700 px-3 py-2 rounded-lg hover:shadow-md transition-shadow"
                   >
                     <AccordionItem value={item.q}>
                       <AccordionTrigger className="hover:cursor-pointer">
@@ -794,9 +642,7 @@ export default function StarterOfferLanding() {
                         </span>
                       </AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-sm text-muted-foreground pl-7">
-                          {item.a}
-                        </p>
+                        <p className="text-sm text-gray-300 pl-7">{item.a}</p>
                       </AccordionContent>
                     </AccordionItem>
                   </motion.div>
@@ -813,12 +659,12 @@ export default function StarterOfferLanding() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-4"
             >
-              <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              <h2 className="text-3xl md:text-5xl font-bold mb-0">
                 Reserve Your ₹2,999 Slot
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base text-gray-300">
                 Takes less than 60 seconds. No payment required now.
               </p>
             </motion.div>
@@ -827,6 +673,7 @@ export default function StarterOfferLanding() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
+              className="p-0"
             >
               <LeadForm />
             </motion.div>
@@ -842,7 +689,7 @@ export default function StarterOfferLanding() {
                   <Shield className="w-7 h-7 text-green-500" />
                 </div>
                 <p className="font-semibold">Secure & Trusted</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-300">
                   Your data is safe with us. No spam, ever.
                 </p>
               </div>
@@ -852,7 +699,7 @@ export default function StarterOfferLanding() {
                   <Award className="w-7 h-7 text-yellow-500" />
                 </div>
                 <p className="font-semibold">50+ Happy Clients</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-300">
                   Trusted by businesses across India
                 </p>
               </div>
@@ -862,7 +709,7 @@ export default function StarterOfferLanding() {
                   <Timer className="w-7 h-7 text-blue-500" />
                 </div>
                 <p className="font-semibold">24/7 Support</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-300">
                   {`We're with you throughout the build process`}
                 </p>
               </div>

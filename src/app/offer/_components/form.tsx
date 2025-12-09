@@ -209,7 +209,7 @@ export default function LeadForm() {
       <Card className="max-w-lg mx-auto py-10 text-center rounded-xl shadow-lg border-border bg-card">
         <CheckCircle className="mx-auto text-green-500 w-14 h-14 mb-4" />
         <h2 className="text-2xl font-semibold">Thank You 🎉</h2>
-        <p className="text-sm text-muted-foreground mt-2">
+        <p className="text-sm text-gray-300 mt-2">
           Your details were submitted successfully.
           <br />
           We’ll reach out soon on WhatsApp.
@@ -219,33 +219,35 @@ export default function LeadForm() {
             <BsWhatsapp /> Chat on WhatsApp
           </Link>
         </Button>
-        <p className="text-xs text-muted-foreground mt-4">
+        <p className="text-xs text-gray-300 mt-4">
           You won’t see the form again on this device.
         </p>
       </Card>
     );
 
   return (
-    <Card className="max-w-xl mx-auto shadow-2xl border-border/60 bg-linear-to-b from-slate-900/70 via-slate-900 to-slate-950 rounded-2xl">
-      <CardHeader className="space-y-3 pb-3 border-b border-border/60 bg-slate-900/60 rounded-t-2xl">
+    <Card className="max-w-xl py-0 px-0 p-0 gap-2 mx-auto shadow-2xl border-border/60 bg-linear-to-b from-slate-900/70 via-slate-900 to-slate-950 rounded-2xl border birder-gray-700">
+      <CardHeader className="space-y-3 pt-4 pb-3 border-b border-border/60 bg-slate-900/60 rounded-t-2xl">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h3 className="text-lg sm:text-xl font-semibold">
+            <h3 className="text-lg sm:text-xl font-semibold text-white">
               Launch Your Website Offer 🚀
             </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+            <p className="text-xs sm:text-sm text-gray-300 mt-1">
               Fill this 1–2 minute form to claim the ₹2,999 starter website.
             </p>
           </div>
-          <div className="hidden sm:flex flex-col items-end text-xs text-muted-foreground">
-            <span className="font-medium text-emerald-400">Limited-time</span>
-            <span>Fast delivery & WhatsApp support</span>
+          <div className="hidden sm:flex flex-col items-end text-xs text-gray-300">
+            <span className="font-medium text-emerald-500">Limited-time</span>
+            <span className="text-white text-right">
+              Fast delivery & WhatsApp support
+            </span>
           </div>
         </div>
 
         {/* Progress */}
         <div className="space-y-2 pt-1">
-          <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+          <div className="flex items-center justify-between text-[11px] text-gray-300">
             <span>
               Step {step + 1} of {stepLabels.length}
             </span>
@@ -269,7 +271,7 @@ export default function LeadForm() {
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3">
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div
@@ -287,7 +289,7 @@ export default function LeadForm() {
                   placeholder="e.g. John Doe"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  className="bg-slate-800 border-gray-500 text-white focus-visible:ring-sky-500"
                 />
               </div>
 
@@ -300,9 +302,9 @@ export default function LeadForm() {
                   helperText="Include country code, e.g. +91 98765 43210"
                   value={form.phone}
                   onChange={(e: string) => setForm({ ...form, phone: e })}
-                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  className="bg-slate-800 border-gray-500 focus-visible:ring-sky-500"
                 />
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-[11px] text-gray-300">
                   Used only to share your website demo and updates.
                 </p>
               </div>
@@ -316,7 +318,7 @@ export default function LeadForm() {
                   placeholder="you@example.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  className="bg-slate-800 border-slate-700 text-white focus-visible:ring-sky-500"
                 />
               </div>
             </motion.div>
@@ -338,7 +340,7 @@ export default function LeadForm() {
                   placeholder="e.g. Sai Real Estate"
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  className="bg-slate-800 border-slate-700 text-white focus-visible:ring-sky-500"
                 />
               </div>
 
@@ -350,18 +352,18 @@ export default function LeadForm() {
                   value={form.categoryName}
                   onValueChange={(v) => setForm({ ...form, categoryName: v })}
                 >
-                  <SelectTrigger className="w-full bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500">
+                  <SelectTrigger className="w-full bg-slate-800 text-white border-slate-700 focus-visible:ring-sky-500">
                     <SelectValue placeholder="Select business type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border border-gray-500">
                     {categories.map((c) => (
-                      <SelectItem key={c} value={c}>
+                      <SelectItem key={c} value={c} className="text-white">
                         {c}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-[11px] text-gray-300">
                   This helps tailor the design and sections for your niche.
                 </p>
               </div>
@@ -377,7 +379,7 @@ export default function LeadForm() {
                     onChange={(e) =>
                       setForm({ ...form, street: e.target.value })
                     }
-                    className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                    className="bg-slate-800 border-slate-700 text-white focus-visible:ring-sky-500"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -388,7 +390,7 @@ export default function LeadForm() {
                     placeholder="City"
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                    className="bg-slate-800 border-slate-700 text-white focus-visible:ring-sky-500"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -401,7 +403,7 @@ export default function LeadForm() {
                     onChange={(e) =>
                       setForm({ ...form, state: e.target.value })
                     }
-                    className="bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                    className="bg-slate-800 border-slate-700 text-white focus-visible:ring-sky-500"
                   />
                 </div>
               </div>
@@ -432,12 +434,16 @@ export default function LeadForm() {
                     })
                   }
                 >
-                  <SelectTrigger className="w-full bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500">
+                  <SelectTrigger className="w-full bg-slate-800 text-white border-slate-700 focus-visible:ring-sky-500">
                     <SelectValue placeholder="Choose a package" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border border-gray-500">
                     {servicesOptions.map((sp) => (
-                      <SelectItem key={sp.value} value={sp.value}>
+                      <SelectItem
+                        key={sp.value}
+                        value={sp.value}
+                        className="text-white"
+                      >
                         {sp.name} — {sp.price}
                       </SelectItem>
                     ))}
@@ -463,12 +469,16 @@ export default function LeadForm() {
                   value={form.timeline}
                   onValueChange={(v) => setForm({ ...form, timeline: v })}
                 >
-                  <SelectTrigger className="w-full bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500">
+                  <SelectTrigger className="w-full bg-slate-800 text-white border-slate-700 focus-visible:ring-sky-500">
                     <SelectValue placeholder="How soon do you need it?" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border border-gray-500 text-white">
                     {timelineOptions.map((tl) => (
-                      <SelectItem value={tl.value} key={tl.id}>
+                      <SelectItem
+                        value={tl.value}
+                        key={tl.id}
+                        className="text-white"
+                      >
                         {tl.label}
                       </SelectItem>
                     ))}
@@ -486,9 +496,9 @@ export default function LeadForm() {
                   onChange={(e) =>
                     setForm({ ...form, purpose: e.target.value })
                   }
-                  className="min-h-28 resize-none bg-slate-900/60 border-slate-700 focus-visible:ring-sky-500"
+                  className="min-h-28 resize-none bg-slate-800 border-slate-700 text-white focus-visible:ring-sky-500"
                 />
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-[11px] text-gray-300">
                   Share anything specific you want: pages, features, references,
                   etc.
                 </p>
@@ -502,18 +512,16 @@ export default function LeadForm() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="text-sm text-muted-foreground space-y-3"
+              className="text-sm text-gray-300 space-y-3"
             >
-              <p className="font-semibold text-foreground">
-                Review your details
-              </p>
+              <p className="font-semibold text-white">Review your details</p>
               <div className="space-y-1.5 max-h-64 overflow-y-auto pr-1">
                 {Object.entries(form).map(([k, v]) => (
                   <p key={k} className="flex justify-between gap-3 text-xs">
-                    <span className="capitalize text-slate-400">
+                    <span className="capitalize text-slate-300">
                       {k.replace(/([A-Z])/g, " $1")}
                     </span>
-                    <span className="font-medium text-foreground capitalize text-right">
+                    <span className="font-medium text-white capitalize text-right">
                       {String(v).replace(/-/g, " ") || "-"}
                     </span>
                   </p>
@@ -528,7 +536,7 @@ export default function LeadForm() {
         </AnimatePresence>
       </CardContent>
 
-      <CardFooter className="flex flex-col gap-3 border-t border-border/60 py-3">
+      <CardFooter className="flex flex-col gap-3 border-y border-gray-500 pt-4 pb-2">
         <div
           className={cn(
             "flex w-full items-center justify-between gap-2",
@@ -537,8 +545,8 @@ export default function LeadForm() {
         >
           {step > 0 ? (
             <Button
-              variant="ghost"
-              className="w-auto text-xs sm:text-sm cursor-pointer"
+              variant="outline"
+              className="w-auto text-xs sm:text-sm cursor-pointer text-white bg-transparent hover:bg-transparent hover:text-white"
               onClick={() => {
                 prevStep();
                 if (
@@ -569,7 +577,7 @@ export default function LeadForm() {
             <Button
               type="button"
               variant="outline"
-              className="flex-1 sm:flex-none text-xs sm:text-sm cursor-pointer"
+              className="flex-1 sm:flex-none text-xs sm:text-sm cursor-pointer text-white bg-transparent hover:bg-transparent hover:text-white"
               onClick={() => {
                 setForm(defaultForm);
                 setStep(0);
@@ -625,6 +633,7 @@ export default function LeadForm() {
                 className="flex-1 sm:flex-none text-xs sm:text-sm cursor-pointer"
                 disabled={loading}
                 onClick={handleSubmit}
+                variant="primary"
               >
                 {loading ? "Submitting..." : "Submit & continue"}
               </Button>
@@ -632,13 +641,13 @@ export default function LeadForm() {
           </div>
         </div>
 
-        <p className="text-[11px] text-center text-muted-foreground">
+        <p className="text-[11px] text-center text-gray-300">
           No spam. Your details are used only to contact you about this website
           project.
         </p>
       </CardFooter>
 
-      <div className="pb-4 pt-1">
+      <div className="pb-4">
         <Link
           href="https://wa.me/918143963821?text=Hi!+I+want+to+discuss+the+website+offer."
           target="_blank"

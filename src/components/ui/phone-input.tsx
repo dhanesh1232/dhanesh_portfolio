@@ -33,7 +33,7 @@ const CustomPhoneInputField = React.forwardRef<
       {...inputProps}
       ref={ref}
       className={cn(
-        "w-full bg-transparent text-sm text-foreground placeholder-muted-foreground",
+        "w-full bg-transparent text-sm text-white placeholder-muted-foreground",
         "focus-visible:outline-none focus-visible:ring-0",
         size === "sm" && "py-1.5 text-xs",
         size === "md" && "py-2",
@@ -64,7 +64,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
     ref
   ) => {
     const baseClasses =
-      "PhoneInput flex w-full items-center gap-2 rounded-md border bg-background/80 text-sm transition-all";
+      "PhoneInput flex w-full items-center gap-2 text-white rounded-md border bg-slate-800 text-sm transition-all";
     const sizeClasses: Record<Size, string> = {
       sm: "h-9 px-2.5",
       md: "h-10 px-3",
@@ -72,7 +72,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
     };
     const variantClasses: Record<Variant, string> = {
       default:
-        "border-input bg-input/40 hover:bg-input/60 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/40 focus-within:ring-offset-2 focus-within:ring-offset-background",
+        "border-input bg-input/40 hover:bg-slate-800/60 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/40 focus-within:ring-offset-2 focus-within:ring-offset-background",
       ghost:
         "border-transparent bg-transparent hover:bg-input/30 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/40 focus-within:ring-offset-2 focus-within:ring-offset-background",
       filled:
@@ -96,7 +96,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
       const root = document.querySelector<HTMLElement>(".PhoneInput");
       if (!root) return;
 
-      root.classList.add("text-foreground");
+      root.classList.add("text-white");
 
       root
         .querySelector<HTMLElement>(".PhoneInputCountry")
@@ -114,7 +114,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
         .querySelector<HTMLElement>(".PhoneInputCountrySelect")
         ?.classList.add(
           "bg-transparent",
-          "text-foreground",
+          "text-white",
           "text-xs",
           "border-none",
           "cursor-pointer",
