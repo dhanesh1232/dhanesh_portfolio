@@ -46,7 +46,7 @@ export const plans = [
       },
       {
         text: "Free Hosting (Subdomain)",
-        tooltip: "yoursite.ourplatform.com",
+        tooltip: "yoursite.ecodrix.com",
       },
       { text: "Mobile Responsive", tooltip: "Optimized for all devices" },
       {

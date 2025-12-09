@@ -539,7 +539,25 @@ export default function LeadForm() {
             <Button
               variant="ghost"
               className="w-auto text-xs sm:text-sm cursor-pointer"
-              onClick={prevStep}
+              onClick={() => {
+                prevStep();
+                if (
+                  typeof window !== "undefined" &&
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq("trackCustom", "LeadBack");
+                }
+              }}
             >
               ← Back
             </Button>
@@ -555,6 +573,22 @@ export default function LeadForm() {
               onClick={() => {
                 setForm(defaultForm);
                 setStep(0);
+                if (
+                  typeof window !== "undefined" &&
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq
+                ) {
+                  (
+                    window as Window &
+                      typeof globalThis & {
+                        fbq?: (event: string, ...args: unknown[]) => void;
+                      }
+                  ).fbq("trackCustom", "LeadClear");
+                }
               }}
             >
               Clear form
@@ -563,7 +597,25 @@ export default function LeadForm() {
             {step < 3 ? (
               <Button
                 disabled={!isStepValid()}
-                onClick={nextStep}
+                onClick={() => {
+                  nextStep();
+                  if (
+                    typeof window !== "undefined" &&
+                    (
+                      window as Window &
+                        typeof globalThis & {
+                          fbq?: (event: string, ...args: unknown[]) => void;
+                        }
+                    ).fbq
+                  ) {
+                    (
+                      window as Window &
+                        typeof globalThis & {
+                          fbq?: (event: string, ...args: unknown[]) => void;
+                        }
+                    ).fbq("trackCustom", `formNext-${step.toString()}`);
+                  }
+                }}
                 className="flex-1 sm:flex-none text-xs sm:text-sm cursor-pointer"
               >
                 Next step →
