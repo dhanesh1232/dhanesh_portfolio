@@ -7,6 +7,28 @@ import { SiNextdotjs } from "react-icons/si";
 
 const projects = [
   {
+    title: "Phoenix Trade Website",
+    description:
+      "A full-stack business website with SEO-optimized public pages, product listings, enquiry flow, and a secure admin panel for managing products, categories, media, and leads. Built for real-world sales operations with performance and scalability in mind.",
+    image:
+      "https://ik.imagekit.io/gclqlaadh/Screenshot%202025-12-30%20210218_684QpISOv.png",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Charts",
+      "MongoDB",
+      "SEO",
+      "WhatsApp Integration",
+      "Admin Panel",
+    ],
+    link: "https://phoenix-trade.vercel.app",
+    github: "#",
+    featured: true,
+    category: "Client Website",
+    status: "Live",
+  },
+  {
     title: "Ecodrix SaaS Platform",
     description:
       "Multi-tenant SaaS platform with AI chatbot, ads automation, and subscription management. Built with modern web technologies and scalable architecture.",
@@ -88,20 +110,6 @@ const projects = [
     featured: false,
     category: "Growth Automation",
     status: "Live",
-  },
-
-  {
-    title: "Design System Library",
-    description:
-      "Comprehensive design system and component library for consistent UI development across projects.",
-    image:
-      "https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=2000&auto=format&fit=crop",
-    tech: ["React", "TypeScript", "Storybook", "Tailwind CSS", "Figma"],
-    link: "#",
-    github: "#",
-    featured: false,
-    category: "UI/UX",
-    status: "Published",
   },
 ];
 
