@@ -9,8 +9,10 @@ type Size = "sm" | "md" | "lg";
 type Variant = "default" | "ghost" | "filled";
 type IconPosition = "left" | "right";
 
-export interface StyledPhoneProps
-  extends Omit<React.ComponentProps<typeof PhoneInput>, "onChange" | "value"> {
+export interface StyledPhoneProps extends Omit<
+  React.ComponentProps<typeof PhoneInput>,
+  "onChange" | "value"
+> {
   value?: string;
   onChange?: (value: string | undefined) => void;
   size?: Size;
@@ -38,7 +40,7 @@ const CustomPhoneInputField = React.forwardRef<
         size === "sm" && "py-1.5 text-xs",
         size === "md" && "py-2",
         size === "lg" && "py-2.5 text-base",
-        className
+        className,
       )}
     />
   );
@@ -61,7 +63,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
       helperText,
       ...props
     },
-    ref
+    ref,
   ) => {
     const baseClasses =
       "PhoneInput flex w-full items-center gap-2 text-white rounded-md border bg-slate-800 text-sm transition-all";
@@ -81,15 +83,15 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
     const stateClasses = error
       ? "border-red-500 focus-within:border-red-500 focus-within:ring-red-500/50"
       : success
-      ? "border-emerald-500 focus-within:border-emerald-500 focus-within:ring-emerald-500/40"
-      : "";
+        ? "border-emerald-500 focus-within:border-emerald-500 focus-within:ring-emerald-500/40"
+        : "";
 
     const iconPadding =
       icon && iconPosition === "left"
         ? "pl-9"
         : icon && iconPosition === "right"
-        ? "pr-9"
-        : "";
+          ? "pr-9"
+          : "";
 
     // Style inner react-phone-number-input parts once
     useEffect(() => {
@@ -107,7 +109,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
           "pl-2.5",
           "pr-1.5",
           "border-r",
-          "border-border/60"
+          "border-border/60",
         );
 
       root
@@ -119,7 +121,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
           "border-none",
           "cursor-pointer",
           "focus:outline-none",
-          "focus:ring-0"
+          "focus:ring-0",
         );
 
       root
@@ -129,7 +131,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
           "h-4",
           "rounded-[3px]",
           "shadow-sm",
-          "overflow-hidden"
+          "overflow-hidden",
         );
 
       root
@@ -138,7 +140,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
           "text-muted-foreground",
           "ml-1",
           "transition-transform",
-          "group-hover:rotate-180"
+          "group-hover:rotate-180",
         );
     }, []);
 
@@ -165,7 +167,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
               stateClasses,
               iconPadding,
               "px-0", // padding handled by container + custom input
-              className
+              className,
             )}
             inputComponent={CustomPhoneInputField as any}
           />
@@ -184,8 +186,8 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
               error
                 ? "text-red-500"
                 : success
-                ? "text-emerald-400"
-                : "text-muted-foreground"
+                  ? "text-emerald-400"
+                  : "text-muted-foreground",
             )}
           >
             {helperText}
@@ -193,7 +195,7 @@ export const StyledPhoneInput = React.forwardRef<any, StyledPhoneProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 StyledPhoneInput.displayName = "StyledPhoneInput";

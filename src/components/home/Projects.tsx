@@ -1,313 +1,465 @@
 "use client";
-
+import * as React from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
-import { fadeUp, stagger, hoverLift } from "@/utils/motion";
-import { SiNextdotjs } from "react-icons/si";
+import { motion, AnimatePresence } from "framer-motion";
+import { Reveal } from "@/components/ui/Reveal";
 
 const projects = [
+  // ── Featured cards ────────────────────────────────────────────────
   {
+    index: "01",
     title: "Phoenix Trade Website",
     description:
-      "A full-stack business website with SEO-optimized public pages, product listings, enquiry flow, and a secure admin panel for managing products, categories, media, and leads. Built for real-world sales operations with performance and scalability in mind.",
+      "Full-stack business website with SEO-optimized public pages, product listings, enquiry flow, and a secure admin panel for managing products, categories, media, and leads.",
+    tech: "Next.js · TypeScript · MongoDB · WhatsApp Integration",
+    link: "https://phoenixexporthub.com",
     image:
       "https://ik.imagekit.io/gclqlaadh/Screenshot%202025-12-30%20210218_684QpISOv.png",
-    tech: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Charts",
-      "MongoDB",
-      "SEO",
-      "WhatsApp Integration",
-      "Admin Panel",
-    ],
-    link: "https://phoenix-trade.vercel.app",
-    github: "#",
-    featured: true,
-    category: "Client Website",
     status: "Live",
+    category: "Import/Export Platform",
+    featured: true,
+    results: ["↑ 3× enquiry rate", "0 downtime since launch", "SEO rank pg.1"],
   },
   {
+    index: "02",
+    title: "Nirvisham Medical SaaS",
+    description:
+      "Full-stack medical SaaS platform for AYUSH & holistic healthcare. Features doctor listings, patient management, appointment booking, resource library, and SEO-optimized public pages — built for real clinical operations.",
+    tech: "Next.js · TypeScript · MongoDB · Cloudinary · SEO · Admin Panel",
+    link: "https://nirvisham.com",
+    image: "https://cdn.ecodrix.com/Screenshot%202026-04-28%20205802.png",
+    status: "In Progress",
+    category: "Medical SaaS",
+    featured: true,
+    results: ["Multi-role auth", "Appointment + WhatsApp flow", "CMS built-in"],
+  },
+  {
+    index: "03",
+    title: "ECODrIx Backend Infrastructure",
+    description:
+      "Production-grade multi-tenant SaaS backend (v1.7.8). Powers CRM pipelines, lead scoring, WhatsApp automation, email marketing via AWS SES, Google Meet OAuth, real-time Socket.io messaging, a custom job-queue (ErixJobs), and a full event-log audit trail.",
+    tech: "Node.js · Express 5 · TypeScript · MongoDB · Socket.io · AWS SES/S3 · OpenAI · Docker",
+    link: "https://api.ecodrix.com",
+    image:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2068&auto=format&fit=crop",
+    status: "Live",
+    category: "Backend Infrastructure",
+    featured: false,
+    results: ["↓ 90% response time", "847+ commits", "Multi-tenant isolated"],
+  },
+  {
+    index: "04",
     title: "Ecodrix SaaS Platform",
     description:
       "Multi-tenant SaaS platform with AI chatbot, ads automation, and subscription management. Built with modern web technologies and scalable architecture.",
-    image:
-      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop",
-    tech: [
-      "Next.js",
-      "TypeScript",
-      "PostgreSQL",
-      "Tailwind CSS",
-      "Stripe",
-      "AI",
-    ],
-    link: "#",
-    github: "#",
-    featured: true,
+    tech: "Next.js · TypeScript · PostgreSQL · Stripe · AI",
+    link: "https://ecodrix.com",
+    image: "https://cdn.ecodrix.com/Screenshot%202026-04-30%20194935.png",
+    status: "In Progress",
     category: "SaaS Platform",
-    status: "Progress",
+    featured: false,
+    results: ["Stripe billing", "AI chatbot embedded", "Ads automation"],
   },
   {
+    index: "05",
     title: "WhatsApp CMS Manager",
     description:
-      "AI-powered WhatsApp management system with automated responses, analytics dashboard, and multi-user collaboration features.",
+      "AI-powered WhatsApp management system with automated responses, analytics dashboard, and multi-user collaboration.",
+    tech: "React · Node.js · MongoDB · Socket.io · Redis",
+    link: "#",
     image:
       "https://images.unsplash.com/photo-1636751364472-12bfad09b451?q=80&w=2070&auto=format&fit=crop",
-    tech: ["React", "Node.js", "MongoDB", "Socket.io", "AI", "Redis"],
-    link: "#",
-    github: "#",
-    featured: true,
+    status: "In Progress",
     category: "AI Automation",
-    status: "Progress",
+    featured: false,
+    results: ["↓ 95% manual replies", "Real-time analytics", "Multi-agent"],
   },
   {
+    index: "06",
     title: "Rich Text Editor Package",
     description:
-      "Open-source npm package featuring a customizable TinyMCE-like rich text editor component with modern tooling and extensibility.",
+      "Open-source npm package featuring a customizable TinyMCE-like rich text editor with modern tooling and extensibility.",
+    tech: "TypeScript · React · Tailwind CSS · npm",
+    link: "#",
     image:
       "https://images.unsplash.com/photo-1512317049220-d3c6fcaf6681?q=80&w=2069&auto=format&fit=crop",
-    tech: ["TypeScript", "React", "Tailwind CSS", "NextJS", "npm"],
-    link: "#",
-    github: "#",
-    featured: true,
-    category: "Open Source",
     status: "Published",
-  },
-  {
-    title: "E-commerce Analytics Dashboard",
-    description:
-      "Real-time analytics dashboard for e-commerce businesses with advanced metrics and reporting capabilities.",
-    image:
-      "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=2000&auto=format&fit=crop",
-    tech: ["Next.js", "TypeScript", "PostgreSQL", "D3.js", "Chart.js"],
-    link: "#",
-    github: "#",
+    category: "Open Source",
     featured: false,
-    category: "Dashboard",
-    status: "In Development",
-  },
-
-  // ⭐ Replacement Project (Real)
-  {
-    title: "Client Lead Generation System",
-    description:
-      "A full-stack lead generation system integrating SEO-optimized landing pages, automated WhatsApp callbacks, AI pre-qualification, and analytics tracking. Built for service businesses to capture, nurture, and convert leads automatically.",
-    image:
-      "https://plus.unsplash.com/premium_photo-1756165389225-52ce93ec16bc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    tech: [
-      "Next.js",
-      "Node.js",
-      "PostgreSQL",
-      "n8n",
-      "Twilio/WhatsApp",
-      "Google Analytics",
-      "Meta Ads",
-      "SEO",
-    ],
-    link: "#",
-    github: "#",
-    featured: false,
-    category: "Growth Automation",
-    status: "Live",
+    results: ["npm published", "Zero dependencies", "Fully typed"],
   },
 ];
 
-export function Projects() {
+function statusColor(status: string) {
+  if (status === "Live" || status === "Published")
+    return {
+      color: "#4ade80",
+      border: "rgba(74,222,128,0.3)",
+      bg: "rgba(74,222,128,0.08)",
+    };
+  if (status === "In Progress")
+    return {
+      color: "var(--p-accent)",
+      border: "var(--p-accent-border)",
+      bg: "var(--p-accent-dim)",
+    };
+  return {
+    color: "var(--p-text-muted)",
+    border: "var(--p-border-mid)",
+    bg: "transparent",
+  };
+}
+
+// ── Outcome badges strip ────────────────────────────────────────────
+function ResultBadges({ results }: { results: string[] }) {
   return (
-    <section id="projects" className="py-6 px-6 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-20 left-10 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl animate-pulse-slower"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
-      </div>
-
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]"></div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={stagger}
+    <div
+      className="flex flex-wrap gap-1.5 pt-3 mt-3"
+      style={{ borderTop: "1px solid var(--p-border)" }}
+    >
+      {results.map((r) => (
+        <span
+          key={r}
+          className="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5"
+          style={{
+            color: "var(--p-accent)",
+            background: "rgba(245,158,11,0.07)",
+            border: "1px solid rgba(245,158,11,0.18)",
+          }}
         >
-          {/* Section Header */}
-          <div className="text-center mb-20">
-            <motion.div
-              variants={fadeUp as Variants}
-              className="inline-flex items-center gap-3 px-6 py-1.5 rounded-full bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm mb-8"
-            >
-              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-              <span className="text-cyan-300 font-medium text-sm uppercase tracking-wider">
-                Featured Work
-              </span>
-            </motion.div>
+          {r}
+        </span>
+      ))}
+    </div>
+  );
+}
 
-            <motion.h2
-              className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent"
-              variants={fadeUp as Variants}
-            >
-              Selected
-              <span className="inline bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                {" "}
-                Projects
-              </span>
-            </motion.h2>
+// ── Featured card ─────────────────────────────────────────────────
+function FeaturedCard({
+  project,
+  delay = 0,
+}: {
+  project: (typeof projects)[number];
+  delay?: number;
+}) {
+  const sc = statusColor(project.status);
+  const isExternal = project.link !== "#";
 
-            <motion.p
-              className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light"
-              variants={fadeUp as Variants}
-            >
-              A curated collection of{" "}
-              <span className="text-cyan-300 font-semibold">
-                production-ready applications
-              </span>{" "}
-              and
-              <span className="text-cyan-300 font-semibold">
-                {" "}
-                innovative solutions
-              </span>{" "}
-              built with modern technologies
-            </motion.p>
+  return (
+    <Reveal delay={delay} variant="rise" offset={28}>
+      <motion.a
+        href={isExternal ? project.link : undefined}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
+        data-cursor={isExternal ? "View" : undefined}
+        className="group block h-full"
+        style={{
+          color: "inherit",
+          textDecoration: "none",
+          cursor: isExternal ? "pointer" : "default",
+        }}
+        whileHover="hover"
+        initial="rest"
+        animate="rest"
+      >
+        <div className="relative overflow-hidden flex flex-col h-full transition-all duration-300 border border-(--p-border) bg-(--p-elevated) group-hover:border-(--p-accent-border) group-hover:shadow-[0_0_30px_var(--p-accent-dim)]">
+          {/* Image */}
+          <div className="relative h-52 overflow-hidden shrink-0">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover group-hover:scale-[1.04] transition-all duration-700"
+            />
+            {/* Bottom dark fade */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to bottom, transparent 40%, rgba(8,10,14,0.85) 100%)",
+              }}
+            />
+            {/* Category + status overlaid on image */}
+            <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between">
+              <span
+                className="text-xs uppercase tracking-widest font-mono"
+                style={{ color: "rgba(255,255,255,0.5)" }}
+              >
+                {project.category}
+              </span>
+              <span
+                className="text-xs px-2 py-0.5 border font-mono"
+                style={{
+                  color: sc.color,
+                  borderColor: sc.border,
+                  background: sc.bg,
+                }}
+              >
+                {project.status}
+              </span>
+            </div>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid md:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <motion.article
-                key={project.title}
-                variants={fadeUp as Variants}
-                whileHover="whileHover"
-                custom={hoverLift}
-                className="group relative"
+          {/* Content pane */}
+          <div
+            className="relative p-6 flex flex-col gap-3 flex-1"
+            style={{ borderTop: "2px solid var(--p-accent)" }}
+          >
+            {/* Large index watermark */}
+            <span
+              className="absolute top-2 right-5 font-display font-bold leading-none select-none pointer-events-none"
+              style={{
+                fontSize: "4rem",
+                color: "var(--p-accent)",
+                opacity: 0.06,
+              }}
+              aria-hidden
+            >
+              {project.index}
+            </span>
+
+            <span
+              className="text-xs uppercase tracking-widest font-mono"
+              style={{ color: "var(--p-accent)" }}
+            >
+              {project.index}
+            </span>
+
+            <h3
+              className="font-display font-bold leading-tight transition-colors duration-300 group-hover:text-(--p-accent)"
+              style={{
+                fontSize: "clamp(1.15rem, 2.2vw, 1.5rem)",
+                color: "var(--p-text)",
+              }}
+            >
+              {project.title}
+            </h3>
+
+            <p
+              className="text-sm leading-relaxed line-clamp-2"
+              style={{ color: "var(--p-text-muted)" }}
+            >
+              {project.description}
+            </p>
+
+            <p
+              className="text-xs mt-1 font-mono"
+              style={{ color: "var(--p-text-faint)" }}
+            >
+              {project.tech}
+            </p>
+
+            {/* Outcome badges */}
+            <ResultBadges results={project.results} />
+
+            {isExternal && (
+              <span
+                className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide mt-1 transition-colors duration-200"
+                style={{ color: "var(--p-accent)" }}
               >
-                {/* Gradient Border Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-700 to-slate-800 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -m-0.5 blur-sm"></div>
+                View project
+                <span className="group-hover:translate-x-1 transition-transform duration-200">
+                  →
+                </span>
+              </span>
+            )}
+          </div>
+        </div>
+      </motion.a>
+    </Reveal>
+  );
+}
 
-                <div className="relative bg-slate-800/40 backdrop-blur-xl rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 h-full flex flex-col">
-                  {/* Image Container */}
-                  <div className="relative h-56 overflow-hidden">
-                    {/* Status Badge */}
-                    <div className="absolute top-4 left-4 z-10">
-                      <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
-                          project.status === "Live"
-                            ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                            : project.status === "Published"
-                            ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                            : "bg-yellow-500/20 text-yellow-300 border border-yellow-500/30"
-                        }`}
-                      >
-                        <div
-                          className={`w-1.5 h-1.5 rounded-full mr-2 ${
-                            project.status === "Live"
-                              ? "bg-green-400 animate-pulse"
-                              : project.status === "Published"
-                              ? "bg-blue-400"
-                              : "bg-yellow-400"
-                          }`}
-                        ></div>
-                        {project.status}
-                      </span>
-                    </div>
+// ── List row ───────────────────────────────────────────────────
+function ProjectRow({
+  project,
+  delay = 0,
+}: {
+  project: (typeof projects)[number];
+  delay?: number;
+}) {
+  const [expanded, setExpanded] = React.useState(false);
+  const sc = statusColor(project.status);
 
-                    {/* Category Badge */}
-                    <div className="absolute top-4 right-4 z-10">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-slate-800/80 backdrop-blur-sm text-slate-300 text-xs font-medium border border-slate-700/50">
-                        {project.category}
-                      </span>
-                    </div>
+  return (
+    <Reveal delay={delay} variant="rise" offset={20}>
+      <div
+        className="project-row cursor-pointer"
+        onClick={() => setExpanded((p) => !p)}
+      >
+        <div className="flex items-center gap-6 px-4 py-5 group">
+          {/* Index */}
+          <span
+            className="text-xs font-bold shrink-0 w-8"
+            style={{
+              color: "var(--p-accent)",
+              fontFamily: "var(--font-geist-mono)",
+            }}
+          >
+            {project.index}
+          </span>
 
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                    />
+          {/* Title + tech */}
+          <div className="flex-1 min-w-0">
+            <div
+              className="font-display font-semibold text-base md:text-lg leading-tight group-hover:text-(--p-accent) transition-colors duration-200 truncate"
+              style={{ color: "var(--p-text)" }}
+            >
+              {project.title}
+            </div>
+            <div
+              className="text-xs mt-0.5 truncate hidden sm:block"
+              style={{
+                color: "var(--p-text-faint)",
+                fontFamily: "var(--font-geist-mono)",
+              }}
+            >
+              {project.tech}
+            </div>
+          </div>
 
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex-1">
-                      {/* Featured Badge */}
-                      {project.featured && (
-                        <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-medium mb-3">
-                          <SiNextdotjs className="w-3 h-3" />
-                          Featured Project
-                        </div>
-                      )}
-
-                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300">
-                        {project.title}
-                      </h3>
-
-                      <p className="text-slate-400 leading-relaxed mb-4 line-clamp-3">
-                        {project.description}
-                      </p>
-                    </div>
-
-                    {/* Tech Stack */}
-                    <div className="mb-4">
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-3 py-1.5 rounded-lg bg-slate-700/50 text-cyan-300 text-xs font-medium border border-slate-600/30 backdrop-blur-sm group-hover:border-cyan-500/30 transition-all duration-300"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Hover Line */}
-                  <div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 group-hover:w-full transition-all duration-500"></div>
-                </div>
-              </motion.article>
+          {/* Results preview — visible on md+ */}
+          <div className="hidden lg:flex items-center gap-1.5 shrink-0">
+            {project.results.slice(0, 2).map((r) => (
+              <span
+                key={r}
+                className="text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5"
+                style={{
+                  color: "var(--p-accent)",
+                  background: "rgba(245,158,11,0.07)",
+                  border: "1px solid rgba(245,158,11,0.15)",
+                }}
+              >
+                {r}
+              </span>
             ))}
           </div>
 
-          {/* View More CTA
-          <motion.div variants={fadeUp as any} className="text-center mt-16">
-            <div className="bg-slate-800/30 backdrop-blur-md rounded-2xl p-8 border border-slate-700/30 max-w-2xl mx-auto">
-              <h3 className="text-2xl font-bold text-white mb-4">
-                Interested in seeing more?
-              </h3>
-              <p className="text-slate-300 mb-6">
-                Explore more projects, case studies, and technical deep dives on
-                my portfolio.
-              </p>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25"
+          {/* Status + arrow */}
+          <div className="flex items-center gap-4 shrink-0">
+            <span
+              className="text-xs hidden md:block"
+              style={{ color: sc.color }}
+            >
+              {project.status}
+            </span>
+            <span
+              className="text-lg transition-transform duration-300"
+              style={{
+                color: "var(--p-text-muted)",
+                transform: expanded ? "rotate(45deg)" : "none",
+              }}
+            >
+              +
+            </span>
+          </div>
+        </div>
+
+        {/* Expand panel */}
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="expand"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <div
+                className="grid grid-cols-1 md:grid-cols-3 gap-0 mx-4 mb-4 overflow-hidden"
+                style={{ border: "1px solid var(--p-border)" }}
               >
-                View Full Portfolio
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                {/* Image preview */}
+                <div className="relative h-40 md:h-full md:col-span-1 overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
                   />
-                </svg>
-              </a>
-            </div>
-          </motion.div> */}
-        </motion.div>
+                </div>
+
+                {/* Details */}
+                <div className="md:col-span-2 p-6 flex flex-col justify-between">
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{ color: "var(--p-text-muted)" }}
+                  >
+                    {project.description}
+                  </p>
+
+                  {/* Outcome badges in expand */}
+                  <ResultBadges results={project.results} />
+
+                  <div className="mt-4">
+                    {project.link !== "#" && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-cursor="View"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium"
+                        style={{ color: "var(--p-accent)" }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Open project →
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </Reveal>
+  );
+}
+
+export function Projects() {
+  const featured = projects.filter((p) => p.featured);
+  const rest = projects.filter((p) => !p.featured);
+
+  return (
+    <section
+      id="projects"
+      className="section-pad"
+      style={{ background: "var(--p-bg)" }}
+    >
+      <div className="max-content">
+        {/* Eyebrow */}
+        <Reveal className="flex items-center gap-3 mb-16">
+          <span className="accent-line" />
+          <span className="eyebrow">Work</span>
+        </Reveal>
+
+        {/* Heading */}
+        <Reveal offset={24} className="mb-14">
+          <h2
+            className="font-display font-bold leading-tight"
+            style={{
+              fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
+              color: "var(--p-text)",
+            }}
+          >
+            Selected projects.
+          </h2>
+        </Reveal>
+
+        {/* Featured cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          {featured.map((p, i) => (
+            <FeaturedCard key={p.index} project={p} delay={i * 0.08} />
+          ))}
+        </div>
+
+        {/* List rows */}
+        <div className="mt-4">
+          {rest.map((p, i) => (
+            <ProjectRow key={p.index} project={p} delay={i * 0.06} />
+          ))}
+        </div>
       </div>
     </section>
   );

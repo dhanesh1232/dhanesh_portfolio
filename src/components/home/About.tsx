@@ -1,144 +1,203 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import { fadeUp, stagger } from "@/utils/motion";
-import { Shimmer } from "../shimmer";
-import { highlights } from "@/lib/data";
+import * as React from "react";
+import { motion } from "framer-motion";
+import { Reveal, RevealGroup } from "@/components/ui/Reveal";
+import { CountUp } from "@/components/ui/CountUp";
+
+const STATS = [
+  { num: 3, suffix: "+", label: "Years of\nEngineering" },
+  { num: 20, suffix: "+", label: "Products\nShipped" },
+  { num: 5, suffix: "+", label: "Clients\nServed" },
+  { num: 3, suffix: "", prefix: "~", label: "SaaS\nLive" },
+];
+
+const fadeUp = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: false, amount: 0.12 },
+  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 export function About() {
   return (
-    <section id="about" className="px-6 bg-inherit relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse-slower"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
-      </div>
+    <section
+      id="about"
+      className="section-pad"
+      style={{ background: "var(--p-elevated)" }}
+    >
+      <div className="max-content">
+        {/* Eyebrow */}
+        <Reveal className="flex items-center gap-3 mb-16">
+          <span className="accent-line" />
+          <span className="eyebrow">About</span>
+        </Reveal>
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]"></div>
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+          {/* Left: Stats */}
+          <div className="lg:col-span-4">
+            <RevealGroup stagger={0.1} className="grid grid-cols-2 gap-x-6 gap-y-10">
+              {STATS.map((stat) => (
+                <div key={stat.label}>
+                  <div
+                    className="font-display font-bold leading-none mb-2"
+                    style={{
+                      fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+                      color: "var(--p-accent)",
+                    }}
+                  >
+                    <CountUp
+                      target={stat.num}
+                      suffix={stat.suffix}
+                      prefix={stat.prefix}
+                      duration={900}
+                    />
+                  </div>
+                  <div
+                    className="text-xs uppercase tracking-widest leading-relaxed whitespace-pre-line"
+                    style={{
+                      color: "var(--p-text-muted)",
+                      fontFamily: "var(--font-geist-mono)",
+                    }}
+                  >
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </RevealGroup>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={stagger}
-        >
-          {/* Header */}
-          <div className="text-center mb-20">
-            <motion.div
-              variants={fadeUp as Variants}
-              className="inline-flex items-center gap-3 px-6 py-1.5 rounded-full bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm mb-8"
-            >
-              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-              <span className="text-cyan-300 font-medium text-sm uppercase tracking-wider">
-                About Me
-              </span>
+            {/* Separator */}
+            <div
+              className="mt-12 h-px"
+              style={{
+                background:
+                  "linear-gradient(to right, var(--p-accent), transparent)",
+              }}
+            />
+
+            {/* Location + availability */}
+            <motion.div {...fadeUp} className="mt-8 space-y-3">
+              {[
+                { label: "Location", value: "Andhra Pradesh, India" },
+                { label: "Status", value: "Open to work" },
+                { label: "Focus", value: "SaaS · AI · Growth" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-baseline justify-between gap-4"
+                >
+                  <span
+                    className="text-xs uppercase tracking-widest shrink-0"
+                    style={{
+                      color: "var(--p-text-faint)",
+                      fontFamily: "var(--font-geist-mono)",
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                  <span
+                    className="text-xs"
+                    style={{ color: "var(--p-text-muted)" }}
+                  >
+                    {item.value}
+                  </span>
+                </div>
+              ))}
             </motion.div>
+          </div>
 
+          {/* Right: Text */}
+          <div className="lg:col-span-8">
             <motion.h2
-              className="text-3xl md:text-5xl font-bold mb-8 bg-linear-to-br from-white to-slate-400 bg-clip-text text-transparent"
-              variants={fadeUp as Variants}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.12 }}
+              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display font-bold leading-tight mb-8"
+              style={{
+                fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
+                color: "var(--p-text)",
+              }}
             >
-              Building With Purpose,
-              <span className="block bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Crafting With Precision
+              Engineering with precision,
+              <br />
+              <span style={{ color: "var(--p-accent)" }}>
+                shipping with purpose.
               </span>
             </motion.h2>
 
-            <motion.p
-              className="text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed font-light"
-              variants={fadeUp as Variants}
-            >
-              {"I'm"} a{" "}
-              <span className="text-cyan-300 font-semibold">
-                full-stack engineer
-              </span>{" "}
-              and{" "}
-              <span className="text-cyan-300 font-semibold">
-                automation-driven creator
-              </span>
-              , blending development, AI, and marketing systems to build
-              products that solve real business problems and drive results.
-            </motion.p>
-          </div>
-
-          {/* Highlights */}
-          <motion.div
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={stagger}
-          >
-            {highlights.map(
-              (
-                { title, subtitle, description, icon, gradient, color },
-                index
-              ) => (
-                <motion.div
-                  key={subtitle}
-                  variants={fadeUp as Variants}
-                  whileTap={{ scale: 0.98 }}
-                  className="group relative p-0.5"
+            <div className="space-y-5">
+              {[
+                `I'm a full-stack engineer and entrepreneur who builds systems that don't just look good — they work hard underneath. My stack spans modern web frameworks, AI-powered workflows, database architecture, and performance-tuned deployments.`,
+                `What sets me apart is range. I write production code, design growth systems, run ad funnels, and architect SaaS platforms end-to-end. Most engineers do one. I do all of it — because real products need all of it.`,
+              ].map((para, i) => (
+                <motion.p
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.12 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.1 + i * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="text-base leading-[1.85]"
+                  style={{ color: "var(--p-text-muted)" }}
                 >
-                  <Shimmer color={color} />
-                  <div className="absolute z-10 inset-0 bg-linear-to-r from-slate-700 to-slate-800 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -m-0.5 blur-sm"></div>
+                  {para}
+                </motion.p>
+              ))}
 
-                  <div className="relative z-10 bg-slate-800 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 h-full overflow-hidden">
-                    <div
-                      className={`absolute inset-0 bg-linear-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                    />
-
-                    {/* Icon Row */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-4xl">{icon}</div>
-                      <div className="text-2xl text-slate-400 group-hover:text-cyan-400 transition-colors">
-                        #{String(index + 1).padStart(2, "0")}
-                      </div>
-                    </div>
-
-                    {/* Info */}
-                    <motion.div
-                      className={`text-4xl font-bold bg-linear-to-r ${gradient} bg-clip-text text-transparent mb-2`}
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      {title}
-                    </motion.div>
-
-                    <h3 className="text-2xl font-semibold text-white mb-3">
-                      {subtitle}
-                    </h3>
-
-                    <p className="text-slate-400 text-base leading-relaxed">
-                      {description}
-                    </p>
-                  </div>
-                </motion.div>
-              )
-            )}
-          </motion.div>
-
-          {/* Additional Info */}
-          <motion.div
-            variants={fadeUp as Variants}
-            className="mt-20 text-center"
-          >
-            <div className="glow-outline bg-slate-800/30 backdrop-blur-md rounded-2xl p-8 border border-slate-700/30 max-w-4xl mx-auto">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                Engineering with{" "}
-                <span className="text-cyan-400">Precision & Impact</span>
-              </h3>
-              <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                I bring together{" "}
-                <span className="text-cyan-300">full-stack development</span>,{" "}
-                <span className="text-purple-300">AI automations</span>,{" "}
-                <span className="text-blue-300">SEO</span>, and{" "}
-                <span className="text-orange-300">ad-driven growth</span> to
-                build systems that don’t just look good—but work hard
-                underneath.
-              </p>
+              {/* Ecodrix accent line */}
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.12 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="text-sm font-mono pt-2"
+                style={{ color: "var(--p-accent)" }}
+              >
+                Currently building{" "}
+                <a
+                  href="https://ecodrix.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 hover:opacity-80 transition-opacity"
+                >
+                  Ecodrix
+                </a>
+                {" "}— AI automation, ad management, and web infrastructure in one platform.
+              </motion.p>
             </div>
-          </motion.div>
-        </motion.div>
+
+            {/* Tech signature row */}
+            <motion.div
+              {...fadeUp}
+              className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2"
+            >
+              {[
+                "Next.js",
+                "TypeScript",
+                "Node.js",
+                "PostgreSQL",
+                "n8n",
+                "AI/LLMs",
+              ].map((t) => (
+                <span
+                  key={t}
+                  className="text-xs uppercase tracking-widest"
+                  style={{
+                    color: "var(--p-accent)",
+                    fontFamily: "var(--font-geist-mono)",
+                  }}
+                >
+                  {t}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

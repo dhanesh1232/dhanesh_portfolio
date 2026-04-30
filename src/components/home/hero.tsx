@@ -3,370 +3,363 @@ import * as React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Clock } from "lucide-react";
 import { usePortfolio } from "@/context/parent";
+import { ScrambleText } from "@/components/ui/ScrambleText";
+
+const STATS = [
+  { value: "3+", label: "Years" },
+  { value: "20+", label: "Projects" },
+  { value: "5+", label: "Clients" },
+  { value: "3", label: "SaaS Live" },
+];
 
 export const Hero = () => {
-  const [hidden, setHidden] = React.useState(false);
   const { handleToChangeState } = usePortfolio();
+  const heroRef = React.useRef<HTMLElement>(null);
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setHidden(window.scrollY > 80); // hide when scrolled a bit
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+  // Mouse-tracking amber glow
+  const [glow, setGlow] = React.useState({ x: 50, y: 50 });
+  const onMouseMove = React.useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setGlow({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top) / rect.height) * 100,
+    });
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-inherit relative overflow-hidden py-20">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-400/5 rounded-full blur-3xl animate-pulse-slower"></div>
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-teal-300/5 rounded-full blur-3xl"></div>
+    <section
+      id="hero"
+      ref={heroRef}
+      onMouseMove={onMouseMove}
+      className="relative min-h-screen flex flex-col overflow-hidden"
+      style={{ background: "var(--p-bg)" }}
+    >
+      {/* ── Dot-grid background ── */}
+      <div
+        className="absolute inset-0 pointer-events-none select-none"
+        aria-hidden
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* ── Cursor amber glow ── */}
+      <div
+        className="absolute inset-0 pointer-events-none select-none transition-all duration-300"
+        aria-hidden
+        style={{
+          background: `radial-gradient(circle 28vw at ${glow.x}% ${glow.y}%, rgba(245,158,11,0.06) 0%, transparent 65%)`,
+        }}
+      />
+      {/* ── Watermark background text ── */}
+      <div
+        className="absolute inset-0 flex items-center justify-start pointer-events-none select-none overflow-hidden"
+        aria-hidden
+      >
+        <span
+          className="font-display font-bold text-white leading-none pl-4 md:pl-10"
+          style={{
+            fontSize: "clamp(6rem, 22vw, 22rem)",
+            opacity: 0.022,
+            whiteSpace: "nowrap",
+          }}
+        >
+          BUILD.
+        </span>
       </div>
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]"></div>
-
-      <div className="max-w-7xl mx-auto w-full px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
-        {/* LEFT CONTENT */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 0.8, 0.3, 1] }}
-          className="text-center lg:text-left space-y-2"
+      {/* ── Top eyebrow bar ── */}
+      <motion.div
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 flex items-center justify-between px-6 md:px-16 pt-24 md:pt-28"
+      >
+        <div className="flex items-center gap-2.5">
+          <span
+            className="block w-1.5 h-1.5 rounded-full amber-pulse"
+            style={{ background: "var(--p-accent)" }}
+          />
+          <span className="eyebrow">
+            Full·Stack Developer &amp; SaaS Builder
+          </span>
+        </div>
+        <span
+          className="text-xs tracking-widest uppercase hidden sm:block"
+          style={{
+            color: "var(--p-text-muted)",
+            fontFamily: "var(--font-geist-mono)",
+          }}
         >
-          {/* Badge */}
+          Andhra Pradesh, India
+        </span>
+      </motion.div>
+
+      {/* ── Main grid ── */}
+      <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-12 px-6 md:px-16 mt-6 md:mt-10 gap-y-8 items-end pb-4">
+        {/* Left: name + bio + CTAs */}
+        <div className="lg:col-span-8 flex flex-col justify-end">
+          {/* Value proposition */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-3"
           >
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-sm text-slate-300">
-              Available for new projects
+            <span
+              className="font-display font-bold leading-none"
+              style={{
+                fontSize: "clamp(0.9rem, 1.6vw, 1.15rem)",
+                color: "var(--p-accent)",
+                letterSpacing: "0.04em",
+              }}
+            >
+              From idea to live product — end-to-end.
             </span>
           </motion.div>
 
-          {/* Main Heading */}
-          <div className="space-y-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-              Hi, {"I'm "}
-              <span className="text-transparent font-sans bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-[length:200%_200%] animate-gradient">
-                Dhanesh
-              </span>
-            </h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-xl lg:text-2xl text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light"
+          {/* Display name */}
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display font-bold leading-[0.88] tracking-tighter"
+              style={{ color: "var(--p-text)" }}
             >
-              Full-Stack Developer &{" "}
-              <span className="text-blue-600 font-bold">Entrepreneur </span>
-              <span className="text-cyan-300 font-medium">
-                & SaaS Builder
-              </span>{" "}
-              crafting fast, scalable, and modern digital experiences with
-              cutting-edge technologies.
-            </motion.p>
+              <span
+                className="block"
+                style={{ fontSize: "clamp(3.5rem, 13vw, 11rem)" }}
+              >
+                <ScrambleText text="Dhanesh" startDelay={400} duration={950} />
+              </span>
+              <span
+                className="block pl-[5%] md:pl-[8%]"
+                style={{
+                  fontSize: "clamp(3.5rem, 13vw, 11rem)",
+                  color: "var(--p-accent)",
+                }}
+              >
+                <ScrambleText text="M." startDelay={900} duration={500} />
+              </span>
+            </motion.h1>
           </div>
 
-          {/* Tech Stack */}
+          {/* Bio + CTAs row */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="flex flex-wrap justify-center lg:justify-start gap-3"
+            transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-10 flex flex-col gap-6"
           >
-            {[
-              { label: "Next.js", color: "from-slate-500 to-slate-300" },
-              { label: "TypeScript", color: "from-blue-500 to-blue-300" },
-              { label: "Tailwind", color: "from-cyan-400 to-cyan-300" },
-              { label: "React", color: "from-blue-400 to-blue-300" },
-              { label: "Node.js", color: "from-green-500 to-green-300" },
-              { label: "Express", color: "from-gray-300 to-gray-500" },
-              { label: "MongoDB", color: "from-green-400 to-green-300" },
-            ].map((tech, index) => (
-              <motion.span
-                key={tech.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
-                className={`
-        relative px-4 py-1.5 md:py-2 rounded-lg text-sm font-medium
-        text-white
-        bg-slate-900/40 border border-slate-700/50
-        backdrop-blur-sm
-        shadow-[0_0_10px_rgba(0,0,0,0.3)]
-        cursor-default
-        group
-        transition-all duration-300
-        hover:scale-110 hover:bg-slate-800/60
-      `}
+            <p
+              className="max-w-xs text-sm leading-relaxed"
+              style={{ color: "var(--p-text-muted)" }}
+            >
+              I take your idea from a Google Doc to a live product — designed,
+              built, and deployed. Full-stack, end-to-end, no hand-offs.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                id="hero-view-work"
+                href="#projects"
+                data-cursor="View"
+                className="group inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold tracking-wide transition-all duration-200 hover:brightness-90"
+                style={{ background: "var(--p-accent)", color: "var(--p-bg)" }}
               >
-                {/* Glow Border Effect */}
-                <span
-                  className={`
-          absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100
-          transition-opacity duration-300
-          bg-linear-to-r ${tech.color}
-          blur-md
-        `}
-                ></span>
-
-                {/* Inside Glow Ring */}
-                <span
-                  className={`
-          absolute inset-0 rounded-lg opacity-0
-          group-hover:opacity-40 transition-all duration-300
-          bg-linear-to-r ${tech.color}
-          blur-xl
-        `}
-                />
-
-                {/* Shine Line */}
-                <span
-                  className="
-          absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-[1px]
-          bg-gradient-to-r from-transparent via-white/50 to-transparent
-          opacity-0 group-hover:opacity-70
-          transition-all duration-500
-        "
-                />
-
-                {/* Actual Label */}
-                <span className="relative z-10">{tech.label}</span>
-              </motion.span>
-            ))}
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 mt-6 justify-center lg:justify-start"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-          >
-            {/* Primary CTA – Neon Gradient */}
-            <Link
-              href="#projects"
-              onClick={() => {
-                if (
-                  typeof window !== "undefined" &&
-                  (window as unknown as { fbq?: unknown }).fbq
-                ) {
-                  (
-                    window as Window &
-                      typeof globalThis & {
-                        fbq?: (event: string, ...args: unknown[]) => void;
-                      }
-                  ).fbq?.("track", "ViewContent", {
-                    content_name: "Projects",
-                  });
-                }
-              }}
-              className="
-      relative group inline-flex items-center justify-center
-      px-7 md:px-10 py-2 md:py-3
-      font-medium text-white rounded-full
-      bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
-      shadow-lg shadow-cyan-500/20
-      hover:shadow-blue-500/40
-      transition-all duration-300
-      overflow-hidden
-    "
-            >
-              {/* Glow sweep */}
-              <span
-                className="
-        absolute inset-0 opacity-0 group-hover:opacity-20
-        bg-gradient-to-r from-white/40 to-transparent
-        translate-x-[-100%] group-hover:translate-x-[100%]
-        transition-all duration-700
-      "
-              />
-
-              <span className="relative z-10 mr-2 group-hover:scale-105 transition">
-                View My Work
-              </span>
-
-              {/* Arrow with trail */}
-              <svg
-                className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </Link>
-            {/* Secondary CTA – Glass + Glow Border */}
-            <button
-              onClick={() => {
-                handleToChangeState?.("fillOut", true);
-                if (
-                  typeof window !== "undefined" &&
-                  (window as unknown as { fbq?: unknown }).fbq
-                ) {
-                  (
-                    window as Window &
-                      typeof globalThis & {
-                        fbq?: (event: string, ...args: unknown[]) => void;
-                      }
-                  ).fbq("track", "Schedule");
-                }
-              }}
-              role="button"
-              className="
-      group relative inline-flex items-center justify-center
-      px-7 md:px-10 py-2 md:py-3
-      font-medium rounded-full
-      border border-slate-600 text-slate-300
-      backdrop-blur-md bg-slate-900/40
-      hover:text-white hover:border-cyan-400
-      hover:bg-slate-800/50
-      transition-all duration-300
-      overflow-hidden cursor-pointer
-    "
-            >
-              {/* Glow Border Animation */}
-              <span
-                className="
-        absolute inset-0 rounded-full
-        border border-transparent
-        group-hover:border-cyan-400
-        group-hover:shadow-[0_0_12px_3px_rgba(34,211,238,0.4)]
-        transition-all duration-500
-      "
-              ></span>
-
-              <span className="relative z-10 mr-2">Book</span>
-
-              <Clock className="h-4 w-4 text-muted-foreground  group-hover:text-cyan-500" />
-            </button>
-            {/* Offer CTA – Glass + Glow Border */}
-            <Link
-              href="/offer"
-              onClick={() => {
-                if (
-                  typeof window !== "undefined" &&
-                  (window as unknown as { fbq?: unknown }).fbq
-                ) {
-                  (
-                    window as Window &
-                      typeof globalThis & {
-                        fbq?: (event: string, ...args: unknown[]) => void;
-                      }
-                  ).fbq("track", "ViewContent", {
-                    content_name: "Offer",
-                  });
-                }
-              }}
-              className="
-      group relative inline-flex items-center justify-center
-      px-7 md:px-10 py-2 md:py-3
-      font-medium rounded-full
-      border-0 outline-0 ring-0
-      backdrop-blur-md bg-blue-600/70
-      hover:text-white
-      transition-all duration-300
-      overflow-hidden gap-2 text-white hover:bg-blue-500/70 cursor-pointer"
-            >
-              <span className="flex items-center">
-                <ArrowRight className="w-6 h-4 opacity-0 group-hover:opacity-100 translate-y-2 text-white group-hover:text-cyan-600 group-hover:translate-y-0 transform transition-all ease-in-out duration-300" />
-                <span className="-translate-x-2 group-hover:translate-x-0 transform transition-all ease-in-out duration-300">
-                  Offer
+                View Work
+                <span className="group-hover:translate-x-1 transition-transform duration-200">
+                  →
                 </span>
-              </span>
-            </Link>
-          </motion.div>
-        </motion.div>
+              </Link>
 
-        {/* RIGHT IMAGE SECTION */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 0.8, 0.3, 1] }}
-          className="flex justify-center lg:justify-end relative"
-        >
-          {/* Floating Elements */}
-          <div className="absolute -top-4 -right-4 w-8 h-8 bg-blue-400/20 rounded-full blur-sm animate-float"></div>
-          <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-cyan-400/10 rounded-full blur-sm animate-float-slower"></div>
-
-          <div className="relative">
-            {/* Main Image Container */}
-            <div className="relative w-80 h-80 sm:w-96 sm:h-96 rounded-full overflow-hidden border border-slate-700/50 shadow-2xl shadow-black/50 group">
-              {/* Animated Gradient Border */}
-              <div className="absolute inset-0 bg-linear-to-r from-blue-500/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -m-0.5 blur-sm"></div>
-
-              {/* Inner Glow */}
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute inset-0 rounded-3xl border border-white/5"></div>
-              </div>
-
-              {/* Background Pattern */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(120,119,198,0.1),transparent_70%)]"></div>
-              <Image
-                alt="Dhanesh - Full Stack Developer"
-                src="https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png"
-                fill
-                sizes="(max-width: 768px) 320px, 384px"
-                priority
-                className="object-cover scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
-              />
-
-              {/* Overlay Shine Effect */}
-              <div className="absolute inset-0 bg-linear-to-t from-slate-900/20 via-transparent to-slate-900/10"></div>
+              <button
+                id="hero-hire-btn"
+                onClick={() => handleToChangeState?.("fillOut", true)}
+                data-cursor="Hire"
+                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold tracking-wide border transition-all duration-200 hover:border-[var(--p-accent)] hover:text-[var(--p-accent)]"
+                style={{
+                  borderColor: "var(--p-border-mid)",
+                  color: "var(--p-text-muted)",
+                  background: "transparent",
+                }}
+              >
+                Let&apos;s Talk
+              </button>
             </div>
 
-            {/* Floating Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.5 }}
-              className="absolute -bottom-4 -right-4 bg-slate-800/80 backdrop-blur-md border border-slate-700/50 rounded-full px-4 py-3 shadow-2xl"
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium text-slate-200">
-                  Open to Work
+            {/* Availability widget */}
+            <div className="flex items-center gap-3">
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1.5"
+                style={{
+                  border: "1px solid var(--p-border-mid)",
+                  background: "var(--p-elevated)",
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full amber-pulse"
+                  style={{ background: "#4ade80" }}
+                />
+                <span
+                  className="text-xs font-mono"
+                  style={{ color: "var(--p-text-muted)" }}
+                >
+                  Next slot: May 2026
                 </span>
               </div>
+              <span
+                className="text-xs font-mono"
+                style={{ color: "var(--p-text-faint)" }}
+              >
+                · 1 spot open
+              </span>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Right: photo */}
+        <div className="lg:col-span-4 flex items-end justify-center lg:justify-end relative">
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="relative"
+          >
+            {/* Vertical available label (desktop) */}
+            <div
+              className="absolute -right-8 top-1/2 hidden lg:flex items-center gap-1.5 text-xs tracking-[0.35em] uppercase select-none"
+              style={{
+                color: "var(--p-accent)",
+                fontFamily: "var(--font-geist-mono)",
+                writingMode: "vertical-rl",
+                textOrientation: "mixed",
+                transform: "translateY(-50%) rotate(180deg)",
+              }}
+              aria-hidden
+            >
+              Available Now ↓
+            </div>
+
+            {/* Image rectangle */}
+            <div
+              className="relative overflow-hidden"
+              style={{
+                width: "clamp(180px, 22vw, 280px)",
+                height: "clamp(230px, 28vw, 360px)",
+                borderLeft: "2px solid var(--p-accent)",
+                background: "var(--p-elevated)",
+              }}
+            >
+              <Image
+                alt="Dhanesh Mekalthuru — Full Stack Developer"
+                src="https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png"
+                fill
+                sizes="280px"
+                priority
+                className="object-cover object-top hover:grayscale transition-all duration-700"
+              />
+              {/* Amber tint */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(245,158,11,0.12) 0%, transparent 50%)",
+                }}
+              />
+            </div>
+
+            {/* Open to work pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="absolute -bottom-4 left-0 flex items-center gap-2 px-3 py-1.5"
+              style={{
+                background: "var(--p-elevated)",
+                border: "1px solid var(--p-border-mid)",
+              }}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full amber-pulse"
+                style={{ background: "#4ade80" }}
+              />
+              <span
+                className="text-xs font-mono"
+                style={{ color: "var(--p-text-muted)" }}
+              >
+                Open to work
+              </span>
             </motion.div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* ── Bottom stats bar ── */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: hidden ? 0 : 1 }}
-        transition={{ duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.75 }}
+        className="relative z-10 px-6 md:px-16 pb-10 mt-14"
       >
-        <div className="flex flex-col items-center gap-2 text-slate-400">
-          <span className="text-sm">Scroll to explore</span>
-          <div className="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="w-1 h-3 bg-slate-400 rounded-full mt-2"
+        <div
+          className="flex items-center justify-between pt-6"
+          style={{ borderTop: "1px solid var(--p-border)" }}
+        >
+          <div className="flex items-center gap-6 md:gap-10">
+            {STATS.map((s, i) => (
+              <React.Fragment key={s.label}>
+                {i > 0 && (
+                  <div
+                    className="w-px h-7 hidden sm:block"
+                    style={{ background: "var(--p-border-mid)" }}
+                  />
+                )}
+                <div>
+                  <div
+                    className="font-display font-bold text-xl md:text-2xl leading-none"
+                    style={{ color: "var(--p-accent)" }}
+                  >
+                    {s.value}
+                  </div>
+                  <div
+                    className="text-xs uppercase tracking-widest mt-0.5"
+                    style={{
+                      color: "var(--p-text-muted)",
+                      fontFamily: "var(--font-geist-mono)",
+                    }}
+                  >
+                    {s.label}
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Scroll hint */}
+          <div
+            className="hidden sm:flex items-center gap-2 text-xs"
+            style={{
+              color: "var(--p-text-muted)",
+              fontFamily: "var(--font-geist-mono)",
+            }}
+          >
+            <span>Scroll</span>
+            <span
+              className="block w-8 h-px"
+              style={{ background: "var(--p-border-mid)" }}
             />
+            <span
+              style={{ color: "var(--p-accent)" }}
+              className="animate-bounce inline-block"
+            >
+              ↓
+            </span>
           </div>
         </div>
       </motion.div>

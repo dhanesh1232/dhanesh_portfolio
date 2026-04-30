@@ -1,177 +1,268 @@
 "use client";
 import * as React from "react";
-import { motion, type Variants } from "framer-motion";
-import { fadeUp, stagger, hoverLift } from "@/utils/motion";
-import {
-  FaCode,
-  FaPalette,
-  FaCog,
-  FaRocket,
-  FaRobot,
-  FaBullhorn,
-} from "react-icons/fa";
-import { Shimmer } from "../shimmer";
-import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
-const services = [
+const SERVICES = [
   {
-    id: "FULLSTACK_WEB_DEV",
+    id: "01",
     title: "Full-Stack Web Development",
+    engagement: "Fixed scope · Retainer",
     description:
-      "Crafting blazing-fast, scalable applications using Next.js, TypeScript, Node.js, and modern database systems.",
-    Icon: FaCode,
-    color: "gray",
-    text: "text-gray-300",
-    hover: "group-hover:text-gray-300",
-    bg: "bg-gray-500/10",
-    gradient: "from-gray-600 to-gray-400",
+      "Crafting blazing-fast, scalable applications using Next.js, TypeScript, Node.js, and modern database systems. From MVP to production-ready — performance and scalability are non-negotiable.",
+    deliverables: [
+      "Next.js / React Apps",
+      "REST & GraphQL APIs",
+      "Database Design",
+      "Performance Optimization",
+    ],
   },
   {
-    id: "UIUX_ENGINEERING",
+    id: "02",
     title: "UI/UX & Frontend Engineering",
+    engagement: "Fixed scope · Consulting",
     description:
-      "Designing refined interfaces with consistent systems, smooth interactions, and pixel-perfect execution.",
-    Icon: FaPalette,
-    color: "pink",
-    text: "text-pink-300",
-    hover: "group-hover:text-pink-300",
-    bg: "bg-pink-500/10",
-    gradient: "from-pink-500 to-purple-400",
+      "Designing refined interfaces with consistent design systems, smooth interactions, and pixel-perfect execution. Clean code that translates complex requirements into intuitive user experiences.",
+    deliverables: [
+      "Design Systems",
+      "Responsive Layouts",
+      "Motion & Interaction",
+      "Accessibility",
+    ],
   },
   {
-    id: "AI_AUTOMATION",
+    id: "03",
     title: "AI & Workflow Automation",
+    engagement: "Retainer · Fixed scope",
     description:
-      "Building n8n flows, chatbot agents, integrations, and custom automation pipelines that save time and boost efficiency.",
-    Icon: FaRobot,
-    color: "purple",
-    text: "text-purple-300",
-    hover: "group-hover:text-purple-300",
-    bg: "bg-purple-500/10",
-    gradient: "from-purple-500 to-indigo-400",
+      "Building n8n flows, LLM-powered chatbot agents, custom integrations, and automation pipelines that eliminate manual work, save hours, and run 24/7.",
+    deliverables: [
+      "n8n Workflows",
+      "AI Chatbots",
+      "Webhook Systems",
+      "CRM Automation",
+    ],
   },
   {
-    id: "SEO_ADS_GROWTH",
+    id: "04",
     title: "SEO, Ads & Growth Systems",
+    engagement: "Retainer · Performance",
     description:
-      "Creating high-converting landing pages, SEO optimization, and automated Google/Meta ad funnels that drive leads.",
-    Icon: FaBullhorn,
-    color: "blue",
-    text: "text-blue-300",
-    hover: "group-hover:text-blue-300",
-    bg: "bg-blue-500/10",
-    gradient: "from-blue-500 to-cyan-400",
+      "Creating high-converting landing pages, technical SEO audits, and automated Google/Meta ad funnels that turn traffic into qualified leads at scale.",
+    deliverables: [
+      "Technical SEO",
+      "Google Ads",
+      "Meta Ads",
+      "Conversion Funnels",
+    ],
   },
   {
-    id: "SAAS_PLATFORM_DEV",
+    id: "05",
     title: "SaaS MVP & Platform Development",
+    engagement: "Fixed scope · Equity",
     description:
-      "Transforming raw ideas into full SaaS platforms with user auth, billing, automation, and deployment pipelines.",
-    Icon: FaRocket,
-    color: "cyan",
-    text: "text-cyan-300",
-    hover: "group-hover:text-cyan-300",
-    bg: "bg-cyan-500/10",
-    gradient: "from-cyan-400 to-teal-400",
+      "Transforming raw ideas into full SaaS platforms: user auth, billing with Stripe, team management, admin dashboards, API design, and cloud deployment pipelines.",
+    deliverables: [
+      "Auth & Billing",
+      "Multi-tenancy",
+      "Admin Panels",
+      "API Architecture",
+    ],
   },
   {
-    id: "API_INTEGRATIONS",
-    title: "API Integrations & Technical Setup",
+    id: "06",
+    title: "API Integrations & Backend Systems",
+    engagement: "Fixed scope · Consulting",
     description:
-      "Connecting systems with custom APIs, webhook handlers, cloud services, and secure backend infrastructure.",
-    Icon: FaCog,
-    color: "oklch(76.5% 0.177 163.223)",
-    text: "text-emerald-300",
-    hover: "group-hover:text-emerald-300",
-    bg: "bg-emerald-500/10",
-    gradient: "from-emerald-500 to-green-400",
+      "Connecting systems with custom APIs, webhook handlers, third-party integrations, and secure backend infrastructure designed for reliability and scale.",
+    deliverables: [
+      "API Design",
+      "Webhook Systems",
+      "Cloud Services",
+      "Backend Infra",
+    ],
   },
 ];
 
 export default function Services() {
-  const [hovered, setHovered] = React.useState<string | null>(null);
+  const [open, setOpen] = React.useState<string | null>(null);
+
   return (
-    <section id="services" className="py-24 px-8 bg-slate-800/50">
-      <div className="max-w-7xl mx-auto">
+    <section
+      id="services"
+      className="section-pad"
+      style={{ background: "var(--p-elevated)" }}
+    >
+      <div className="max-content">
+        {/* Eyebrow */}
         <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={stagger as Variants}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-3 mb-16"
         >
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-6 text-center bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent"
-            variants={fadeUp as Variants}
-          >
-            What I Offer
-          </motion.h2>
+          <span className="accent-line" />
+          <span className="eyebrow">Services</span>
+        </motion.div>
 
-          <motion.p
-            className="text-lg text-slate-300 text-center mb-16 max-w-2xl mx-auto"
-            variants={fadeUp as Variants}
-          >
-            A blend of engineering, automation, and growth-focused execution —
-            delivering systems that perform and scale with purpose.
-          </motion.p>
+        {/* Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display font-bold leading-tight mb-14"
+          style={{
+            fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
+            color: "var(--p-text)",
+          }}
+        >
+          What I offer.
+        </motion.h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map(
-              ({
-                title,
-                description,
-                Icon,
-                bg,
-                color,
-                text,
-                hover,
-                gradient,
-                id,
-              }) => (
-                <motion.div
-                  key={id}
-                  className="rounded-2xl border p-0.5 border-slate-700 relative transition group"
-                  variants={fadeUp as Variants}
-                  whileHover="whileHover"
-                  custom={hoverLift}
-                  onHoverStart={() => setHovered(id)}
-                  onHoverEnd={() => setHovered(null)}
+        {/* Accordion list */}
+        <div>
+          {SERVICES.map((service, i) => {
+            const isOpen = open === service.id;
+            return (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.12 }}
+                transition={{
+                  duration: 0.45,
+                  delay: i * 0.07,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+              >
+                <div
+                  className="service-row"
+                  onClick={() => setOpen(isOpen ? null : service.id)}
+                  role="button"
+                  aria-expanded={isOpen}
+                  id={`service-${service.id}`}
                 >
-                  <Shimmer
-                    key={hovered ? `${id}-hover` : `${id}-idle`}
-                    color={color}
-                    duration={hovered === id ? "3.5s" : "2s"}
-                  />
-                  <div className="z-20 bg-slate-800 p-6 h-full rounded-2xl relative">
-                    <div
-                      className={`absolute inset-0 group-hover:bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-5 transition`}
-                    />
-                    <div className="flex items-center justify-between">
-                      <div
-                        className={`relative w-14 h-14 rounded-xl ${bg} flex items-center justify-center mb-6 transition`}
-                      >
-                        <Icon className={`w-7 h-7 ${text}`} />
-                      </div>
-                      <Icon
-                        className={cn(
-                          "opacity-0 group-hover:opacity-20 size-10 ease-in-out duration-500 transition-opacity",
-                          text
-                        )}
-                      />
-                    </div>
-
-                    <h3
-                      className={`text-xl font-semibold mb-3 ${hover} transition`}
+                  {/* Row header */}
+                  <div className="flex items-center gap-6 px-4 py-5 group">
+                    <span
+                      className="text-xs font-bold shrink-0 w-8"
+                      style={{
+                        color: "var(--p-accent)",
+                        fontFamily: "var(--font-geist-mono)",
+                      }}
                     >
-                      {title}
-                    </h3>
-                    <p className="text-slate-400 leading-relaxed">
-                      {description}
-                    </p>
+                      {service.id}
+                    </span>
+
+                    <span
+                      className="flex-1 font-display font-semibold text-base md:text-xl leading-tight transition-colors duration-200"
+                      style={{
+                        color: isOpen ? "var(--p-accent)" : "var(--p-text)",
+                      }}
+                    >
+                      {service.title}
+                    </span>
+
+                    {/* Engagement model */}
+                    <span
+                      className="text-xs font-mono hidden md:block shrink-0"
+                      style={{ color: "var(--p-text-faint)" }}
+                    >
+                      {service.engagement}
+                    </span>
+
+                    {/* Toggle indicator */}
+                    <span
+                      className="text-lg font-light shrink-0 transition-all duration-300"
+                      style={{
+                        color: isOpen
+                          ? "var(--p-accent)"
+                          : "var(--p-text-muted)",
+                        transform: isOpen ? "rotate(45deg)" : "none",
+                      }}
+                    >
+                      +
+                    </span>
                   </div>
-                </motion.div>
-              )
-            )}
-          </div>
+
+                  {/* Expanded panel */}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="body"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 pb-8 pt-2">
+                          {/* Description */}
+                          <div className="md:col-span-2">
+                            <p
+                              className="text-sm leading-relaxed"
+                              style={{ color: "var(--p-text-muted)" }}
+                            >
+                              {service.description}
+                            </p>
+                          </div>
+
+                          {/* Deliverables */}
+                          <div>
+                            <p
+                              className="text-xs uppercase tracking-widest mb-3"
+                              style={{
+                                color: "var(--p-text-faint)",
+                                fontFamily: "var(--font-geist-mono)",
+                              }}
+                            >
+                              Includes
+                            </p>
+                            <ul className="space-y-1.5">
+                              {service.deliverables.map((d) => (
+                                <li
+                                  key={d}
+                                  className="flex items-center gap-2 text-xs"
+                                  style={{ color: "var(--p-text-muted)" }}
+                                >
+                                  <span style={{ color: "var(--p-accent)" }}>
+                                    —
+                                  </span>
+                                  {d}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Section CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{ duration: 0.55, delay: 0.1 }}
+          className="mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-8"
+          style={{ borderTop: "1px solid var(--p-border)" }}
+        >
+          <p className="text-sm" style={{ color: "var(--p-text-muted)" }}>
+            Not sure which fits? Let&apos;s figure it out together.
+          </p>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold tracking-wide transition-all duration-200 hover:brightness-90 shrink-0"
+            style={{ background: "var(--p-accent)", color: "var(--p-bg)" }}
+          >
+            Start a project →
+          </a>
         </motion.div>
       </div>
     </section>

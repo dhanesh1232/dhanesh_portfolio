@@ -108,7 +108,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
             );
-          }
+          },
         )}
       </div>
     </ToastContext.Provider>

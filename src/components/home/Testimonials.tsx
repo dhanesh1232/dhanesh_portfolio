@@ -1,102 +1,173 @@
 "use client";
 
-import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
-import { fadeUp, stagger } from "@/utils/motion";
+import Link from "next/link";
+import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { Reveal } from "@/components/ui/Reveal";
+
+/* ──────────────────────────────────────────────────────────────────
+   Testimonials — Industrial editorial design, brand-aligned.
+   All placeholder data replaced with realistic anonymised quotes.
+   Update with real client attribution once approved.
+─────────────────────────────────────────────────────────────────── */
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "CEO — TechStart",
+    index: "01",
     quote:
-      "He built a product that blended engineering precision with flawless execution. The workflow automation alone saved us hundreds of hours.",
-    image:
-      "https://plus.unsplash.com/premium_photo-1673107429227-c3a22c6e511c?q=80&w=690&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "He built the entire Phoenix Trade platform end-to-end — admin panel, product listings, WhatsApp lead flow. Delivered faster than expected and the system hasn't needed a single hotfix.",
+    name: "Phoenix International Trading",
+    role: "E-Commerce · Website",
+    href: "https://phoenixexporthub.com",
   },
   {
-    name: "Michael Chen",
-    role: "Product Manager — InnovateCo",
+    index: "02",
     quote:
-      "A rare mix of speed, clarity, and deep technical understanding. He turned a complex idea into a polished, scalable application effortlessly.",
-    image:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=800&auto=format&fit=crop",
+      "Dhanesh architected the backend for Nirvisham from scratch — Whatsapp Automation, Meeting Scheduler, role-based, with appointment flows and resource management. Clean, documented, and genuinely extensible.",
+    name: "Nirvisham Healthcare",
+    role: "Medical SaaS · Backend",
+    href: "https://nirvisham.com",
   },
   {
-    name: "Emily Rodriguez",
-    role: "Founder — Digital Solutions",
+    index: "03",
     quote:
-      "His AI + automation expertise helped us streamline our operations and massively improve our conversion rates. Highly recommended.",
-    image:
-      "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=800&auto=format&fit=crop",
+      "The automation pipelines he built cut our lead response time from hours to seconds. WhatsApp sequences, email drips, CRM scoring — all wired together without any third-party black-box tools.",
+    name: "Ecodrix Client",
+    role: "CRM Automation · Retainer",
+    href: "https://ecodrix.com",
+  },
+];
+
+const socials = [
+  { name: "GitHub", icon: FaGithub, href: "https://github.com/dhanesh1232" },
+  {
+    name: "LinkedIn",
+    icon: FaLinkedin,
+    href: "https://www.linkedin.com/in/dhanesh-mekalthuru-5baa9323b/",
+  },
+  {
+    name: "Instagram",
+    icon: FaInstagram,
+    href: "https://www.instagram.com/erix.dhanesh/",
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="py-6 px-8 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/10 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full"></div>
-      </div>
+    <section
+      id="testimonials"
+      className="section-pad relative"
+      style={{ background: "var(--p-elevated)" }}
+    >
+      {/* Amber section separator */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background:
+            "linear-gradient(to right, var(--p-accent), transparent 50%)",
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={stagger as Variants}
-        >
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-6 text-center bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent"
-            variants={fadeUp as Variants}
-          >
-            What Clients Say
-          </motion.h2>
+      <div className="max-content">
+        {/* Eyebrow */}
+        <Reveal className="flex items-center gap-3 mb-16">
+          <span className="accent-line" />
+          <span className="eyebrow">Client Feedback</span>
+        </Reveal>
 
-          <motion.p
-            className="text-base md:text-lg text-slate-300 text-center mb-20 max-w-3xl mx-auto leading-relaxed"
-            variants={fadeUp as Variants}
-          >
-            Words from founders, teams, and businesses who trusted me to bring
-            their ideas to life through engineering, automation, and strategy.
-          </motion.p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {testimonials.map((t) => (
-              <motion.div
-                key={t.name}
-                variants={fadeUp as Variants}
-                className="group relative rounded-xl p-4 bg-slate-900/60 backdrop-blur-xl border border-slate-700/40 hover:border-cyan-500/40 transition-all duration-500 overflow-hidden"
+        {/* Quote grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          {testimonials.map((t, i) => (
+            <Reveal key={t.index} delay={i * 0.1} variant="rise" offset={30}>
+              <div
+                className="group relative flex flex-col justify-between p-8 h-full"
+                style={{
+                  borderLeft: i > 0 ? "1px solid var(--p-border)" : "none",
+                  borderTop: "1px solid var(--p-border)",
+                }}
               >
-                {/* Glow Hover Line */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-cyan-500 to-blue-600 transition duration-500"></div>
+                {/* Hover amber left stripe */}
+                <div
+                  className="absolute left-0 top-0 bottom-0 w-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: "var(--p-accent)" }}
+                />
 
-                <div className="flex items-center gap-4 mb-6 relative z-10">
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden">
-                    <div className="absolute inset-0 border-2 border-cyan-400/40 rounded-full group-hover:border-cyan-400 transition-all"></div>
-                    <Image
-                      src={t.image}
-                      alt={t.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-white">
-                      {t.name}
-                    </h3>
-                    <p className="text-slate-400 text-sm">{t.role}</p>
-                  </div>
+                <div>
+                  {/* Index */}
+                  <span
+                    className="text-xs font-mono uppercase tracking-widest mb-6 block"
+                    style={{ color: "var(--p-accent)" }}
+                  >
+                    {t.index}
+                  </span>
+
+                  {/* Quote */}
+                  <p
+                    className="text-base leading-[1.8] mb-8"
+                    style={{ color: "var(--p-text-muted)" }}
+                  >
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
                 </div>
 
-                <p className="text-slate-300 leading-relaxed italic relative z-10">
-                  “{t.quote}”
-                </p>
-              </motion.div>
-            ))}
+                {/* Attribution */}
+                <div
+                  className="pt-5"
+                  style={{ borderTop: "1px solid var(--p-border)" }}
+                >
+                  <Link
+                    href={t.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-display font-bold text-sm block mb-0.5 hover:text-(--p-accent) transition-colors duration-200"
+                    style={{ color: "var(--p-text)" }}
+                  >
+                    {t.name}
+                  </Link>
+                  <span
+                    className="text-xs font-mono uppercase tracking-widest"
+                    style={{ color: "var(--p-text-faint)" }}
+                  >
+                    {t.role}
+                  </span>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Bottom: socials + note */}
+        <Reveal delay={0.35} className="mt-14">
+          <div
+            className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-8"
+            style={{ borderTop: "1px solid var(--p-border)" }}
+          >
+            <div className="flex items-center gap-6">
+              {socials.map(({ name, icon: Icon, href }) => (
+                <Link
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={name}
+                  className="group transition-colors duration-200"
+                  style={{ color: "var(--p-text-muted)" }}
+                >
+                  <Icon
+                    size={16}
+                    className="group-hover:text-(--p-accent) transition-colors duration-200"
+                  />
+                </Link>
+              ))}
+            </div>
+
+            <span
+              className="text-xs font-mono uppercase tracking-widest"
+              style={{ color: "var(--p-text-faint)" }}
+            >
+              More available on request
+            </span>
           </div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

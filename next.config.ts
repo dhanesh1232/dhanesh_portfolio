@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         hostname: "plus.unsplash.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.ecodrix.com",
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowSVG: true, // ✅ Needed for SVG images
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;", // ✅ (Optional but recommended)

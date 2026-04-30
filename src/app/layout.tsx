@@ -1,30 +1,64 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Syne } from "next/font/google";
 import "./globals.css";
 import { PortfolioProvider } from "@/context/parent";
 import { MainLayout } from "@/components/layout/main";
 import { Toaster } from "sonner";
-import MetaPixel from "@/components/tracking/MetaPixel";
 import Script from "next/script";
 
-const geistSans = Geist({
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+});
+
+const geist = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
+const OG_IMAGE = "https://portfolio.ecodrix.com/og-card.png";
+
 export const metadata: Metadata = {
-  title: "Dhanesh - Full-Stack Developer & SaaS Builder",
+  title: "Dhanesh M. — Full-Stack Developer & SaaS Builder",
   description:
-    "Portfolio of Dhanesh - Building scalable SaaS platforms and open-source tools",
+    "I build fast, scalable web products, SaaS platforms, and AI-powered systems. Andhra Pradesh-based full-stack engineer & entrepreneur.",
+  metadataBase: new URL("https://portfolio.ecodrix.com"),
+  openGraph: {
+    title: "Dhanesh M. — Full-Stack Developer & SaaS Builder",
+    description:
+      "Building scalable SaaS platforms, AI automations, and growth systems.",
+    url: "https://portfolio.ecodrix.com",
+    siteName: "Dhanesh M.",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Dhanesh M. — Full-Stack Developer",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dhanesh M. — Full-Stack Developer & SaaS Builder",
+    description:
+      "Building scalable SaaS platforms, AI automations, and growth systems.",
+    images: [OG_IMAGE],
+  },
   icons: {
-    icon: "https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png",
-    apple:
-      "https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png",
+    icon: "/favicon.ico",
+    apple: "/og-card.png",
   },
 };
 
@@ -36,11 +70,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="icon"
-          href="https://res.cloudinary.com/dhzw6k0vc/image/upload/v1763133090/DN_u5rrpd.png"
-          type="image/png"
-        />
         <meta
           name="facebook-domain-verification"
           content="jl1vkjxmuowl2xl4ame6u3fdbltm1j"
@@ -71,11 +100,19 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100`}
+        className={`${syne.variable} ${geist.variable} ${geistMono.variable} antialiased`}
       >
         <PortfolioProvider>
-          {/* <MetaPixel /> */}
-          <Toaster />
+          <Toaster
+            theme="dark"
+            toastOptions={{
+              style: {
+                background: "var(--p-elevated)",
+                border: "1px solid var(--p-border-mid)",
+                color: "var(--p-text)",
+              },
+            }}
+          />
           <MainLayout>{children}</MainLayout>
         </PortfolioProvider>
       </body>

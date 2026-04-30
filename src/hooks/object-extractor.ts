@@ -3,6 +3,6 @@ export const extractSkills = (skillsObj: object) => {
     items.map((skill: object) => ({
       ...skill,
       category,
-    }))
+    })),
   );
 };

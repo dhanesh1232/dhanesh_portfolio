@@ -10,6 +10,9 @@ interface PortfolioContextType {
   showOffer: boolean;
   setShowOffer: (value: boolean) => void;
 
+  navOpen: boolean;
+  setNavOpen: (value: boolean) => void;
+
   // New
   state?: Record<string, boolean>;
   handleToChangeState: (key: string, value: boolean) => void;
@@ -25,7 +28,7 @@ const defaultState: Record<string, boolean> = {
 };
 
 const PortfolioContext = React.createContext<PortfolioContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
@@ -35,6 +38,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] =
     React.useState<Record<string, boolean>>(defaultState);
   const [form, setForm] = React.useState<Record<string, string>>(defaultForm);
+  const [navOpen, setNavOpen] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -48,7 +52,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     if (typeof window !== "undefined") {
       console.log(
         "fbq in client:",
-        (window as unknown as { fbq?: unknown }).fbq
+        (window as unknown as { fbq?: unknown }).fbq,
       );
     }
   }, []);
@@ -66,7 +70,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
   const handleToChangeState = (
     key: keyof typeof defaultState,
-    value: boolean
+    value: boolean,
   ) => {
     setState(() => ({
       ...defaultState,
@@ -93,6 +97,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             slotsLeft,
             form,
             setForm,
+            navOpen,
+            setNavOpen,
           }}
         >
           {children}

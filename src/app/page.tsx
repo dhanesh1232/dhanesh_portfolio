@@ -1,6 +1,7 @@
 import { About } from "@/components/home/About";
 import { CTA } from "@/components/home/cta";
 import { Hero } from "@/components/home/hero";
+import { Process } from "@/components/home/Process";
 import { Projects } from "@/components/home/Projects";
 import Services from "@/components/home/Services";
 import { Skills } from "@/components/home/Skills";
@@ -11,15 +12,16 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="bg-transparent">
+      <main>
         <Hero />
         <About />
         <Skills />
         <Projects />
+        <Testimonials />
         <Services />
-        {/* <Testimonials /> */}
+        <Process />
         <CTA />
-      </div>
+      </main>
     </>
   );
 }

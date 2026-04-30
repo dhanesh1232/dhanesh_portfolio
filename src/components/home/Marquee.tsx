@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { fadeUp } from "@/utils/motion";
-import type { Skill, SkillsRecord } from "./Skills";
 
 interface LogomarqueeProps {
   className?: string;
@@ -13,20 +12,6 @@ interface LogomarqueeProps {
 
 function Logomarquee({ skills, className }: LogomarqueeProps) {
   const logos = extractSkills(skills!);
-  React.useEffect(() => {
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = `
-      @keyframes marquee-move {
-        to {
-          transform: translateX(calc(-100cqw - var(--item-gap)));
-        }
-      }
-    `;
-    document.head.appendChild(styleSheet);
-    return () => {
-      document.head.removeChild(styleSheet);
-    };
-  }, []);
 
   return (
     <AnimatePresence>
@@ -35,14 +20,14 @@ function Logomarquee({ skills, className }: LogomarqueeProps) {
         className={cn("items-center overflow-hidden", className)}
       >
         <div className="w-full max-w-7xl flex flex-col gap-y-6">
-          <Marquee logos={logos} />
+          <MarqueeTrack logos={logos} />
         </div>
       </motion.div>
     </AnimatePresence>
   );
 }
 
-const Marquee = ({
+const MarqueeTrack = ({
   logos,
   direction = "forwards",
 }: {
@@ -50,9 +35,9 @@ const Marquee = ({
   direction?: string;
 }) => {
   const numItems = logos.length;
-  const speed = "25s";
-  const itemWidth = "80px";
-  const itemGap = "25px";
+  const speed = "28s";
+  const itemWidth = "76px";
+  const itemGap = "16px";
 
   return (
     <div
@@ -65,7 +50,7 @@ const Marquee = ({
           "--item-gap": itemGap,
           "--direction": direction,
           maskImage:
-            "linear-gradient(to right, transparent, black 2rem, black calc(100% - 2rem), transparent)",
+            "linear-gradient(to right, transparent, black 3rem, black calc(100% - 3rem), transparent)",
         } as React.CSSProperties
       }
     >
@@ -78,26 +63,26 @@ const Marquee = ({
           } as React.CSSProperties
         }
       >
-        {[...logos, ...logos].map(({ Icon, color }, index) => {
-          return (
-            <div
-              key={index}
-              className="flex-shrink-0 group flex justify-center items-center bg-slate-700/50 rounded-xl border border-slate-600/30 hover:border-cyan-500/50 transition-all duration-300"
-              style={
-                {
-                  width: "var(--item-width)",
-                  aspectRatio: "1 / 1.2",
-                  marginRight: "var(--item-gap)",
-                  animation: `marquee-move var(--speed) linear infinite ${direction}`,
-                } as React.CSSProperties
-              }
-            >
-              <Icon
-                className={`w-3/5 h-auto ${color} group-hover:scale-110 transition-transform ease-in-out duration-150`}
-              />
-            </div>
-          );
-        })}
+        {[...logos, ...logos].map(({ Icon, color }, index) => (
+          <div
+            key={index}
+            className="shrink-0 group flex justify-center items-center transition-all duration-300"
+            style={
+              {
+                width: "var(--item-width)",
+                aspectRatio: "1 / 1",
+                marginRight: "var(--item-gap)",
+                animation: `marquee-move var(--speed) linear infinite ${direction}`,
+                border: "1px solid var(--p-border)",
+                background: "var(--p-elevated)",
+              } as React.CSSProperties
+            }
+          >
+            <Icon
+              className={`w-2/5 h-auto ${color} group-hover:scale-110 transition-transform ease-out duration-200`}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
