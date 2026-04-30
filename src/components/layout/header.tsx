@@ -332,7 +332,7 @@ export function Navbar() {
                   { label: "GitHub", href: "https://github.com/dhanesh1232" },
                   {
                     label: "LinkedIn",
-                    href: "https://www.linkedin.com/in/dhanesh-mekalthuru-5baa9323b/",
+                    href: "https://www.linkedin.com/in/dhanesh-ecodrix/",
                   },
                   { label: "Ecodrix", href: "https://ecodrix.com" },
                 ].map(({ label, href }) => (

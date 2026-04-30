@@ -8,7 +8,7 @@ const socialLinks = [
   {
     name: "LinkedIn",
     icon: FaLinkedin,
-    href: "https://www.linkedin.com/in/dhanesh-mekalthuru-5baa9323b/",
+    href: "https://www.linkedin.com/in/dhanesh-ecodrix/",
   },
   {
     name: "Instagram",
