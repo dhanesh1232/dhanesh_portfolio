@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Reveal, RevealGroup } from "@/components/ui/Reveal";
 import { CountUp } from "@/components/ui/CountUp";
+import { GitHubPulse } from "@/components/home/GitHubPulse";
 
 const STATS = [
   { num: 3, suffix: "+", label: "Years of\nEngineering" },
@@ -196,6 +197,11 @@ export function About() {
                 </span>
               ))}
             </motion.div>
+
+            {/* GitHub Pulse */}
+            <div className="mt-10">
+              <GitHubPulse />
+            </div>
           </div>
         </div>
       </div>

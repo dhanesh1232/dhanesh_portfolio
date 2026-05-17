@@ -7,6 +7,9 @@ const SERVICES = [
     id: "01",
     title: "Full-Stack Web Development",
     engagement: "Fixed scope · Retainer",
+    priceFrom: "$2.5K",
+    priceFromINR: "₹2L",
+    timeline: "2 – 6 weeks",
     description:
       "Crafting blazing-fast, scalable applications using Next.js, TypeScript, Node.js, and modern database systems. From MVP to production-ready — performance and scalability are non-negotiable.",
     deliverables: [
@@ -20,6 +23,9 @@ const SERVICES = [
     id: "02",
     title: "UI/UX & Frontend Engineering",
     engagement: "Fixed scope · Consulting",
+    priceFrom: "$1.5K",
+    priceFromINR: "₹1.2L",
+    timeline: "1 – 3 weeks",
     description:
       "Designing refined interfaces with consistent design systems, smooth interactions, and pixel-perfect execution. Clean code that translates complex requirements into intuitive user experiences.",
     deliverables: [
@@ -33,6 +39,9 @@ const SERVICES = [
     id: "03",
     title: "AI & Workflow Automation",
     engagement: "Retainer · Fixed scope",
+    priceFrom: "$1.8K",
+    priceFromINR: "₹1.5L",
+    timeline: "1 – 4 weeks",
     description:
       "Building n8n flows, LLM-powered chatbot agents, custom integrations, and automation pipelines that eliminate manual work, save hours, and run 24/7.",
     deliverables: [
@@ -46,6 +55,9 @@ const SERVICES = [
     id: "04",
     title: "SEO, Ads & Growth Systems",
     engagement: "Retainer · Performance",
+    priceFrom: "$1.2K/mo",
+    priceFromINR: "₹1L/mo",
+    timeline: "Ongoing",
     description:
       "Creating high-converting landing pages, technical SEO audits, and automated Google/Meta ad funnels that turn traffic into qualified leads at scale.",
     deliverables: [
@@ -59,6 +71,9 @@ const SERVICES = [
     id: "05",
     title: "SaaS MVP & Platform Development",
     engagement: "Fixed scope · Equity",
+    priceFrom: "$5K",
+    priceFromINR: "₹4L",
+    timeline: "4 – 10 weeks",
     description:
       "Transforming raw ideas into full SaaS platforms: user auth, billing with Stripe, team management, admin dashboards, API design, and cloud deployment pipelines.",
     deliverables: [
@@ -72,6 +87,9 @@ const SERVICES = [
     id: "06",
     title: "API Integrations & Backend Systems",
     engagement: "Fixed scope · Consulting",
+    priceFrom: "$1.5K",
+    priceFromINR: "₹1.2L",
+    timeline: "1 – 3 weeks",
     description:
       "Connecting systems with custom APIs, webhook handlers, third-party integrations, and secure backend infrastructure designed for reliability and scale.",
     deliverables: [
@@ -85,6 +103,7 @@ const SERVICES = [
 
 export default function Services() {
   const [open, setOpen] = React.useState<string | null>(null);
+  const [currency, setCurrency] = React.useState<"USD" | "INR">("USD");
 
   return (
     <section
@@ -111,7 +130,7 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.12 }}
           transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display font-bold leading-tight mb-14"
+          className="font-display font-bold leading-tight mb-6"
           style={{
             fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
             color: "var(--p-text)",
@@ -119,6 +138,53 @@ export default function Services() {
         >
           What I offer.
         </motion.h2>
+
+        {/* Currency toggle + lead text */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{ duration: 0.55, delay: 0.1 }}
+          className="flex items-end justify-between gap-6 mb-12 flex-wrap"
+        >
+          <p
+            className="text-sm leading-relaxed max-w-md"
+            style={{ color: "var(--p-text-muted)" }}
+          >
+            Indicative pricing — every project is scoped after a discovery
+            call. Domestic clients invoiced with GST.
+          </p>
+
+          <div
+            className="inline-flex items-center text-[10px] font-mono uppercase tracking-widest"
+            style={{ border: "1px solid var(--p-border-mid)" }}
+            role="tablist"
+            aria-label="Currency"
+          >
+            {(["USD", "INR"] as const).map((c) => {
+              const active = currency === c;
+              return (
+                <button
+                  key={c}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setCurrency(c)}
+                  className="px-3 py-1.5 transition-colors duration-200"
+                  style={{
+                    background: active
+                      ? "var(--p-accent)"
+                      : "transparent",
+                    color: active
+                      ? "var(--p-bg)"
+                      : "var(--p-text-muted)",
+                  }}
+                >
+                  {c}
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
 
         {/* Accordion list */}
         <div>
@@ -164,13 +230,28 @@ export default function Services() {
                       {service.title}
                     </span>
 
-                    {/* Engagement model */}
-                    <span
-                      className="text-xs font-mono hidden md:block shrink-0"
-                      style={{ color: "var(--p-text-faint)" }}
-                    >
-                      {service.engagement}
-                    </span>
+                    {/* Price + timeline (desktop) */}
+                    <div className="hidden md:flex items-center gap-4 shrink-0">
+                      <span
+                        className="text-xs font-mono"
+                        style={{ color: "var(--p-text-faint)" }}
+                      >
+                        {service.timeline}
+                      </span>
+                      <span
+                        className="text-xs font-mono uppercase tracking-widest px-2.5 py-1"
+                        style={{
+                          color: "var(--p-accent)",
+                          background: "rgba(245,158,11,0.06)",
+                          border: "1px solid rgba(245,158,11,0.18)",
+                        }}
+                      >
+                        From{" "}
+                        {currency === "USD"
+                          ? service.priceFrom
+                          : service.priceFromINR}
+                      </span>
+                    </div>
 
                     {/* Toggle indicator */}
                     <span
@@ -201,11 +282,21 @@ export default function Services() {
                           {/* Description */}
                           <div className="md:col-span-2">
                             <p
-                              className="text-sm leading-relaxed"
+                              className="text-sm leading-relaxed mb-5"
                               style={{ color: "var(--p-text-muted)" }}
                             >
                               {service.description}
                             </p>
+
+                            {/* Engagement model row */}
+                            <div className="flex flex-wrap items-center gap-4 text-[10px] font-mono uppercase tracking-widest">
+                              <span style={{ color: "var(--p-text-faint)" }}>
+                                Engagement
+                              </span>
+                              <span style={{ color: "var(--p-text-muted)" }}>
+                                {service.engagement}
+                              </span>
+                            </div>
                           </div>
 
                           {/* Deliverables */}

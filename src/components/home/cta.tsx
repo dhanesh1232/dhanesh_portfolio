@@ -151,7 +151,53 @@ export function CTA() {
               }}
               className="space-y-6"
             >
-              {/* Email */}
+              {/* Schedule a 15-min intro call */}
+              <div
+                className="p-5"
+                style={{
+                  border: "1px solid var(--p-accent-border)",
+                  background: "rgba(245,158,11,0.04)",
+                }}
+              >
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span
+                    className="text-[10px] font-mono uppercase tracking-widest"
+                    style={{ color: "var(--p-accent)" }}
+                  >
+                    Free 15-min intro
+                  </span>
+                  <span
+                    className="text-[10px] font-mono uppercase tracking-widest"
+                    style={{ color: "var(--p-text-muted)" }}
+                  >
+                    No obligation
+                  </span>
+                </div>
+                <p
+                  className="text-sm leading-relaxed mb-4"
+                  style={{ color: "var(--p-text-muted)" }}
+                >
+                  Pick a slot that works in your timezone — I&apos;ll come
+                  prepared with questions about your goals, scope, and stack.
+                </p>
+                <a
+                  href="https://cal.com/dhanesh-ecodrix/15min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="Book"
+                  className="group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold tracking-wide transition-all duration-200 hover:brightness-90"
+                  style={{
+                    background: "var(--p-accent)",
+                    color: "var(--p-bg)",
+                  }}
+                >
+                  Open calendar
+                  <span className="group-hover:translate-x-1 transition-transform duration-200">
+                    →
+                  </span>
+                </a>
+              </div>
+
               <div
                 className="flex items-center justify-between py-4"
                 style={{ borderBottom: "1px solid var(--p-border)" }}

@@ -85,7 +85,12 @@ export const Hero = () => {
             style={{ background: "var(--p-accent)" }}
           />
           <span className="eyebrow">
-            Full·Stack Developer &amp; SaaS Builder
+            Full·Stack Developer &amp; SaaS Builder &amp; Founder of{" "}
+            <strong
+              style={{ color: "var(--p-accent)" }}
+            >
+              ECODrIx
+            </strong>
           </span>
         </div>
         <span
@@ -210,14 +215,14 @@ export const Hero = () => {
                   className="text-xs font-mono"
                   style={{ color: "var(--p-text-muted)" }}
                 >
-                  Next slot: May 2026
+                  Next slot: June - July 2026
                 </span>
               </div>
               <span
                 className="text-xs font-mono"
                 style={{ color: "var(--p-text-faint)" }}
               >
-                · 1 spot open
+                · limited spot open
               </span>
             </div>
           </motion.div>
