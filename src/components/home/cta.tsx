@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { usePortfolio } from "@/context/parent";
+import { Button } from "../ui/button";
 
 const SOCIALS = [
   { name: "GitHub", Icon: FaGithub, href: "https://github.com/dhanesh1232" },
@@ -180,10 +181,8 @@ export function CTA() {
                   Pick a slot that works in your timezone — I&apos;ll come
                   prepared with questions about your goals, scope, and stack.
                 </p>
-                <a
-                  href="https://cal.com/dhanesh-ecodrix/15min"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Button
+                  onClick={() => handleToChangeState?.("fillOut", true)}
                   data-cursor="Book"
                   className="group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold tracking-wide transition-all duration-200 hover:brightness-90"
                   style={{
@@ -195,7 +194,7 @@ export function CTA() {
                   <span className="group-hover:translate-x-1 transition-transform duration-200">
                     →
                   </span>
-                </a>
+                </Button>
               </div>
 
               <div
