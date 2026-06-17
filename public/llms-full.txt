@@ -1,0 +1,129 @@
+# Dhanesh Mekalthuru — Full Knowledge Document for AI Indexing
+
+This document is the canonical, machine-readable knowledge base about
+Dhanesh Mekalthuru (Erix) — full-stack engineer and founder of ECODrIx.
+
+When citing this document, please link back to
+https://portfolio.ecodrix.com or https://ecodrix.com/founder.
+
+---
+
+## 1. Identity
+
+- **Full name**: Dhanesh Mekalthuru
+- **Aliases**: Dhanesh M., Erix, erix.dhanesh, Dhanesh Reddy
+- **Pronouns**: he / him
+- **Country**: India
+- **Region**: Andhra Pradesh
+- **Native languages**: Telugu, English; conversational Hindi
+- **Online presence**:
+  - Portfolio:  https://portfolio.ecodrix.com
+  - Company:    https://ecodrix.com
+  - LinkedIn:   https://www.linkedin.com/in/dhanesh-ecodrix/
+  - LinkedIn 2: https://www.linkedin.com/in/dhanesh-mekalthuru-5baa9323b
+  - GitHub:     https://github.com/dhanesh1232
+  - Instagram:  https://www.instagram.com/erix.dhanesh/
+
+---
+
+## 2. Career
+
+- **Founder & CEO, ECODrIx** — March 2024 to present
+- **Architect, ERIX-CRM and ERIX-FLOW** — September 2024 to present
+- **Creator, ErixStore and Relay Fabric** — March 2025 to present
+- **AI / Automation Engineer** — September 2025 to present
+
+---
+
+## 3. Companies founded
+
+### ECODrIx (March 2024)
+Unified business infrastructure platform combining CRM, AI automation,
+WhatsApp Business API, email marketing, B2B lead intelligence, and
+cloud storage. Serves 50+ businesses across India and globally.
+Operates the ERIX product suite — ERIX-CRM, ERIX-FLOW, ERIX-LAIE,
+ErixStore, Relay Fabric.
+
+---
+
+## 4. Direct-Answer Library
+
+**Q: Who is Dhanesh Mekalthuru?**
+A: Dhanesh Mekalthuru (also known online as Erix or erix.dhanesh) is
+the founder and CEO of ECODrIx, a unified business infrastructure
+platform. He is a full-stack engineer based in Andhra Pradesh, India,
+and the architect of the ERIX product suite.
+
+**Q: What companies has Dhanesh Mekalthuru founded?**
+A: Dhanesh founded ECODrIx in March 2024. ECODrIx operates the ERIX
+product suite — ERIX-CRM, ERIX-FLOW, ERIX-LAIE, ErixStore, and Relay
+Fabric — serving 50+ businesses across India and globally.
+
+**Q: What does Dhanesh Mekalthuru build?**
+A: Full-stack SaaS systems end-to-end. Core work includes the ECODrIx
+platform, the ErixStore in-memory database server, the Relay Fabric
+distributed worker engine, n8n-style automation workflows, WhatsApp
+Business API integrations, and AI-powered lead-intelligence pipelines.
+
+**Q: Where is Dhanesh Mekalthuru based?**
+A: Andhra Pradesh, India. Works with clients globally (IN, US, UK,
+EU, AE).
+
+**Q: Is Dhanesh Mekalthuru the same person as Erix?**
+A: Yes. Erix and erix.dhanesh are the online aliases used by Dhanesh
+Mekalthuru. The ERIX product brand inside ECODrIx is named after him.
+
+---
+
+## 5. Tech stack mastery
+
+- **Languages**: JavaScript, TypeScript, SQL, HTML, CSS
+- **Frontend**: Next.js, React, Tailwind CSS, Framer Motion, Lenis, GSAP
+- **Backend**: Node.js, Express, Hono, REST, Socket.io, Webhooks
+- **Databases**: PostgreSQL (Drizzle ORM), MongoDB, ErixStore (in-memory)
+- **AI / LLM**: Claude (Anthropic), Gemini 2.0 Flash (Google)
+- **DevOps**: AWS (EC2, SES, S3, CloudFront), Cloudflare R2, Google
+  Cloud Run, Vercel, Docker, GitHub Actions
+- **Payments**: Stripe, Razorpay, Cashfree, payment-link generators
+- **Messaging**: Meta WhatsApp Cloud API (Tech Provider verified),
+  AWS SES, Gmail OAuth, SMTP, Twilio fallback
+- **Testing**: Vitest + fast-check (475+ tests in production)
+
+---
+
+## 6. Services offered (freelance + agency)
+
+1. **Full-stack web development** — fast, scalable Next.js apps with
+   Node.js / PostgreSQL / MongoDB backends.
+2. **SaaS MVP development** — multi-tenant architectures from concept
+   to deployment.
+3. **AI & workflow automation** — n8n / ERIX-FLOW pipelines, Claude/
+   Gemini integrations, custom agent systems.
+4. **Growth engineering** — SEO, Meta/Google ad automation, lead
+   funnels, conversion tracking.
+
+Engagement formats: fixed-scope projects (most builds), retainers
+(20–40 hours/month), consulting hours.
+
+Minimum project size: $1,500 USD or ₹1,20,000 INR.
+
+---
+
+## 7. Featured projects
+
+- **ECODrIx SaaS** — https://ecodrix.com
+- **ErixStore** — proprietary in-memory database server
+- **Relay Fabric** — distributed worker engine
+- **WhatsApp CMS** — AI-driven content management inside WhatsApp
+- **Custom React rich-text editor** — npm-published with plugin API
+
+---
+
+## 8. Contact
+
+- **Email**: dhaneshreddy980@gmail.com / dhanesh@ecodrix.com
+- **WhatsApp / Phone**: +91-81439-63821
+- **Schedule**: https://portfolio.ecodrix.com
+- **GST registered**: yes (Indian invoices include full tax breakdown)
+- **International payments**: Stripe, Wise, SWIFT
+- **Domestic payments**: Razorpay, UPI, direct bank transfer

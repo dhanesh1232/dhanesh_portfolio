@@ -1,0 +1,20 @@
+/* TEAM */
+
+  Solo:  Dhanesh Mekalthuru (Erix)
+  Site:  https://portfolio.ecodrix.com
+  Email: dhanesh@ecodrix.com
+  Phone: +91-81439-63821
+  From:  Andhra Pradesh, India
+
+/* SITE */
+
+  Last update:  2026/06/17
+  Standards:    HTML5, CSS3, ES2024, JSON-LD
+  Components:   Next.js 16 (App Router), React 19, TypeScript 5,
+                Tailwind CSS 4, Framer Motion, Lenis
+  Languages:    English, Hindi, Telugu
+
+/* THANKS */
+
+  To the open source maintainers behind Next.js, Drizzle, Vitest,
+  Lenis, Framer Motion, GSAP, Tailwind, shadcn/ui, and many more.

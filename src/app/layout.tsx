@@ -28,32 +28,82 @@ const geistMono = Geist_Mono({
 const OG_IMAGE = "https://portfolio.ecodrix.com/og-card.png";
 
 export const metadata: Metadata = {
-  title: "Dhanesh M. — Full-Stack Developer & SaaS Builder",
+  title: {
+    default: "Dhanesh Mekalthuru — Full-Stack Developer & Founder of ECODrIx",
+    template: "%s | Dhanesh M.",
+  },
   description:
-    "I build fast, scalable web products, SaaS platforms, and AI-powered systems. Andhra Pradesh-based full-stack engineer & entrepreneur.",
+    "Dhanesh Mekalthuru (Erix) — full-stack developer, SaaS builder, and founder of ECODrIx. Architect of the ERIX-CRM, ERIX-FLOW, ERIX-LAIE, and ErixStore product suite. Building AI automation, n8n workflows, and web infrastructure end-to-end.",
   metadataBase: new URL("https://portfolio.ecodrix.com"),
+  keywords: [
+    "Dhanesh Mekalthuru",
+    "Dhanesh M.",
+    "Dhanesh M Reddy",
+    "who is Dhanesh Mekalthuru",
+    "Erix",
+    "erix.dhanesh",
+    "ECODrIx founder",
+    "ECODrIx CEO",
+    "ECODrix",
+    "ERIX CRM",
+    "ERIX-FLOW",
+    "ERIX-LAIE",
+    "ErixStore",
+    "Relay Fabric",
+    "full stack developer India",
+    "full stack developer Andhra Pradesh",
+    "SaaS architect India",
+    "SaaS founder India",
+    "AI automation engineer",
+    "n8n workflows",
+    "WhatsApp API integration",
+    "Andhra Pradesh software engineer",
+    "next.js developer India",
+    "node.js engineer India",
+    "freelance full stack developer",
+  ],
+  authors: [
+    { name: "Dhanesh Mekalthuru", url: "https://portfolio.ecodrix.com" },
+  ],
+  creator: "Dhanesh Mekalthuru",
+  publisher: "Dhanesh Mekalthuru",
+  alternates: {
+    canonical: "https://portfolio.ecodrix.com",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "Dhanesh M. — Full-Stack Developer & SaaS Builder",
+    title: "Dhanesh Mekalthuru — Full-Stack Developer & Founder of ECODrIx",
     description:
-      "Building scalable SaaS platforms, AI automations, and growth systems.",
+      "Building scalable SaaS platforms, AI automations, and the ERIX product suite. Founder of ECODrIx.",
     url: "https://portfolio.ecodrix.com",
-    siteName: "Dhanesh M.",
+    siteName: "Dhanesh Mekalthuru — Portfolio",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Dhanesh M. — Full-Stack Developer",
+        alt: "Dhanesh Mekalthuru — Full-Stack Developer & ECODrIx Founder",
       },
     ],
     locale: "en_IN",
+    alternateLocale: ["en_US", "en_GB"],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dhanesh M. — Full-Stack Developer & SaaS Builder",
+    title: "Dhanesh Mekalthuru — Full-Stack Developer & Founder of ECODrIx",
     description:
-      "Building scalable SaaS platforms, AI automations, and growth systems.",
+      "Full-stack engineer behind ECODrIx and the ERIX product suite. Building AI automation and SaaS infrastructure end-to-end.",
     images: [OG_IMAGE],
   },
   icons: {
@@ -73,6 +123,35 @@ export default function RootLayout({
         <meta
           name="facebook-domain-verification"
           content="jl1vkjxmuowl2xl4ame6u3fdbltm1j"
+        />
+
+        {/* WebSite + Organization JSON-LD — anchors the portfolio in the
+            same identity graph as ecodrix.com. Person schema lives in
+            page.tsx so it loads on the homepage. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://portfolio.ecodrix.com/#website",
+              url: "https://portfolio.ecodrix.com",
+              name: "Dhanesh Mekalthuru — Portfolio",
+              description:
+                "Personal portfolio of Dhanesh Mekalthuru (Erix) — founder of ECODrIx and architect of the ERIX product suite.",
+              inLanguage: "en",
+              publisher: { "@id": "https://portfolio.ecodrix.com/#dhanesh" },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate:
+                    "https://portfolio.ecodrix.com/?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
         />
 
         <Script id="fb-pixel" strategy="afterInteractive">

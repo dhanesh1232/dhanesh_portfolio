@@ -1,0 +1,10 @@
+# Dhanesh Mekalthuru — Portfolio
+
+Full-stack engineer, automation builder, and founder of ECODrIx. Also known as Erix or erix.dhanesh online. Architect of the ERIX product suite (ERIX-CRM, ERIX-FLOW, ERIX-LAIE, ErixStore, Relay Fabric). Based in Andhra Pradesh, India.
+
+- **Portfolio**: https://portfolio.ecodrix.com
+- **Company**: https://ecodrix.com
+- **Founder profile**: https://ecodrix.com/founder
+- **Contact**: dhanesh@ecodrix.com · +91-81439-63821 (WhatsApp)
+- **Stack**: Next.js, TypeScript, Node.js, Express, PostgreSQL, MongoDB, ErixStore, AWS, Cloudflare, Claude, Gemini
+- **Services**: Full-stack web dev · SaaS MVPs · AI & workflow automation · Growth engineering

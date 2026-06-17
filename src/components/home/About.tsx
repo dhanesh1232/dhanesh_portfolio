@@ -130,7 +130,7 @@ export function About() {
 
             <div className="space-y-5">
               {[
-                `I'm a full-stack engineer and entrepreneur who builds systems that don't just look good — they work hard underneath. My stack spans modern web frameworks, AI-powered workflows, database architecture, and performance-tuned deployments.`,
+                `I'm Dhanesh Mekalthuru (often known online as Erix), a full-stack engineer, automation expert, and entrepreneur who builds systems that don't just look good — they work hard underneath. I am the founder of ECODrIx, and I've architected the ERIX suite of products including ERIX-CRM, ERIX-FLOW visual automation, and the high-speed ErixStore database server.`,
                 `What sets me apart is range. I write production code, design growth systems, run ad funnels, and architect SaaS platforms end-to-end. Most engineers do one. I do all of it — because real products need all of it.`,
               ].map((para, i) => (
                 <motion.p
