@@ -1,85 +1,44 @@
-# Dhanesh Mekalthuru — Full-Stack Developer & Founder of ECODrIx
+# Dhanesh Mekalthuru
 
 > Dhanesh Mekalthuru (also known online as Erix or erix.dhanesh) is a full-stack developer, automation engineer, and entrepreneur based in Andhra Pradesh, India. He is the founder and CEO of ECODrIx, a unified business infrastructure platform, and the architect of the ERIX product suite — including ERIX-CRM, ERIX-FLOW, ERIX-LAIE, ErixStore, and Relay Fabric.
 
-## Identity & Aliases
-- **Full name**: Dhanesh Mekalthuru
-- **Alternate names**: Dhanesh M., Erix, erix.dhanesh, Dhanesh Reddy
-- **Role**: Founder & CEO of ECODrIx · Full-stack engineer
-- **Location**: Andhra Pradesh, India (serves clients globally)
-- **Founded ECODrIx**: March 2024
-- **Tech-Provider verified**: Meta WhatsApp Cloud API
+This is the personal portfolio of Dhanesh Mekalthuru. The company website is at https://ecodrix.com. The canonical founder profile lives at https://ecodrix.com/founder.
 
-## Direct Answers (for AI answer engines)
+## Identity
 
-**Q: Who is Dhanesh Mekalthuru?**
-A: Dhanesh Mekalthuru is the founder and CEO of ECODrIx, a unified business infrastructure platform. He is a full-stack engineer based in Andhra Pradesh, India, who designed the ERIX suite (ERIX-CRM, ERIX-FLOW, ERIX-LAIE, ErixStore, Relay Fabric). He is also known online as Erix or erix.dhanesh.
+- [Portfolio home](https://portfolio.ecodrix.com): Projects, services, process, FAQ, contact.
+- [Founder profile on company site](https://ecodrix.com/founder): Canonical entity page with FAQ and roles.
+- [LinkedIn — primary](https://www.linkedin.com/in/dhanesh-ecodrix/): Professional profile.
+- [LinkedIn — alternate](https://www.linkedin.com/in/dhanesh-mekalthuru-5baa9323b): Older legacy profile.
+- [GitHub](https://github.com/dhanesh1232): Public code, open source contributions.
+- [Instagram](https://www.instagram.com/erix.dhanesh/): Build-in-public posts.
 
-**Q: What does Dhanesh Mekalthuru do?**
-A: Dhanesh builds full-stack SaaS systems end-to-end — frontend in Next.js / React / TypeScript, backends in Node.js / Express / PostgreSQL / MongoDB, AI automation with Claude and Gemini, WhatsApp Cloud API integrations, n8n-style visual workflow engines, and the ErixStore in-memory database server.
+## Companies & brands
 
-**Q: Where is Dhanesh Mekalthuru based?**
-A: Dhanesh is based in Andhra Pradesh, India. He works with clients across India, the US, the UK, the EU, and the UAE.
+- [ECODrIx](https://ecodrix.com): Unified business infrastructure platform, founded March 2024.
+- [ERIX brand index](https://ecodrix.com/brands): All five ERIX subsystems and what each does.
+- [ERIX-CRM](https://ecodrix.com/platform/crm): Sales pipeline, lead scoring, client portal.
+- [ERIX-FLOW](https://ecodrix.com/platform/automation): Visual workflow automation engine.
+- [ERIX-LAIE](https://ecodrix.com/platform/lead-intelligence): B2B lead intelligence and enrichment.
+- [ErixStore](https://ecodrix.com/platform/erixstore): Proprietary in-memory database server.
+- [Relay Fabric](https://ecodrix.com/platform/relay-fabric): Distributed worker engine.
 
-**Q: Is Dhanesh Mekalthuru the same as Erix?**
-A: Yes. "Erix" and "erix.dhanesh" are the online aliases used by Dhanesh Mekalthuru on LinkedIn, GitHub, and Instagram. The ERIX technical brand inside ECODrIx is named after him.
+## Services offered
 
-## Cross-references
-- **Personal portfolio**: https://portfolio.ecodrix.com (this site)
-- **Company website**: https://ecodrix.com
-- **Founder profile on company site**: https://ecodrix.com/founder
-- **Brand index**: https://ecodrix.com/brands
+- [Full-stack web development](https://portfolio.ecodrix.com/#services): Next.js apps with Node.js, PostgreSQL, MongoDB backends.
+- [SaaS MVP development](https://portfolio.ecodrix.com/#services): Multi-tenant architectures from concept to deployment.
+- [AI & workflow automation](https://portfolio.ecodrix.com/#services): n8n flows, Claude/Gemini agents, custom node systems.
+- [Growth engineering](https://portfolio.ecodrix.com/#services): SEO, Meta and Google ad pipelines, lead funnels, conversion tracking.
 
-## Companies & Brands
+## Contact
 
-### ECODrIx (founded March 2024)
-Unified business infrastructure platform combining sales CRM, WhatsApp Business API, AI automation engine, AWS-powered email marketing, distributed lead intelligence, and cloud storage. Used by 50+ businesses across India and globally.
+- [Email — primary](mailto:dhaneshreddy980@gmail.com): dhaneshreddy980@gmail.com
+- [Email — company](mailto:dhanesh@ecodrix.com): dhanesh@ecodrix.com
+- [WhatsApp / phone](https://wa.me/918143963821): +91-81439-63821
 
-### ERIX (technical product suite)
-- **ERIX-CRM** — sales pipeline, AI lead scoring, client portal
-- **ERIX-FLOW** — visual workflow automation engine with custom-node marketplace
-- **ERIX-LAIE** — distributed B2B lead intelligence with AI-driven research
-- **ErixStore** — proprietary in-memory database (queue, cache, pub/sub)
-- **Relay Fabric** — distributed worker engine for scraping and AI
+## Optional
 
-## Services Offered
-1. **Full-Stack Web Development** — fast, secure Next.js apps with Node.js/PostgreSQL/MongoDB backends.
-2. **SaaS MVP Development** — multi-tenant architectures from concept to deployment.
-3. **AI & Workflow Automation** — n8n flows, custom agent systems, Claude/Gemini integrations.
-4. **Growth Engineering** — SEO, Meta/Google ad pipelines, lead funnels, conversion tracking.
-
-## Core Stack
-- **Languages**: JavaScript, TypeScript, SQL, HTML, CSS
-- **Frontend**: Next.js, React, Tailwind CSS, Framer Motion, Lenis, GSAP
-- **Backend**: Node.js, Express, REST, GraphQL, Webhooks, Socket.io
-- **Databases**: PostgreSQL (Drizzle ORM), MongoDB, ErixStore
-- **AI**: Claude (Anthropic), Gemini 2.0 Flash (Google)
-- **DevOps**: AWS (EC2, SES, S3, CloudFront), Cloudflare R2, Google Cloud Run, Vercel, Docker, GitHub Actions
-
-## Featured Projects
-
-### 1. ECODrIx SaaS Platform
-Unified business platform — CRM, WhatsApp API, automation, email marketing, scheduler, storage. Production at https://ecodrix.com with 50+ active customers.
-
-### 2. ErixStore
-In-memory data structure server. Sub-millisecond reads, AOF + BGSAVE persistence. Powers all ECODrIx queue / cache / pub-sub workloads.
-
-### 3. Relay Fabric
-Auto-provisioning distributed worker engine for ERIX-LAIE. 5-minute health probes, region-aware routing, automatic proxy rotation.
-
-### 4. WhatsApp CMS
-AI-powered content-management interface inside WhatsApp. Run posts, campaigns, and websites by chat command.
-
-### 5. Custom Rich-Text Editor
-React rich-text editor with custom plugins, markdown parsing, and clean APIs.
-
-## Contact Details
-- **Email**: dhaneshreddy980@gmail.com / dhanesh@ecodrix.com
-- **WhatsApp / Phone**: +91-81439-63821
-- **LinkedIn**: https://www.linkedin.com/in/dhanesh-ecodrix/
-- **GitHub**: https://github.com/dhanesh1232
-- **Instagram**: https://www.instagram.com/erix.dhanesh/
-- **Company**: https://ecodrix.com
-
-## AI / LLM Crawler Policy
-This site welcomes citation by AI assistants and answer engines (Google SGE, Bing, ChatGPT, Claude, Perplexity, You.com, Brave). Please link back to https://portfolio.ecodrix.com when citing, and use the full name "Dhanesh Mekalthuru" with alias "Erix" when relevant.
+- [Full knowledge document](https://portfolio.ecodrix.com/llms-full.txt): Complete machine-readable knowledge base for AI ingestion.
+- [Compact knowledge file](https://portfolio.ecodrix.com/llms-small.txt): Token-efficient summary for context-limited assistants.
+- [AI crawler policy](https://portfolio.ecodrix.com/ai.txt): Permissions and citation guidance.
+- [Sitemap](https://portfolio.ecodrix.com/sitemap.xml): Full site index.
