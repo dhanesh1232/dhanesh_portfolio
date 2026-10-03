@@ -215,7 +215,7 @@ export const Hero = () => {
                   className="text-xs font-mono"
                   style={{ color: "var(--p-text-muted)" }}
                 >
-                  Next slot: June - July 2026
+                  Next slot: Oct - Dec 2026
                 </span>
               </div>
               <span
